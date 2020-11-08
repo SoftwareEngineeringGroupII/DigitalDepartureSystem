@@ -1,5 +1,9 @@
 com\digitaldeparturesystem\utils\MybatisUtils.class
+com\digitaldeparturesystem\DDSApplication.class
+com\digitaldeparturesystem\controller\student\StudentApi.class
 com\digitaldeparturesystem\pojo\Student.class
+com\digitaldeparturesystem\response\ResponseState.class
 com\digitaldeparturesystem\controller\TestController.class
 com\digitaldeparturesystem\mapper\StudentMapper.class
-com\digitaldeparturesystem\Application.class
+com\digitaldeparturesystem\config\Swagger2Configuration.class
+com\digitaldeparturesystem\response\ResponseResult.class
