@@ -1,0 +1,5 @@
+com\digitaldeparturesystem\utils\MybatisUtils.class
+com\digitaldeparturesystem\pojo\Student.class
+com\digitaldeparturesystem\controller\TestController.class
+com\digitaldeparturesystem\mapper\StudentMapper.class
+com\digitaldeparturesystem\Application.class

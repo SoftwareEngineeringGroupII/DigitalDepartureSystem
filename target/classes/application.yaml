@@ -1,0 +1,10 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: digitaldeparturesystem
+  datasource:
+    url: jdbc:mysql://192.168.172.128:3306/digital_departure_system?characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
