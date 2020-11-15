@@ -50,18 +50,18 @@ public class StudentMapperTest {
 
         StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
         Student student = new Student();
-        student.setId("001");
+        student.setStuId("001");
         student.setStuNumber("2018110427");
         student.setStuName("感同身受");
         student.setStuPwd("123456");
         student.setStuDept("计算机科学学院");
         student.setStuClass("2018级4班");
         student.setStuPhoneNumber("15328755505");
-        student.setStuPicture("照片");
+        student.setStuPhoto("照片");
         student.setStuSex("男");
         student.setStuStatus("1");
         student.setStuInDate(new Date());
-        student.setStuOutDate(new Date());
+        student.setStuOutData(new Date());
         student.setStuAddress("xxxx");
         int result = mapper.addStudent(student);
         if (result>0) {
@@ -95,18 +95,18 @@ public class StudentMapperTest {
 
         StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
         Student student = new Student();
-        student.setId("001");
+        student.setStuId("001");
         student.setStuNumber("2018110427");
         student.setStuName("感同身受");
         student.setStuPwd("123456");
         student.setStuDept("计算机科学学院");
         student.setStuClass("2018级4班");
         student.setStuPhoneNumber("15328755505");
-        student.setStuPicture("照片");
+        student.setStuPhoto("照片");
         student.setStuSex("男");
         student.setStuStatus("1");
         student.setStuInDate(new Date());
-        student.setStuOutDate(new Date());
+        student.setStuOutData(new Date());
         student.setStuAddress("四川仁寿");
         mapper.updateStudent(student);
         //提交事务

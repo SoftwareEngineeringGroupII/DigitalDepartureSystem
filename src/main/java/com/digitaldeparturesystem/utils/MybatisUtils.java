@@ -34,6 +34,8 @@ public class MybatisUtils {
     //SqlSession完全包括了面向数据库执行SQL命令所需的所有方法
     public static SqlSession getSqlSession(){
         //使用工厂生成sqlSession对象
+        //mybatis默认是不自动提交事务的，所以在insert、update、delete后要手动提交事务
+        //如果这里传入一个sqlSessionFactory.openSession(true);那么就不用手动提交了
         return sqlSessionFactory.openSession();
     }
 

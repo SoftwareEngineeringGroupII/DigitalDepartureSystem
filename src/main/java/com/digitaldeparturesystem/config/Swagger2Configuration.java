@@ -49,7 +49,7 @@ public class Swagger2Configuration {
      * @return
      */
     @Bean
-    public Docket adminApi() {
+    public Docket adminApiDocket() {
         return new Docket(DocumentationType.SWAGGER_12)
                 .apiInfo(adminApiInfo())
                 .select()
@@ -70,7 +70,7 @@ public class Swagger2Configuration {
 
 
     @Bean
-    public Docket sectionApi() {
+    public Docket sectionApiDocket() {
         return new Docket(DocumentationType.SWAGGER_12)
                 .apiInfo(sectionApiInfo())
                 .select()
