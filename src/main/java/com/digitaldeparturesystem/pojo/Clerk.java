@@ -11,7 +11,16 @@ public class Clerk {
   private String clerkPower;
   private String clerkPhoto;
   private String clerkStatus;
+  private String clerkEmail;
 
+
+  public String getClerkEmail() {
+    return clerkEmail;
+  }
+
+  public void setClerkEmail(String clerkEmail) {
+    this.clerkEmail = clerkEmail;
+  }
 
   public String getClerkPower() {
     return clerkPower;

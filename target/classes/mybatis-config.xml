@@ -32,5 +32,7 @@
         <mapper resource="com/digitaldeparturesystem/mapper/StudentMapper.xml"/>
         <mapper resource="com/digitaldeparturesystem/mapper/AdminMapper.xml"/>
         <mapper resource="com/digitaldeparturesystem/mapper/SettingsMapper.xml"/>
+        <mapper resource="com/digitaldeparturesystem/mapper/SectorMapper.xml"/>
+        <mapper resource="com/digitaldeparturesystem/mapper/RefreshTokenMapper.xml"/>
     </mappers>
 </configuration>

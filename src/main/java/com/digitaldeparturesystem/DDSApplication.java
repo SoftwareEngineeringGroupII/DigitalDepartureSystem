@@ -1,12 +1,17 @@
 package com.digitaldeparturesystem;
 
 import com.digitaldeparturesystem.utils.IdWorker;
+import com.digitaldeparturesystem.utils.RedisUtils;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Random;
 
 @Slf4j
 @EnableSwagger2
@@ -23,5 +28,27 @@ public class DDSApplication {
     @Bean
     public IdWorker createIdWorker(){
         return new IdWorker(0,0);
+    }
+
+    //加密密码
+    @Bean
+    public BCryptPasswordEncoder createPasswordEncoder(){
+        //不加盐值，直接用它默认的
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public RedisUtils createRedisUtils(){
+        return new RedisUtils();
+    }
+
+    @Bean
+    public Random createRandom(){
+        return new Random();
+    }
+
+    @Bean
+    public Gson createGson(){
+        return new Gson();
     }
 }

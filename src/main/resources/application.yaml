@@ -8,8 +8,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+  redis:
+    port: 6379
+    host: 192.168.172.129
+    password: 123456
 mybatis:
   # 扫描classpath中mapper目录下的映射配置文件，针对于映射配置文件放到了resources目录下
   mapper-locations: classpath:/mapper/*.xml
   # 配置了这个，在mapper.xml中，使用pojo类时就不用写完整路径了
   type-aliases-package: com.digitaldeparturesystem.pojo
+

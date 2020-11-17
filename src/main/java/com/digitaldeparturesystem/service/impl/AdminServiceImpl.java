@@ -12,6 +12,7 @@ import com.digitaldeparturesystem.utils.MybatisUtils;
 import com.digitaldeparturesystem.utils.TextUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ public class AdminServiceImpl implements IAdminService {
 
     @Autowired
     private IdWorker idWorker;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public ResponseResult initManagerAccount(Clerk clerk) {
@@ -51,6 +55,13 @@ public class AdminServiceImpl implements IAdminService {
         clerk.setClerkPower(Constants.Clerk.POWER_ADMIN);
         clerk.setClerkPhoto(Constants.Clerk.DEFAULT_PHOTO);
         clerk.setClerkStatus("1");
+        //对密码进行加密
+        //原密码
+        String password = clerk.getClerkPwd();
+        //加密之后的密码
+        String encode = bCryptPasswordEncoder.encode(password);
+        clerk.setClerkPwd(encode);
+
         //保存到数据库
         AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         adminMapper.addClerk(clerk);
