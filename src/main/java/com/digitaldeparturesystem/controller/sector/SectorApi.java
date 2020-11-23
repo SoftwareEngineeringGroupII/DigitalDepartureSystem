@@ -56,10 +56,10 @@ public class SectorApi {
         return sectorService.doLogin(captcha, captchaKey, clerk);
     }
 
-    @GetMapping("/login")
-    public ResponseResult login() {
-        return ResponseResult.ACCOUNT_NOT_LOGIN();
-    }
+//    @GetMapping("/login")
+//    public ResponseResult login() {
+//        return ResponseResult.ACCOUNT_NOT_LOGIN();
+//    }
 
     /**
      * 获取图灵验证码
