@@ -7,8 +7,8 @@
 
     <!--对象中的属性可以换直接取出来-->
     <insert id="addClerk" parameterType="com.digitaldeparturesystem.pojo.Clerk">
-        insert into clerk(clerkID,clerkName,clerkPwd,department,clerkPower,clerkAccount,clerkPhoto,clerkStatus)
-        values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkPower},#{clerkAccount},#{clerkPhoto},#{clerkStatus});
+        insert into clerk(clerkID,clerkName,clerkPwd,department,clerkPower,clerkAccount,clerkPhoto,clerkStatus,clerkEmail)
+        values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkPower},#{clerkAccount},#{clerkPhoto},#{clerkStatus},#{clerkEmail});
     </insert>
 
 </mapper>

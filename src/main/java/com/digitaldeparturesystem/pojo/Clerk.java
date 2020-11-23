@@ -8,17 +8,17 @@ public class Clerk {
   private String clerkPwd;
   private String department;
   private String clerkAccount;
-  private String clerkPower;
   private String clerkPhoto;
   private String clerkStatus;
+  private String clerkEmail;
 
 
-  public String getClerkPower() {
-    return clerkPower;
+  public String getClerkEmail() {
+    return clerkEmail;
   }
 
-  public void setClerkPower(String clerkPower) {
-    this.clerkPower = clerkPower;
+  public void setClerkEmail(String clerkEmail) {
+    this.clerkEmail = clerkEmail;
   }
 
   public String getClerkStatus() {
