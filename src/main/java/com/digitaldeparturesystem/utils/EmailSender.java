@@ -135,7 +135,7 @@ public class EmailSender {
      */
     public  EmailSender from(String nickName, String from) {
         try {
-            String encodeNickName = com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility.encodeText(nickName);
+            String encodeNickName =  MimeUtility.encodeText(nickName);
             msg.setFrom(new InternetAddress(encodeNickName + " <" + from + ">"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,7 +227,7 @@ public class EmailSender {
         FileDataSource fds = new FileDataSource(file);
         try {
             attachmentPart.setDataHandler(new DataHandler(fds));
-            attachmentPart.setFileName(null == fileName ? com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility.encodeText(fds.getName()) : com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility.encodeText(fileName));
+            attachmentPart.setFileName(null == fileName ?  MimeUtility.encodeText(fds.getName()) :  MimeUtility.encodeText(fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -240,7 +240,7 @@ public class EmailSender {
         DataHandler dataHandler = new DataHandler(url);
         try {
             attachmentPart.setDataHandler(dataHandler);
-            attachmentPart.setFileName(null == fileName ? com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility.encodeText(fileName) : com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility.encodeText(fileName));
+            attachmentPart.setFileName(null == fileName ? MimeUtility.encodeText(fileName) :  MimeUtility.encodeText(fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }

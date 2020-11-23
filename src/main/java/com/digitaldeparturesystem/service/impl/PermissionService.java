@@ -36,10 +36,10 @@ public class PermissionService {
         if (clerk == null) {
             return false;
         }
-        if (Constants.Clerk.POWER_ADMIN.equals((clerk.getClerkPower()))) {
-            //部门成员
-            return true;
-        }
+//        if (Constants.Clerk.POWER_ADMIN.equals((clerk.getClerkPower()))) {
+//            //部门成员
+//            return true;
+//        }
         return false;
     }
 

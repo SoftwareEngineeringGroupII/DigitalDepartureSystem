@@ -6,6 +6,7 @@ import com.digitaldeparturesystem.service.ISectorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,11 @@ public class SectorApi {
                                 @PathVariable("captcha") String captcha,
                                 @RequestBody Clerk clerk) {
         return sectorService.doLogin(captcha, captchaKey, clerk);
+    }
+
+    @GetMapping("/login")
+    public ResponseResult login() {
+        return ResponseResult.ACCOUNT_NOT_LOGIN();
     }
 
     /**

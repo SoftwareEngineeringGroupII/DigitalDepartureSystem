@@ -1,8 +1,10 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.AdminMapper;
+import com.digitaldeparturesystem.mapper.AuthoritiesMapper;
 import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
 import com.digitaldeparturesystem.mapper.SectorMapper;
+import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Refreshtoken;
 import com.digitaldeparturesystem.response.ResponseResult;
@@ -18,6 +20,12 @@ import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +35,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Slf4j
 @Service  //业务层
@@ -457,5 +463,38 @@ public class SectorServiceImpl implements ISectorService {
             }
         }
         return null;
+    }
+
+    /**
+     * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
+     */
+    @Override
+    public UserDetails loadUserByUsername(String clerkAccount) throws UsernameNotFoundException {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
+        if (byClerkAccount == null){
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        //根据用户id查找权限
+        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
+        List<Authorities> permissions = authoritiesMapper.getRolePermissions(byClerkAccount.getClerkID());
+        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Authorities permission : permissions) {
+            authorities.add(new SimpleGrantedAuthority(permission.getName()));
+        }
+        sqlSession.close();
+        return new User(byClerkAccount.getClerkAccount(),byClerkAccount.getClerkPwd(),authorities);
+    }
+
+
+    @Override
+    public Clerk findClerkByAccount(String clerkAccount) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
+        sqlSession.close();
+        return byClerkAccount;
     }
 }
