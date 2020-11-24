@@ -1,15 +1,22 @@
 package com.digitaldeparturesystem.controller.sector;
 
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ISectorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -118,4 +125,57 @@ public class SectorApi {
     public ResponseResult updateStuInfo(@RequestBody Clerk clerk){
         return null;
     }
+
+
+    //----2020.11.24 周二 增加部分-----//
+
+    /**
+     * 上传公告
+     * 识别上传公告人权限,ID,发布类型,
+     * @param notice
+     * @param photo
+     * @param request
+     * @return
+     */
+    @PostMapping("/notice")
+    public  ResponseResult uploadNotice(@RequestBody Notice notice,MultipartFile photo,
+                                        HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+        return sectorService.uploadNotice(notice,photo,request,response);
+    }
+
+
+
+
+    //---公共功能抽取----//
+
+
+    /**
+     * 根据学生学号查询学生
+     * @param stuId
+     * @return
+     */
+    @GetMapping("/{stuId}")
+    public ResponseResult getStuInfoByStuId(@PathVariable("stuId") String stuId){
+
+        return sectorService.getStuInfo(stuId);
+    }
+
+    /**
+     * 根据学院查询学生信息
+     * @param stuDept
+     * @return
+     */
+    public ResponseResult getStuInfoByDept(@PathVariable("stuDept")String stuDept){
+        return null;
+    }
+
+
+    public ResponseResult getStuInfoByNoPass(@RequestParam("type") String type){
+        return null;
+    }
+
+
+
+
 }

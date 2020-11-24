@@ -5,15 +5,15 @@ import java.util.Date;
 
 public class Notice {
 
-  private String noticeId;
-  private String content;
-  private String title;
-  private String publisherId;
-  private Date publishTime;
-  private String checkStatus;
-  private String remark;
-  private String noticeType;
-  private String isTop;
+  private String noticeId; //公告ID
+  private String content; //公告内容
+  private String title; //公告标题
+  private String publisherId; //发布者ID
+  private Date publishTime; //发布时间
+  private String checkStatus; //公告审核状态
+  private String remark; //备注
+  private String noticeType; //公告类型
+  private String isTop; //公告是否置顶
 
 
   public String getNoticeId() {

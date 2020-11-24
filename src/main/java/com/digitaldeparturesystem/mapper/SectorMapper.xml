@@ -15,4 +15,8 @@
         select * from clerk where clerkID = #{clerkId};
     </select>
 
+    <select id="findAll" resultType="com.digitaldeparturesystem.pojo.Clerk">
+        select stuId,stuNumber,stuDept,stuClass,stuContact,stuSex from student;
+    </select>
+
 </mapper>

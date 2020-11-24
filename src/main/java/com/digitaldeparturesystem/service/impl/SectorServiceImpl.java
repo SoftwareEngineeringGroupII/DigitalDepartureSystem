@@ -1,10 +1,10 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.AdminMapper;
+import com.digitaldeparturesystem.mapper.NoticeMapper;
 import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
 import com.digitaldeparturesystem.mapper.SectorMapper;
-import com.digitaldeparturesystem.pojo.Clerk;
-import com.digitaldeparturesystem.pojo.Refreshtoken;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseState;
 import com.digitaldeparturesystem.service.ISectorService;
@@ -16,20 +16,31 @@ import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 @Slf4j
 @Service  //业务层
@@ -61,6 +72,12 @@ public class SectorServiceImpl implements ISectorService {
     @Autowired
     private RedisUtils redisUtils;
 
+    /**
+     *  生成图灵验证码
+     * @param response
+     * @param captchaKey
+     * @throws Exception
+     */
     @Override
     public void createCaptcha(HttpServletResponse response, String captchaKey) throws Exception {
         if (TextUtils.isEmpty(captchaKey) || captchaKey.length() < 13) {
@@ -191,9 +208,19 @@ public class SectorServiceImpl implements ISectorService {
         return ResponseResult.SUCCESS("验证码发送成功");
     }
 
+    /**
+     * 添加管理员
+     * @param clerk
+     * @param emailCode
+     * @param captchaCode
+     * @param captchaKey
+     * @param request
+     * @return
+     */
+
     @Override
     public ResponseResult register(Clerk clerk, String emailCode, String captchaCode, String captchaKey, HttpServletRequest request) {
-        //第一步：检查当前用户名、姓名、部门是否已经注册
+        //第一步：检查当前用户名、姓名、部门是否为空
         String clerkAccount = clerk.getClerkAccount();
         if (TextUtils.isEmpty(clerkAccount)) {
             return ResponseResult.FAILED("用户名不可以为空");
@@ -247,7 +274,7 @@ public class SectorServiceImpl implements ISectorService {
             //成功，删除验证码
             redisUtils.del(Constants.Clerk.KEY_CAPTCHA_CONTENT + captchaKey);
         }
-        //达到可以注册的条件
+        //达到可以注册(添加)的条件
         //第六步：对密码进行加密
         String password = clerk.getClerkPwd();
         if (TextUtils.isEmpty(password)) {
@@ -264,10 +291,18 @@ public class SectorServiceImpl implements ISectorService {
         //提交事务，关闭sqlSession
         sqlSession.commit();
         sqlSession.close();
+
         //第九步：返回结果
         return ResponseResult.GET(ResponseState.JOIN_SUCCESS);
     }
 
+    /**
+     * 登录
+     * @param captcha
+     * @param captchaKey
+     * @param clerk
+     * @return
+     */
     @Override
     public ResponseResult doLogin(String captcha, String captchaKey, Clerk clerk) {
         String captchaValue = (String) redisUtils.get(Constants.Clerk.KEY_CAPTCHA_CONTENT + captchaKey);
@@ -310,6 +345,8 @@ public class SectorServiceImpl implements ISectorService {
     }
 
     /**
+     * 创建token
+     * 返回tokenKey
      * @param response
      * @param clerkFromDb
      * @return token_key
@@ -358,9 +395,9 @@ public class SectorServiceImpl implements ISectorService {
         return tokenKey;
     }
 
+
     /**
      * 本质：检查用户是否有登录，如果登陆了，久返回用户信息
-     *
      * @return
      */
     @Override
@@ -407,9 +444,15 @@ public class SectorServiceImpl implements ISectorService {
         return clerk;
     }
 
+
     @Autowired
     private Gson gson;
 
+    /**
+     * 获取普通管理员信息
+     * @param clerkId
+     * @return
+     */
     @Override
     public ResponseResult getClerkInfo(String clerkId) {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
@@ -431,6 +474,7 @@ public class SectorServiceImpl implements ISectorService {
         return ResponseResult.SUCCESS("获取成功").setData(newClerk);
     }
 
+
     private HttpServletRequest getRequest(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return requestAttributes.getRequest();
@@ -441,6 +485,11 @@ public class SectorServiceImpl implements ISectorService {
         return requestAttributes.getResponse();
     }
 
+    /**
+     * 解析token
+     * @param tokenKey
+     * @return
+     */
     private Clerk parseByTokenKey(String tokenKey) {
         //记得加前缀，通过前面保存的(tokenKey,token)拿到token
         String token = (String) redisUtils.get(Constants.Clerk.KEY_TOKEN + tokenKey);
@@ -458,4 +507,131 @@ public class SectorServiceImpl implements ISectorService {
         }
         return null;
     }
+
+
+
+    //-----2020.11.24 周二增加部分---- //
+
+    @Value("${photo.dir}")
+    private String realPath;
+
+    /**
+     * 上传公告
+     * @param notice
+     * @param photo
+     * @param request
+     * @param response
+     * @return
+     */
+    @Override
+    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,
+                                       HttpServletRequest request,
+                                       HttpServletResponse response) throws IOException {
+        //检验当前操作的用户是谁
+        Clerk currentUser = checkClerk();
+        if (currentUser == null) {
+            return ResponseResult.ACCOUNT_NOT_LOGIN();
+        }
+
+        //判断角色
+        if (!Constants.Clerk.POWER_ADMIN.equals(currentUser.getDepartment())) {
+            return ResponseResult.ERROR_403(); //权限不足:这里针对管理员发布公告权限,不清楚是否有其他具体权限要求
+        }
+
+        //检查数据:标题、内容不可以为空
+        if (TextUtils.isEmpty(notice.getTitle())) {
+            ResponseResult.FAILED("标题不可以为空！");
+        }
+
+        if (TextUtils.isEmpty(notice.getContent())) {
+            ResponseResult.FAILED("公告内容不可以为空！");
+        }
+
+          /*   log.info("公告信息：[{}]",notice.toString());
+        log.info("公告图片：[{}]",photo.getOriginalFilename());
+        String newFileName = idWorker.nextId() + "." + FilenameUtils.getExtension(photo.getOriginalFilename());
+        photo.transferTo(new File(realPath, newFileName));//保存到指定的路径文件路径中
+        photo.setPath(newFileName);
+        newNotice1.setPath(); ---这里数据库差图片路径字段
+        */
+
+        //设置数据
+        Notice newNotice1 = new Notice();
+        newNotice1.setNoticeId(idWorker.nextId()+"");//公告ID
+        newNotice1.setTitle(notice.getTitle());//标题
+        newNotice1.setContent(notice.getContent());//内容
+        newNotice1.setRemark(notice.getRemark());//设置备注
+        newNotice1.setPublisherId(currentUser.getClerkID());//发布者ID
+        newNotice1.setNoticeType(currentUser.getDepartment()); //发布者部门
+        newNotice1.setCheckStatus("0");//默认未审核
+        newNotice1.setIsTop(notice.getIsTop()); //默认非置顶
+        newNotice1.setPublishTime(new Date());//发布时间
+        //保存数据
+        SqlSession  sqlSession = MybatisUtils.getSqlSession();
+        NoticeMapper sessionMapper = sqlSession.getMapper(NoticeMapper.class);
+        sessionMapper.save(newNotice1);
+        sqlSession.commit();
+        sqlSession.close();
+        //返回结果
+        return ResponseResult.SUCCESS("公告添加成功");
+
+    }
+
+    //---获取学生信息---//
+
+    /**
+     *  分頁查詢
+     *  获取用户列表
+     *  需要管理员权限
+     * @param page
+     * @param size
+     * @param request
+     * @param response
+     * @return
+     */
+    @Override
+    public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response) {
+        //检验当前操作的用户是谁
+        Clerk currentUser = checkClerk();
+        if (currentUser == null) {
+            return ResponseResult.ACCOUNT_NOT_LOGIN();
+        }
+
+        //判断角色
+        if (!Constants.Clerk.POWER_ADMIN.equals(currentUser.getDepartment())) {
+            return ResponseResult.ERROR_403();
+        }
+
+        //获取用户列表
+        //分页查询
+        //size业限制一下，每一页不得少于5个
+        if (page < Constants.Page.DEFAULT_PAGE){
+            page = Constants.Page.DEFAULT_PAGE;
+        }
+
+        //根据学号排序
+        //升序
+        // Sort sort = new Sort(Sort.Direction.ASC,"stuId");
+        Sort sort = Sort.by(Sort.Order.asc("stuId"));
+        Pageable pageable = PageRequest.of(page-1,size,sort);
+
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        Page<Clerk> all =  sectorMapper.findAll(pageable);
+
+        return ResponseResult.SUCCESS("获取用户列表成功").setData(all);
+    }
+
+    /**
+     *  根据学号获取ID
+     * @param stuId
+     * @return
+     */
+    @Override
+    public ResponseResult getStuInfo(@PathVariable("stuId") String stuId) {
+        return null;
+    }
+
+
+
 }

@@ -1,6 +1,8 @@
 package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.Clerk;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface SectorMapper {
 
@@ -10,4 +12,5 @@ public interface SectorMapper {
 
     Clerk findOneById(String clerkId);
 
+    Page<Clerk> findAll(Pageable pageable);
 }

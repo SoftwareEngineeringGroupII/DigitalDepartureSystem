@@ -2,6 +2,9 @@ package com.digitaldeparturesystem.utils;
 
 public interface Constants {
 
+    /**
+     * 这里是部分管理员
+     */
     interface Clerk{
         String POWER_ADMIN = "power_admin";
         String DEFAULT_PHOTO = "https://upload.jianshu.io/users/upload_avatars/15748212/9e38ce4e-dcb8-49cf-8eaf-8bdd8ba99f21.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240";
@@ -18,6 +21,13 @@ public interface Constants {
     interface Setting{
         String ADMIN_ACCOUNT_INIT_STATUS = "admin_account_init_status";
     }
+
+    //分页查询
+    interface Page{
+        int DEFAULT_PAGE = 1;
+        int MIN_SIZE = 10;
+    }
+
 
 
     /**
