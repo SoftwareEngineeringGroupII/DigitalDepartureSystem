@@ -49,7 +49,7 @@ public class SectorApi {
      * @param clerk   用户bean类，封装账号和密码
      * @return
      */
-    @PostMapping("/login/{captcha}/{captcha_key}")
+    @PostMapping("/login/{captcha_key}/{captcha}")
     public ResponseResult login(@PathVariable("captcha_key") String captchaKey,
                                 @PathVariable("captcha") String captcha,
                                 @RequestBody Clerk clerk) {

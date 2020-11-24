@@ -29,11 +29,11 @@
 
     <!--每一个mapper.xml都需要在Mybatis核心配置文件中注册-->
     <mappers>
-        <mapper resource="com/digitaldeparturesystem/mapper/StudentMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/AdminMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/SettingsMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/SectorMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/RefreshTokenMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/AuthoritiesMapper.xml"/>
+        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/AdminMapper.xml"/>
+        <mapper resource="mapper/SettingsMapper.xml"/>
+        <mapper resource="mapper/SectorMapper.xml"/>
+        <mapper resource="mapper/RefreshTokenMapper.xml"/>
+        <mapper resource="mapper/AuthoritiesMapper.xml"/>
     </mappers>
 </configuration>
