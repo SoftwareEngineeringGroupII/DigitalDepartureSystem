@@ -110,6 +110,21 @@ public class AdminServiceImpl implements IAdminService {
         return ResponseResult.SUCCESS("查找成功").setData(menus);
     }
 
+    @Override
+    public ResponseResult addClerk(Clerk clerk) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult deleteClerk(String clerk) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult updateClerk(String clerkId, Clerk clerk) {
+        return null;
+    }
+
     /**
      * 找到菜单下面的子菜单
      * @param authoritiesMapper

@@ -43,4 +43,19 @@ public class AuthorityServiceImpl implements IAuthorityService {
         sqlSession.close();
         return ResponseResult.SUCCESS("权限增加成功");
     }
+
+    @Override
+    public ResponseResult updateAuthority(String authorityId, Authorities authorities) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult deleteAuthority(String authorityId) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult getAllAuthorities() {
+        return null;
+    }
 }

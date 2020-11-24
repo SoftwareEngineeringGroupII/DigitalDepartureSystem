@@ -15,4 +15,16 @@
         select * from clerk where clerkID = #{clerkId};
     </select>
 
+    <update id="updateClerk" parameterType="com.digitaldeparturesystem.pojo.Clerk">
+        update clerk set
+        clerkName = #{clerkName},
+        clerkPwd = #{clerkPwd},
+        department = #{department},
+        clerkPower = #{clerkPower},
+        clerkAccount = #{clerkAccount},
+        clerkPhoto = #{clerkPhoto},
+        clerkStatus = #{clerkStatus},
+        clerkEmail = #{clerkEmail}
+        where clerkID = #{clerkID};
+    </update>
 </mapper>

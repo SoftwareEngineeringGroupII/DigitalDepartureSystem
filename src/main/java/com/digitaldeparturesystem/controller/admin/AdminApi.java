@@ -1,6 +1,7 @@
 package com.digitaldeparturesystem.controller.admin;
 
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IAdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,17 @@ public class AdminApi {
     @GetMapping("/menu")
     public ResponseResult getAllMenu(){
         return adminService.findAuditMenu();
+    }
+
+    /**
+     * 审核公告
+     * @param articleId
+     * @param notice
+     * @return
+     */
+    @PostMapping("/checkNotice/{noticeId}")
+    public ResponseResult checkNotice(@PathVariable("noticeId")String articleId,@RequestBody Notice notice){
+        return null;
     }
 
 

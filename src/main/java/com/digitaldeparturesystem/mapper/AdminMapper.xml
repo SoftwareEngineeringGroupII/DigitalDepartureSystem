@@ -11,4 +11,8 @@
         values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkPower},#{clerkAccount},#{clerkPhoto},#{clerkStatus},#{clerkEmail});
     </insert>
 
+    <select id="findAllClerks" resultType="com.digitaldeparturesystem.pojo.Clerk">
+        select * from clerk;
+    </select>
+
 </mapper>
