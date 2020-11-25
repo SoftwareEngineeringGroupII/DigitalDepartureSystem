@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口-->
+<mapper namespace="com.digitaldeparturesystem.mapper.AdminMapper">
+
+    <!--select查询语句-->
+
+    <!--对象中的属性可以换直接取出来-->
+    <insert id="addClerk" parameterType="com.digitaldeparturesystem.pojo.Clerk">
+        insert into clerk(clerkID,clerkName,clerkPwd,department,clerkAccount,clerkPhoto,clerkStatus,clerkEmail)
+        values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkAccount},#{clerkPhoto},#{clerkStatus},#{clerkEmail});
+    </insert>
+
+    <select id="findAllClerks" resultType="com.digitaldeparturesystem.pojo.Clerk">
+        select * from clerk where clerkStatus = 1;
+    </select>
+
+    <update id="deleteClerkByStatus" parameterType="java.lang.String">
+        update clerk set
+        clerkStatus = 0
+        where clerkID = #{clerkId};
+    </update>
+
+</mapper>

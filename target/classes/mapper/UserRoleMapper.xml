@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口-->
+<mapper namespace="com.digitaldeparturesystem.mapper.UserRoleMapper">
+
+    <select id="getRolesByUser" resultType="com.digitaldeparturesystem.pojo.Role" parameterType="java.lang.String">
+        select * from role where id in(
+        select role_id from user_role where user_id = #{clerk_id});
+    </select>
+
+    <delete id="deleteAllRoleByUser" parameterType="java.lang.String">
+        delete from user_role where user_id = #{clerkId};
+    </delete>
+
+    <insert id="addRoleToUser" parameterType="java.lang.String">
+        insert into user_role(`id`,user_id,role_id)
+        values (#{id},#{clerkId},#{roleId});
+    </insert>
+
+</mapper>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/sector")
@@ -19,20 +20,6 @@ public class SectorApi {
 
     @Autowired
     private ISectorService sectorService;
-
-    /**
-     * 注册
-     * @return
-     */
-    @PreAuthorize("@permission.sector()")
-    @PostMapping("/join_in")
-    public ResponseResult register(@RequestBody Clerk clerk,
-                                   @RequestParam("email_code")String emailCode,
-                                   @RequestParam("captcha_code")String captchaCode,
-                                   @RequestParam("captcha_key")String captchaKey,
-                                   HttpServletRequest request) {
-        return sectorService.register(clerk,emailCode,captchaCode,captchaKey,request);
-    }
 
     /**
      * 登录sign-up
@@ -49,7 +36,7 @@ public class SectorApi {
      * @param clerk   用户bean类，封装账号和密码
      * @return
      */
-    @PostMapping("/login/{captcha}/{captcha_key}")
+    @PostMapping("/login/{captcha_key}/{captcha}")
     public ResponseResult login(@PathVariable("captcha_key") String captchaKey,
                                 @PathVariable("captcha") String captcha,
                                 @RequestBody Clerk clerk) {
