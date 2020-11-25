@@ -1,13 +1,18 @@
 package com.digitaldeparturesystem.controller.admin;
 
-import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IAdminService;
+import com.digitaldeparturesystem.service.ISectorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/admin/user")
@@ -16,18 +21,21 @@ public class UserApi {
     @Autowired
     private IAdminService adminService;
 
+    @Autowired
+    private ISectorService sectorService;
+
     /**
-     * 添加权限
-     * @param clerk
+     * 注册
      * @return
      */
-    @PostMapping()
-    public ResponseResult addClerk(@RequestBody Clerk clerk){
-        return adminService.addClerk(clerk);
+    @PostMapping("/join_in")
+    public ResponseResult register(@RequestBody Clerk clerk,
+                                   HttpServletRequest request) {
+        return adminService.registerClerk(clerk,request);
     }
 
     /**
-     * 修改权限
+     * 修改用户
      * @param clerk
      * @return
      */
@@ -42,7 +50,7 @@ public class UserApi {
      */
     @DeleteMapping("/{clerkId}")
     public ResponseResult deleteClerk(@PathVariable("clerkId")String clerkId){
-        return adminService.deleteClerk(clerkId);
+        return adminService.deleteClerkByStatus(clerkId);
     }
 
     /**
@@ -52,7 +60,7 @@ public class UserApi {
      */
     @GetMapping("/{clerkId}")
     public ResponseResult getClerkById(@PathVariable("clerkId")String clerkId){
-        return null;
+        return adminService.getClerkById(clerkId);
     }
 
     /**
@@ -61,7 +69,33 @@ public class UserApi {
      */
     @GetMapping()
     public ResponseResult getAllClerks(){
-        return null;
+        return adminService.getAllClerks();
     }
+
+    @PostMapping("/role/{clerkId}")
+    public ResponseResult addRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<Role> roles){
+        return adminService.addRoleToUser(clerkId,roles);
+    }
+
+    /**
+     * 更新用户拥有的角色
+     * @param clerkId
+     * @param roles
+     * @return
+     */
+    @PutMapping("/role/{clerkId}")
+    public ResponseResult updateRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<Role> roles){
+        return adminService.addRoleToUser(clerkId,roles);
+    }
+
+    /**
+     * 获取用户拥有的角色
+     * @return
+     */
+    @GetMapping("/role/{clerkId}")
+    public ResponseResult getRolesByUser(@PathVariable("clerkId")String clerkId){
+        return adminService.getRolesByUser(clerkId);
+    }
+
 
 }

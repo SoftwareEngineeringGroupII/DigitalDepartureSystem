@@ -6,12 +6,15 @@ com\digitaldeparturesystem\service\ISectorService.class
 com\digitaldeparturesystem\controller\sector\NoticeApi.class
 com\digitaldeparturesystem\pojo\Process.class
 com\digitaldeparturesystem\response\ResponseResult.class
+com\digitaldeparturesystem\config\MyMvcConfig.class
 com\digitaldeparturesystem\utils\TextUtils.class
 com\digitaldeparturesystem\pojo\Card.class
+com\digitaldeparturesystem\mapper\RoleAuthorityMapper.class
 com\digitaldeparturesystem\utils\MybatisUtils.class
 com\digitaldeparturesystem\controller\admin\UserApi.class
 com\digitaldeparturesystem\service\impl\PermissionService.class
 com\digitaldeparturesystem\pojo\Form.class
+com\digitaldeparturesystem\mapper\UserRoleMapper.class
 com\digitaldeparturesystem\pojo\Department.class
 com\digitaldeparturesystem\pojo\Processmanage.class
 com\digitaldeparturesystem\config\Swagger2Configuration.class
@@ -36,6 +39,7 @@ com\digitaldeparturesystem\utils\Constants.class
 com\digitaldeparturesystem\config\AsyncConfiguration.class
 com\digitaldeparturesystem\controller\sector\SectorApi.class
 com\digitaldeparturesystem\pojo\Lib.class
+com\digitaldeparturesystem\config\CorsConfig.class
 com\digitaldeparturesystem\controller\sector\Library.class
 com\digitaldeparturesystem\pojo\Checkcommit.class
 com\digitaldeparturesystem\controller\sector\DormApi.class
@@ -48,6 +52,7 @@ com\digitaldeparturesystem\utils\Constants$TimeValueInMillions.class
 com\digitaldeparturesystem\pojo\Clerk.class
 com\digitaldeparturesystem\mapper\SectorMapper.class
 com\digitaldeparturesystem\controller\sector\CardApi.class
+com\digitaldeparturesystem\service\impl\RoleServiceImpl.class
 com\digitaldeparturesystem\DDSApplication.class
 com\digitaldeparturesystem\service\impl\TaskService.class
 com\digitaldeparturesystem\pojo\Student.class
@@ -55,6 +60,7 @@ com\digitaldeparturesystem\controller\admin\AdminApi.class
 com\digitaldeparturesystem\utils\Constants$Clerk.class
 com\digitaldeparturesystem\pojo\Refreshtoken.class
 com\digitaldeparturesystem\pojo\Logistics.class
+com\digitaldeparturesystem\config\MyMvcConfig$1.class
 com\digitaldeparturesystem\pojo\Dorm.class
 com\digitaldeparturesystem\mapper\AdminMapper.class
 com\digitaldeparturesystem\utils\CookieUtils.class

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/admin/authority")
@@ -57,6 +58,6 @@ public class AuthorityApi {
      */
     @GetMapping("/{authorityId}")
     public ResponseResult getAuthorityById(@PathVariable("authorityId")String authorityId){
-        return null;
+        return authorityService.getAuthorityById(authorityId);
     }
 }

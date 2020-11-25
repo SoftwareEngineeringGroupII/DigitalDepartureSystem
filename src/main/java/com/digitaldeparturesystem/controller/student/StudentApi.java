@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/student")

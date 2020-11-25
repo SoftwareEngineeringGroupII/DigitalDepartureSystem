@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/admin")
 public class AdminApi {

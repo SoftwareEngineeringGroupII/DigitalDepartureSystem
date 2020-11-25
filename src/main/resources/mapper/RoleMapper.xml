@@ -7,7 +7,7 @@
 
     <!--对象中的属性可以换直接取出来-->
     <insert id="addRole" parameterType="com.digitaldeparturesystem.pojo.Role">
-        insert into role(id,code,`name`,index)
+        insert into role(id,`code`,`name`,`index`)
         values(#{id},#{code},#{name},#{index});
     </insert>
 
@@ -17,15 +17,18 @@
 
     <update id="updateRole" parameterType="com.digitaldeparturesystem.pojo.Role">
         update role set
-        id = #{id}
-        code = #{code}
-        `name` = #{name}
-        index = #{index}
+        `code` = #{code},
+        `name` = #{name},
+        `index` = #{index}
         where id = #{id};
     </update>
 
     <select id="getRoles" resultType="com.digitaldeparturesystem.pojo.Role">
         select * from role;
+    </select>
+
+    <select id="getRoleById" resultType="com.digitaldeparturesystem.pojo.Role">
+        select * from role where id = #{roleId};
     </select>
 
 </mapper>

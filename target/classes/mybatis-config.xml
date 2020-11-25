@@ -35,5 +35,8 @@
         <mapper resource="mapper/SectorMapper.xml"/>
         <mapper resource="mapper/RefreshTokenMapper.xml"/>
         <mapper resource="mapper/AuthoritiesMapper.xml"/>
+        <mapper resource="mapper/RoleMapper.xml"/>
+        <mapper resource="mapper/RoleAuthorityMapper.xml"/>
+        <mapper resource="mapper/UserRoleMapper.xml"/>
     </mappers>
 </configuration>

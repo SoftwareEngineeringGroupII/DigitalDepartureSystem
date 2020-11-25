@@ -229,7 +229,7 @@ public class SectorServiceImpl implements ISectorService {
         //第三步：检查邮箱是否已经注册
         Clerk clerkByEmail = sectorMapper.findOneByEmail(email);
         if (clerkByEmail != null) {
-            ResponseResult.FAILED("该邮箱地址已经注册");
+            return ResponseResult.FAILED("该邮箱地址已经注册");
         }
         //第四步：检查邮箱验证码是否正确
         String emailVerifyCode = (String) redisUtils.get(Constants.Clerk.KEY_EMAIL_CODE_CONTENT + email);

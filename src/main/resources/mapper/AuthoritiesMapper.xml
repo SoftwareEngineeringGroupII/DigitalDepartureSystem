@@ -17,9 +17,34 @@
         select * from authorities where parent_id = #{parentId};
     </select>
 
-    <select id="insertAuthority" parameterType="com.digitaldeparturesystem.pojo.Authorities">
+    <insert id="insertAuthority" parameterType="com.digitaldeparturesystem.pojo.Authorities">
         insert into authorities(`id`,`name`,`parent_id`,`index`,`available`,`resourceType`,`url`)
          values(#{id},#{name},#{parentId},#{index},#{available},#{resourceType},#{url});
+    </insert>
+
+    <select id="getAllAuthorities" resultType="com.digitaldeparturesystem.pojo.Authorities">
+        select * from authorities;
     </select>
+
+    <select id="getAuthorityById" resultType="com.digitaldeparturesystem.pojo.Authorities">
+        select * from authorities where id = #{authorityId};
+    </select>
+
+    <delete id="deleteAuthorities" parameterType="java.lang.String">
+        delete from authorities where id = #{authorityId};
+    </delete>
+
+    <update id="updateAuthority" parameterType="com.digitaldeparturesystem.pojo.Authorities">
+        update authorities set
+        `name` = #{name},
+        `parent_id` = #{parentId},
+        `index` = #{index},
+        `available` = #{available},
+        `resourceType` = #{resourceType},
+        `url` = #{url}
+        where id = #{id};
+    </update>
+
+
 
 </mapper>
