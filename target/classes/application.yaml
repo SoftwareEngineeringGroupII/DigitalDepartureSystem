@@ -4,17 +4,20 @@ spring:
   application:
     name: digitaldeparturesystem
   datasource:
-    url: jdbc:mysql://localhost:3306/digital_departure_system?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://121.196.104.229:3306/digital_departure_system?characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 888888
+    password: root
   redis:
-    host: localhost
+    host: 121.196.104.229
     port: 6379
-    #password: 123456
+    timeout: 1000
 mybatis:
   # 扫描classpath中mapper目录下的映射配置文件，针对于映射配置文件放到了resources目录下
   mapper-locations: classpath:/mapper/*.xml
   # 配置了这个，在mapper.xml中，使用pojo类时就不用写完整路径了
   type-aliases-package: com.digitaldeparturesystem.pojo
+
+photo.dir: C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\src\main\resources\static\photos
+
 

@@ -4,12 +4,13 @@ import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public interface ISectorService {
+public interface ISectorService extends UserDetailsService {
 
     void createCaptcha(HttpServletResponse response, String captchaKey) throws Exception;
 
@@ -30,4 +31,6 @@ public interface ISectorService {
     public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);
 
     ResponseResult getStuInfo(String stuId);
+
+    Clerk findClerkByAccount(String clerkAccount);
 }

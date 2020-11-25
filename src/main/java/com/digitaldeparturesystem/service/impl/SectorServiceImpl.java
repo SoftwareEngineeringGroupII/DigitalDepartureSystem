@@ -5,6 +5,12 @@ import com.digitaldeparturesystem.mapper.NoticeMapper;
 import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
 import com.digitaldeparturesystem.mapper.SectorMapper;
 import com.digitaldeparturesystem.pojo.*;
+import com.digitaldeparturesystem.mapper.AuthoritiesMapper;
+import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
+import com.digitaldeparturesystem.mapper.SectorMapper;
+import com.digitaldeparturesystem.pojo.Authorities;
+import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Refreshtoken;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseState;
 import com.digitaldeparturesystem.service.ISectorService;
@@ -24,6 +30,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +53,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service  //业务层
@@ -250,7 +263,7 @@ public class SectorServiceImpl implements ISectorService {
         //第三步：检查邮箱是否已经注册
         Clerk clerkByEmail = sectorMapper.findOneByEmail(email);
         if (clerkByEmail != null) {
-            ResponseResult.FAILED("该邮箱地址已经注册");
+            return ResponseResult.FAILED("该邮箱地址已经注册");
         }
         //第四步：检查邮箱验证码是否正确
         String emailVerifyCode = (String) redisUtils.get(Constants.Clerk.KEY_EMAIL_CODE_CONTENT + email);
@@ -508,8 +521,6 @@ public class SectorServiceImpl implements ISectorService {
         return null;
     }
 
-
-
     //-----2020.11.24 周二增加部分---- //
 
     @Value("${photo.dir}")
@@ -632,6 +643,36 @@ public class SectorServiceImpl implements ISectorService {
         return null;
     }
 
+    /**
+     * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
+     */
+    @Override
+    public UserDetails loadUserByUsername(String clerkAccount) throws UsernameNotFoundException {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
+        if (byClerkAccount == null){
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        //根据用户id查找权限
+        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
+        List<Authorities> permissions = authoritiesMapper.getRolePermissions(byClerkAccount.getClerkID());
+        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Authorities permission : permissions) {
+            authorities.add(new SimpleGrantedAuthority(permission.getName()));
+        }
+        sqlSession.close();
+        return new User(byClerkAccount.getClerkAccount(),byClerkAccount.getClerkPwd(),authorities);
+    }
 
 
+    @Override
+    public Clerk findClerkByAccount(String clerkAccount) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
+        sqlSession.close();
+        return byClerkAccount;
+    }
 }

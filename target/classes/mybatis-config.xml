@@ -20,7 +20,7 @@
             <dataSource type="POOLED">
                 <!--配置数据库的四个信息-->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://192.168.172.129:3306/digital_departure_system?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"/>
+                <property name="url" value="jdbc:mysql://121.196.104.229:3306/digital_departure_system?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
@@ -29,10 +29,15 @@
 
     <!--每一个mapper.xml都需要在Mybatis核心配置文件中注册-->
     <mappers>
-        <mapper resource="com/digitaldeparturesystem/mapper/StudentMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/AdminMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/SettingsMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/SectorMapper.xml"/>
-        <mapper resource="com/digitaldeparturesystem/mapper/RefreshTokenMapper.xml"/>
+        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/AdminMapper.xml"/>
+        <mapper resource="mapper/SettingsMapper.xml"/>
+        <mapper resource="mapper/SectorMapper.xml"/>
+        <mapper resource="mapper/RefreshTokenMapper.xml"/>
+        <mapper resource="mapper/AuthoritiesMapper.xml"/>
+        <mapper resource="mapper/RoleMapper.xml"/>
+        <mapper resource="mapper/RoleAuthorityMapper.xml"/>
+        <mapper resource="mapper/UserRoleMapper.xml"/>
+        <mapper resource="mapper/NoticeMapper.xml"/>
     </mappers>
 </configuration>
