@@ -19,7 +19,9 @@ public interface ISectorService extends UserDetailsService {
 
     Clerk checkClerk();
 
-    ResponseResult getClerkInfo(String clerkId);
+    ResponseResult findClerkInfo(String clerkId);
 
     Clerk findClerkByAccount(String clerkAccount);
+
+    String createToken(HttpServletResponse httpServletResponse, Clerk clerk);
 }

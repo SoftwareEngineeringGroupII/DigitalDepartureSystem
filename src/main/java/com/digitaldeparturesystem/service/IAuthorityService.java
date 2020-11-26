@@ -10,7 +10,7 @@ public interface IAuthorityService {
      * @param authorities
      * @return
      */
-    ResponseResult addAuthority(Authorities authorities);
+    ResponseResult insertAuthority(Authorities authorities);
 
     /**
      * 更新权限
@@ -31,12 +31,12 @@ public interface IAuthorityService {
      * 获取所有得权限
      * @return
      */
-    ResponseResult getAllAuthorities();
+    ResponseResult findAllAuthorities();
 
     /**
      * 通过权限id查找权限
      * @param authorityId
      * @return
      */
-    ResponseResult getAuthorityById(String authorityId);
+    ResponseResult findAuthorityById(String authorityId);
 }

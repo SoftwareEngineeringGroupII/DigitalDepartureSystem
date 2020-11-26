@@ -1,7 +1,15 @@
 package com.digitaldeparturesystem.pojo;
 
 
-public class Clerk {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+public class Clerk implements UserDetails, Serializable {
 
   private String clerkID;
   private String clerkName;
@@ -11,6 +19,8 @@ public class Clerk {
   private String clerkPhoto;
   private String clerkStatus;
   private String clerkEmail;
+
+  private List<? extends GrantedAuthority> authorities;
 
 
   public String getClerkEmail() {
@@ -79,7 +89,43 @@ public class Clerk {
     this.department = department;
   }
 
+  public void setAuthorities(List<? extends GrantedAuthority> authorities) {
+    this.authorities = authorities;
+  }
 
 
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.authorities;
+  }
 
+  @Override
+  public String getPassword() {
+    return this.getClerkPwd();
+  }
+
+  @Override
+  public String getUsername() {
+    return this.getClerkAccount();
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }

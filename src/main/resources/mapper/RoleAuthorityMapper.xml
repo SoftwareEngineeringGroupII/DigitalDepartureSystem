@@ -3,9 +3,9 @@
 <!--namespace=绑定一个对应的mapper接口-->
 <mapper namespace="com.digitaldeparturesystem.mapper.RoleAuthorityMapper">
 
-    <insert id="addAuthorityToRole" parameterType="java.lang.String">
+    <insert id="addAuthorityToRole" parameterType="map">
         insert into role_authority (`id`,`role_id`,`authority_id`)
-        values (#{id},#{roleId},#{authoritiesId});
+        values (#{id},#{roleId},#{authorityId});
     </insert>
 
     <select id="getAuthorityByRole" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Authorities">

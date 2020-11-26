@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -23,10 +26,14 @@ public class RoleServiceImpl implements IRoleService {
     @Autowired
     private IdWorker idWorker;
 
+    @Resource
+    private RoleMapper roleMapper;
+
+    @Resource
+    private RoleAuthorityMapper roleAuthorityMapper;
+
     @Override
-    public ResponseResult addRole(Role role) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+    public ResponseResult insertRole(Role role) {
         //检查数据
         if (TextUtils.isEmpty(role.getCode())){
             return ResponseResult.FAILED("角色代码不能为空");
@@ -41,15 +48,11 @@ public class RoleServiceImpl implements IRoleService {
         role.setId(String.valueOf(idWorker.nextId()));
         //添加
         roleMapper.addRole(role);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("添加角色成功");
     }
 
     @Override
     public ResponseResult updateRole(String roleId, Role role) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
         //数据库种获取数据
         Role roleFromDB = roleMapper.getRoleById(roleId);
         //更新数据
@@ -62,64 +65,48 @@ public class RoleServiceImpl implements IRoleService {
         roleFromDB.setIndex(role.getIndex());
         //更新
         roleMapper.updateRole(roleFromDB);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("更新角色成功");
     }
 
     @Override
     public ResponseResult deleteRole(String roleId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
         if (checkRoleIsExist(roleId, roleMapper)) {
             return ResponseResult.FAILED("角色不存在");
         }
         roleMapper.deleteRole(roleId);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("删除角色成功");
     }
 
     @Override
-    public ResponseResult getAllRoles() {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+    public ResponseResult findAllRoles() {
         List<Role> roles = roleMapper.getRoles();
-        sqlSession.close();
         return ResponseResult.SUCCESS("获取全部角色成功").setData(roles);
     }
 
     @Override
-    public ResponseResult getRoleById(String roleId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+    public ResponseResult findRoleById(String roleId) {
         Role role = roleMapper.getRoleById(roleId);
-        sqlSession.close();
         return ResponseResult.SUCCESS("获取角色成功").setData(role);
     }
 
     @Override
-    public ResponseResult addAuthorityToRole(String roleId, List<Authorities> authoritiesList) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleAuthorityMapper roleAuthorityMapper = sqlSession.getMapper(RoleAuthorityMapper.class);
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+    public ResponseResult insertAuthorityToRole(String roleId, List<String> authorityIds) {
         //检查数据
         if (checkRoleIsExist(roleId, roleMapper))
             return ResponseResult.FAILED("角色不存在");
         //添加数据
-        for (Authorities authorities : authoritiesList) {
-            roleAuthorityMapper.addAuthorityToRole(String.valueOf(idWorker.nextId()),roleId,authorities.getId());
+        Map<String,String> map = new HashMap<>();
+        for (String  authorityId: authorityIds) {
+            map.put("id",String.valueOf(idWorker.nextId()));
+            map.put("roleId",roleId);
+            map.put("authorityId",authorityId);
+            roleAuthorityMapper.addAuthorityToRole(map);
         }
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("向角色添加权限成功");
     }
 
     @Override
-    public ResponseResult getAuthorityByRole(String roleId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RoleAuthorityMapper roleAuthorityMapper = sqlSession.getMapper(RoleAuthorityMapper.class);
-        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+    public ResponseResult findAuthorityByRole(String roleId) {
         //检查数据
         if (checkRoleIsExist(roleId, roleMapper))
             return ResponseResult.FAILED("角色不存在");
