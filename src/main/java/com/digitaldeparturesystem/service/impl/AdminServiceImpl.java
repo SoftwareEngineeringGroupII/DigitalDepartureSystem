@@ -201,7 +201,9 @@ public class AdminServiceImpl implements IAdminService {
     public ResponseResult findClerkById(String clerkId) {
         //查询
         Clerk clerk = sectorMapper.findOneById(clerkId);
-        return ResponseResult.SUCCESS("查询用户成功").setData(clerk);
+        List<Clerk> clerkList = new ArrayList<>();
+        clerkList.add(clerk);
+        return ResponseResult.SUCCESS("查询用户成功").setData(clerkList);
     }
 
     @Override

@@ -95,5 +95,9 @@ public class UserApi {
         return adminService.findRolesByUser(clerkId);
     }
 
+    @GetMapping("/authorities/{clerkId}")
+    public ResponseResult getAuthoritiesByUser(@PathVariable("clerkId")String clerkId){
+        return sectorService.getAuthoritiesByUser(clerkId);
+    }
 
 }

@@ -16,7 +16,6 @@ import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -63,6 +62,7 @@ public class SectorServiceImpl implements ISectorService {
 
     @Autowired
     private RedisUtils redisUtils;
+
     private Clerk clerkFromToken;
 
     @Override
@@ -344,8 +344,27 @@ public class SectorServiceImpl implements ISectorService {
         return tokenKey;
     }
 
+    @Override
+    public ResponseResult getAuthoritiesByUser(String clerkId) {
+        List<Role> roles = userRoleMapper.getRolesByUser(clerkId);
+        List<Authorities> authoritiesSet = new ArrayList<>();
+        for (Role role : roles) {
+            //找到一级菜单
+            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+            for (Authorities authority : authorities) {
+                //找到二级菜单
+                authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
+            }
+            authoritiesSet.addAll(authorities);
+        }
+        return ResponseResult.SUCCESS("查询用户权限成功").setData(authoritiesSet);
+    }
+
     @Resource
     private RefreshTokenMapper tokenMapper;
+
+    @Resource
+    private AuthoritiesMapper authoritiesMapper;
 
     /**
      * 本质：检查用户是否有登录，如果登陆了，久返回用户信息
@@ -471,7 +490,7 @@ public class SectorServiceImpl implements ISectorService {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         //查权限
         for (Role role : roles) {
-            List<Authorities> authorities = roleAuthorityMapper.getAuthorityByRole(role.getId());
+            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
             for (Authorities authority : authorities) {
                 //添加权限
                 authorityList.add(new SimpleGrantedAuthority(authority.getUrl()));

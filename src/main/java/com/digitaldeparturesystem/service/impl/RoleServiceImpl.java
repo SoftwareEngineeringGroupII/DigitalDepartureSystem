@@ -7,9 +7,7 @@ import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IRoleService;
 import com.digitaldeparturesystem.utils.IdWorker;
-import com.digitaldeparturesystem.utils.MybatisUtils;
 import com.digitaldeparturesystem.utils.TextUtils;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,7 +108,7 @@ public class RoleServiceImpl implements IRoleService {
         //检查数据
         if (checkRoleIsExist(roleId, roleMapper))
             return ResponseResult.FAILED("角色不存在");
-        List<Authorities> authorities = roleAuthorityMapper.getAuthorityByRole(roleId);
+        List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(roleId);
         return ResponseResult.SUCCESS("获取角色的权限成功").setData(authorities);
     }
 

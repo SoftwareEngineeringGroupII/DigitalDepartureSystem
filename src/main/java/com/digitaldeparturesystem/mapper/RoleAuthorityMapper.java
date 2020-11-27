@@ -18,5 +18,5 @@ public interface RoleAuthorityMapper {
      * @param roleId
      * @return
      */
-    List<Authorities> getAuthorityByRole(String roleId);
+    List<Authorities> getAuthorityNoParentByRole(String roleId);
 }

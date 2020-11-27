@@ -15,7 +15,6 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 import javax.annotation.Resource;
 
 /**
- * @Author: Mr_OO
  * @Date: 2020/10/11 19:11
  */
 @Aspect

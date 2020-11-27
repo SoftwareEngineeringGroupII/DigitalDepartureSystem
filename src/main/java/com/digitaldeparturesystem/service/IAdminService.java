@@ -65,9 +65,10 @@ public interface IAdminService {
     ResponseResult insertRoleToUser(String clerkId, List<String> roleIds);
 
     /**
-     * 获取用户所拥有的权限
+     * 获取用户所拥有的角色
      * @param clerkId
      * @return
      */
     ResponseResult findRolesByUser(String clerkId);
+
 }
