@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8888
 spring:
   application:
     name: digitaldeparturesystem
@@ -17,7 +17,4 @@ mybatis:
   mapper-locations: classpath:/mapper/*.xml
   # 配置了这个，在mapper.xml中，使用pojo类时就不用写完整路径了
   type-aliases-package: com.digitaldeparturesystem.pojo
-
-photo.dir: C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\src\main\resources\static\photos
-
 

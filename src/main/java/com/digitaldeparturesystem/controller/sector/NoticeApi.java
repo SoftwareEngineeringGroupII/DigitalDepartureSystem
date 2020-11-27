@@ -25,14 +25,12 @@ public class NoticeApi {
      * 识别上传公告人权限,ID,发布类型,
      * @param notice
      * @param photo
-     * @param request
      * @return
      */
     @PostMapping("/notice")
-    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,
-                                       HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
 
-        return sectorService.uploadNotice(notice,photo,request,response);
+        return sectorService.uploadNotice(notice,photo);
     }
 
     /**

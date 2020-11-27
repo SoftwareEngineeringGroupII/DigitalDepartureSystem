@@ -9,6 +9,11 @@
         ,#{checkStatus},#{remark},#{noticeType},#{isTop});
     </insert>
 
+    <!--删除公告-->
+    <delete id="deleteNotice" parameterType="String">
+
+    </delete>
+
 
 
 </mapper>

@@ -1,11 +1,7 @@
 package com.digitaldeparturesystem.service.impl;
 
-import com.digitaldeparturesystem.mapper.AdminMapper;
-import com.digitaldeparturesystem.mapper.NoticeMapper;
-import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
-import com.digitaldeparturesystem.mapper.SectorMapper;
+import com.digitaldeparturesystem.mapper.*;
 import com.digitaldeparturesystem.pojo.*;
-import com.digitaldeparturesystem.mapper.AuthoritiesMapper;
 import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
 import com.digitaldeparturesystem.mapper.SectorMapper;
 import com.digitaldeparturesystem.pojo.Authorities;
@@ -15,14 +11,18 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseState;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import io.jsonwebtoken.Claims;
+import jdk.nashorn.internal.ir.CallNode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -530,16 +531,12 @@ public class SectorServiceImpl implements ISectorService {
      * 上传公告
      * @param notice
      * @param photo
-     * @param request
-     * @param response
      * @return
      */
     @Override
-    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,
-                                       HttpServletRequest request,
-                                       HttpServletResponse response) throws IOException {
+    public ResponseResult uploadNotice(Notice notice, MultipartFile photo) throws IOException {
         //检验当前操作的用户是谁
-        Clerk currentUser = checkClerk();
+      /*  Clerk currentUser = checkClerk();
         if (currentUser == null) {
             return ResponseResult.ACCOUNT_NOT_LOGIN();
         }
@@ -548,7 +545,7 @@ public class SectorServiceImpl implements ISectorService {
         if (!Constants.Clerk.POWER_ADMIN.equals(currentUser.getDepartment())) {
             return ResponseResult.ERROR_403(); //权限不足:这里针对管理员发布公告权限,不清楚是否有其他具体权限要求
         }
-
+*/
         //检查数据:标题、内容不可以为空
         if (TextUtils.isEmpty(notice.getTitle())) {
             ResponseResult.FAILED("标题不可以为空！");
@@ -558,34 +555,34 @@ public class SectorServiceImpl implements ISectorService {
             ResponseResult.FAILED("公告内容不可以为空！");
         }
 
-          /*   log.info("公告信息：[{}]",notice.toString());
+        log.info("公告信息：[{}]",notice.toString());
         log.info("公告图片：[{}]",photo.getOriginalFilename());
-        String newFileName = idWorker.nextId() + "." + FilenameUtils.getExtension(photo.getOriginalFilename());
-        photo.transferTo(new File(realPath, newFileName));//保存到指定的路径文件路径中
-        photo.setPath(newFileName);
-        newNotice1.setPath(); ---这里数据库差图片路径字段
-        */
-
-        //设置数据
-        Notice newNotice1 = new Notice();
-        newNotice1.setNoticeId(idWorker.nextId()+"");//公告ID
-        newNotice1.setTitle(notice.getTitle());//标题
-        newNotice1.setContent(notice.getContent());//内容
-        newNotice1.setRemark(notice.getRemark());//设置备注
-        newNotice1.setPublisherId(currentUser.getClerkID());//发布者ID
-        newNotice1.setNoticeType(currentUser.getDepartment()); //发布者部门
-        newNotice1.setCheckStatus("0");//默认未审核
-        newNotice1.setIsTop(notice.getIsTop()); //默认非置顶
-        newNotice1.setPublishTime(new Date());//发布时间
-        //保存数据
-        SqlSession  sqlSession = MybatisUtils.getSqlSession();
-        NoticeMapper sessionMapper = sqlSession.getMapper(NoticeMapper.class);
-        sessionMapper.save(newNotice1);
-        sqlSession.commit();
-        sqlSession.close();
+        try{
+            String newFileName = idWorker.nextId() + "." + FilenameUtils.getExtension(photo.getOriginalFilename());
+            photo.transferTo(new File(realPath, newFileName));//保存到指定的路径文件路径中
+            // newNotice1.setPath(newFileName); ---这里数据库差图片路径字段
+            //设置数据
+            Notice newNotice = new Notice();
+            newNotice.setNoticeId(idWorker.nextId()+"");//公告ID
+            newNotice.setTitle(notice.getTitle());//标题
+            newNotice.setContent(notice.getContent());//内容
+            newNotice.setRemark(notice.getRemark());//设置备注
+            // newNotice1.setPublisherId(currentUser.getClerkID());//发布者ID
+            //newNotice1.setNoticeType(currentUser.getDepartment()); //发布者部门
+            newNotice.setCheckStatus("0");//默认未审核
+            newNotice.setIsTop(notice.getIsTop()); //默认非置顶:这里前端有个选择置不置顶,但是好像是超级管理员的事情
+            newNotice.setPublishTime(new Date());//发布时间
+            //保存数据
+            SqlSession  sqlSession = MybatisUtils.getSqlSession();
+            NoticeMapper sessionMapper = sqlSession.getMapper(NoticeMapper.class);
+            sessionMapper.save(newNotice);
+            sqlSession.commit();
+            sqlSession.close();
+        }catch (Exception e){
+            return ResponseResult.FAILED("上传公告失败!");
+        }
         //返回结果
         return ResponseResult.SUCCESS("公告添加成功");
-
     }
 
     //---获取学生信息---//
@@ -675,4 +672,120 @@ public class SectorServiceImpl implements ISectorService {
         sqlSession.close();
         return byClerkAccount;
     }
+
+
+
+    //-----一卡通管理-----//
+
+    //-----11.25 按条件分页查询-----//
+
+    /**
+     *  分页查询所有学生
+     * @param map
+     * @return
+     */
+    @Override
+    public ResponseResult findAllByPage(Map<String,Object> map) {
+        Integer page = (Integer)map.get("page");
+        Integer size = (Integer)map.get("size");
+
+        PageHelper.startPage(page,size);
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+        List<Student> userList = studentMapper.getStudentList();
+        PageInfo<Student> studentPageInfo = new PageInfo<>(userList);
+
+        int pageNum = studentPageInfo.getPageNum();
+        int pages = studentPageInfo.getPages();
+        Map<String,Object> map1 = new HashMap<>();
+        map1.put("list",userList);
+        map1.put("pageNum",pageNum);
+        map1.put("pages",pages);
+        return ResponseResult.SUCCESS("查询成功").setData(map1);
+    }
+
+
+    /**
+     * 分页查询 -- 带条件查询：学院类型、学生类型、审核状态
+     * 可在其他部门同样使用
+     * @param map
+     * @return
+     */
+    @Override
+    public ResponseResult findAllByPageAndType(Map<String,Object> map) {
+        Integer page = (Integer)map.get("page");
+        Integer size = (Integer)map.get("size");
+        String deptType = (String) map.get("stuDept");
+        String stuType = (String) map.get("stuType");
+        String cardStatus = (String) map.get("cardStatus");
+
+        Map<String,String> params = new HashMap<>();
+        params.put("stuDept",deptType);
+        params.put("stuType",stuType);
+        params.put("cardStatus",cardStatus);
+        log.info("params --- >"+params);
+
+        //pageHelper使用
+        PageHelper.startPage(page,size);
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+        List<Map<String,Object>> students = studentMapper.listStudentCardInfos(params);
+        PageInfo<Map<String,Object>> studentPageInfo = new PageInfo<>(students);
+        int pageNum = studentPageInfo.getPageNum();
+        int pages = studentPageInfo.getPages();
+        if (students.isEmpty()){
+            return ResponseResult.FAILED("没有数据");
+        }
+        Map<String,Object> map1 = new HashMap<>();
+        map1.put("list",students);
+        map1.put("pageNum",pageNum);
+        map1.put("pages",pages);
+        return ResponseResult.SUCCESS("查询成功").setData(map1);
+
+    }
+
+    //---11.26--//
+
+    /**
+     *  按学号查询一卡通详情
+     * @param studentId
+     * @return
+     */
+    @Override
+    public ResponseResult getStudentByIdForCard(String studentId) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+        Map<String, Object> studentByIdForCard = studentMapper.getStudentByIdForCard(studentId);
+        if (studentByIdForCard == null) {
+            return  ResponseResult.FAILED("查找失败！没有该学生的一卡通详情！");
+        }
+        sqlSession.close();
+        return ResponseResult.SUCCESS("查找成功").setData(studentByIdForCard);
+    }
+
+
+    /**
+     *  审核一卡通
+     * @param stuNumber
+     * @return
+     */
+    public  ResponseResult doCheckForCard(String stuNumber){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
+        int i = studentMapper.doCheckCard(stuNumber);
+        if (i > 0){
+            return ResponseResult.SUCCESS("审核成功！");
+        }
+        sqlSession.commit();
+        sqlSession.close();
+        return ResponseResult.FAILED("审核失败！请重新操作");
+    }
+
+
+
+
+    //------//
+
+
+
 }

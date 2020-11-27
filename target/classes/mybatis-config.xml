@@ -20,9 +20,9 @@
             <dataSource type="POOLED">
                 <!--配置数据库的四个信息-->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://121.196.104.229:3306/digital_departure_system?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/digital_departure_system?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"/>
                 <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <property name="password" value="888888"/>
             </dataSource>
         </environment>
     </environments>
