@@ -1,14 +1,17 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.AuthoritiesMapper;
+import com.digitaldeparturesystem.mapper.RoleAuthorityMapper;
 import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IAuthorityService;
+import com.digitaldeparturesystem.utils.AuthorityTreeUtils;
 import com.digitaldeparturesystem.utils.IdWorker;
 import com.digitaldeparturesystem.utils.MybatisUtils;
 import com.digitaldeparturesystem.utils.TextUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,13 +84,16 @@ public class AuthorityServiceImpl implements IAuthorityService {
         return ResponseResult.SUCCESS("删除权限成功");
     }
 
+    @Resource
+    private RoleAuthorityMapper roleAuthorityMapper;
+
     @Override
     public ResponseResult findAllAuthorities() {
         //得到一级菜单
         List<Authorities> allAuthorities = authoritiesMapper.findByParentIsNullOrderByIndex();
         for (Authorities authority : allAuthorities) {
-            //得到二级菜单
-            authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
+            //得到子菜单
+            AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
         }
         return ResponseResult.SUCCESS("获取全部权限列表成功").setData(allAuthorities);
     }

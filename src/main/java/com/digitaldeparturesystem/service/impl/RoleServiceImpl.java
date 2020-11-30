@@ -6,6 +6,7 @@ import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IRoleService;
+import com.digitaldeparturesystem.utils.AuthorityTreeUtils;
 import com.digitaldeparturesystem.utils.IdWorker;
 import com.digitaldeparturesystem.utils.TextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,8 +111,12 @@ public class RoleServiceImpl implements IRoleService {
         if (checkRoleIsExist(roleId, roleMapper))
             return ResponseResult.FAILED("角色不存在");
         List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(roleId);
+        for (Authorities authority : authorities) {
+            AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
+        }
         return ResponseResult.SUCCESS("获取角色的权限成功").setData(authorities);
     }
+
 
     private boolean checkRoleIsExist(String roleId, RoleMapper roleMapper) {
         //先从数据库中获取数据

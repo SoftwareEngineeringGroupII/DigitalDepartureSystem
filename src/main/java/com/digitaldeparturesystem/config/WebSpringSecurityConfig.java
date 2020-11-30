@@ -52,9 +52,6 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
     ISectorService userDetailsService; // 自定义user
 
     @Autowired
-    JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter; // JWT 拦截器
-
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -65,12 +62,6 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-//        //所有都放行
-//        http.authorizeRequests()
-//                .antMatchers("/**").permitAll()//允许所有
-//                .anyRequest().authenticated()
-//                .and().csrf().disable();
 
         // 去掉 CSRF
         http.csrf().disable()
@@ -84,6 +75,7 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .anyRequest()
                 .access("@permission.hasPermission(request,authentication)") // RBAC 动态 url 认证
+
 
                 .and()
                 .formLogin()  //开启登录
@@ -101,7 +93,6 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService).tokenValiditySeconds(300);
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler); // 无权访问 JSON 格式的数据
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class); // JWT Filter
 
     }
 

@@ -14,4 +14,8 @@
         where role_id = #{roleId}) and parent_id is null order by `index` asc;
     </select>
 
+    <select id="findChildrenByParentId" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Authorities">
+        select * from authorities where parent_id = #{parentId};
+    </select>
+
 </mapper>

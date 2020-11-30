@@ -316,8 +316,6 @@ public class SectorServiceImpl implements ISectorService {
         int deleteResult = tokenMapper.deleteAllByUserId(clerkFromDb.getClerkID());
         log.info("deleteResult of refresh token ===> " + deleteResult);
         //生成token
-        //给用户赋权限
-        findAuthorityToUser(clerkFromDb);
         Map<String, Object> claims = ClaimsUtils.clerk2Claims(clerkFromDb);
         //token默认有效2个小时
         String token = JwtUtil.createToken(claims);
@@ -340,31 +338,19 @@ public class SectorServiceImpl implements ISectorService {
         refreshToken.setCreateTime(new Date());
         refreshToken.setUpdateTime(new Date());
         //保存进数据库
-        tokenMapper.save(refreshToken);
+        tokenMapper.insertRefreshToken(refreshToken);
         return tokenKey;
     }
 
     @Override
     public ResponseResult getAuthoritiesByUser(String clerkId) {
-        List<Role> roles = userRoleMapper.getRolesByUser(clerkId);
-        List<Authorities> authoritiesSet = new ArrayList<>();
-        for (Role role : roles) {
-            //找到一级菜单
-            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
-            for (Authorities authority : authorities) {
-                //找到二级菜单
-                authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
-            }
-            authoritiesSet.addAll(authorities);
-        }
-        return ResponseResult.SUCCESS("查询用户权限成功").setData(authoritiesSet);
+        Clerk clerk = sectorMapper.findOneById(clerkId);
+        List<Authorities> authorityList = (List<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID());
+        return ResponseResult.SUCCESS("查询用户权限成功").setData(authorityList);
     }
 
     @Resource
     private RefreshTokenMapper tokenMapper;
-
-    @Resource
-    private AuthoritiesMapper authoritiesMapper;
 
     /**
      * 本质：检查用户是否有登录，如果登陆了，久返回用户信息
@@ -378,9 +364,9 @@ public class SectorServiceImpl implements ISectorService {
         }
         //拿到token_key(因为之前已经CookieUtils中setUpCookie时，把tokenKey通过(Constants.User.COOKIE_TOKEN_KEY,tokenKey)保存在cookie中了)
         String tokenKey = CookieUtils.getCookie(getRequest(), Constants.Clerk.COOKIE_TOKEN_KEY);
-        log.info("checkUserBean tokenKey ==> " + tokenKey);
+        log.info("checkClerk tokenKey ==> " + tokenKey);
         //解析
-        clerkFromToken = parseByTokenKey(tokenKey);
+        clerkFromToken = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
         if (clerkFromToken == null) {
             //说明解析出错了(过期了)
             //1、去mysql查询refreshToken
@@ -397,15 +383,13 @@ public class SectorServiceImpl implements ISectorService {
                 //拿到用户id，去数据库查询，再在redis里面生成新的token
                 String clerkId = refreshToken.getUserId();
                 Clerk clerkFromDb = sectorMapper.findOneById(clerkId);
-                //给clerk赋权限
-                findAuthorityToUser(clerkFromDb);
                 //如果这样写，因为事务还没有提交，所以该用户的密码直接没了
                 //userFromDb.setPassword("");
                 //在redis里面创建新的token,因为到这里的时候，redis里面久的token已经过期自动删除了，所以这里不必再手动删除了
                 String newTokenKey = createToken(getResponse(), clerkFromDb);
                 //返回token
                 log.info("create new token and refresh token =====");
-                return parseByTokenKey(newTokenKey);
+                return TokenUtils.parseByTokenKey(redisUtils,newTokenKey);
             } catch (Exception exception) {
                 log.info("refresh token 已经过期 =====");
                 //4、如果refreshToken过期了，就当前访问没有登录，提示用户登录
@@ -447,30 +431,6 @@ public class SectorServiceImpl implements ISectorService {
         return requestAttributes.getResponse();
     }
 
-    private Clerk parseByTokenKey(String tokenKey) {
-        //记得加前缀，通过前面保存的(tokenKey,token)拿到token
-        String token = (String) redisUtils.get(Constants.Clerk.KEY_TOKEN + tokenKey);
-        log.info("parseByTokenKey token ==> " + token);
-        if (token != null) {
-            try {
-                //说明有token，解析token
-                Claims claims = JwtUtil.parseJWT(token);
-                return ClaimsUtils.claims2Clerk(claims);
-            } catch (Exception e) {
-                //过期了
-                log.info("parseByTokenKey ==> " + tokenKey + " ========== 过期了");
-                return null;
-            }
-        }
-        return null;
-    }
-
-    @Resource
-    private RoleAuthorityMapper roleAuthorityMapper;
-
-    @Resource
-    private UserRoleMapper userRoleMapper;
-
     /**
      * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
      */
@@ -483,23 +443,6 @@ public class SectorServiceImpl implements ISectorService {
         }
         return byClerkAccount;
     }
-
-    private void findAuthorityToUser(Clerk byClerkAccount) {
-        List<Role> roles = userRoleMapper.getRolesByUser(byClerkAccount.getClerkID());
-        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
-        List<GrantedAuthority> authorityList = new ArrayList<>();
-        //查权限
-        for (Role role : roles) {
-            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
-            for (Authorities authority : authorities) {
-                //添加权限
-                authorityList.add(new SimpleGrantedAuthority(authority.getUrl()));
-            }
-        }
-        //赋值
-        byClerkAccount.setAuthorities(authorityList);
-    }
-
 
     @Override
     public Clerk findClerkByAccount(String clerkAccount) {

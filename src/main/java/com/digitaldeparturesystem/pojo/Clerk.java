@@ -2,9 +2,11 @@ package com.digitaldeparturesystem.pojo;
 
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +22,7 @@ public class Clerk implements UserDetails, Serializable {
   private String clerkStatus;
   private String clerkEmail;
 
-  private List<? extends GrantedAuthority> authorities;
+  private List<Role> userRoles;
 
 
   public String getClerkEmail() {
@@ -89,14 +91,25 @@ public class Clerk implements UserDetails, Serializable {
     this.department = department;
   }
 
-  public void setAuthorities(List<? extends GrantedAuthority> authorities) {
-    this.authorities = authorities;
+
+  public List<Role> getUserRoles() {
+    return userRoles;
   }
 
+  public void setUserRoles(List<Role> userRoles) {
+    this.userRoles = userRoles;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.authorities;
+    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+    if (userRoles == null){
+      return authorities;
+    }
+    for (Role role : userRoles) {
+      authorities.add(new SimpleGrantedAuthority(role.getName()));
+    }
+    return authorities;
   }
 
   @Override
