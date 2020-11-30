@@ -50,10 +50,20 @@ public class SectorApi {
         return sectorService.doLogin(captcha, captchaKey, clerk);
     }
 
-//    @GetMapping("/login")
-//    public ResponseResult login() {
-//        return ResponseResult.ACCOUNT_NOT_LOGIN();
-//    }
+    @GetMapping("/login")
+    public ResponseResult login() {
+        return ResponseResult.ACCOUNT_NOT_LOGIN();
+    }
+
+    @GetMapping("/login/error")
+    public ResponseResult loginError(){
+        return ResponseResult.LOGIN_FAILED();
+    }
+
+    @GetMapping("/index")
+    public ResponseResult index(){
+        return ResponseResult.SUCCESS("登录成功");
+    }
 
     /**
      * 获取图灵验证码
@@ -120,25 +130,10 @@ public class SectorApi {
     }
 
 
-    //----2020.11.24 周二 增加部分-----//
-
-    /**
-     * 上传公告
-     * 识别上传公告人权限,ID,发布类型,
-     * @param notice
-     * @param photo
-     * @return
-     */
-    @PostMapping("/notice")
-    public  ResponseResult uploadNotice(@RequestBody Notice notice,MultipartFile photo) throws IOException {
-
-        return sectorService.uploadNotice(notice,photo);
-    }
 
 
 
 
-    //---公共功能抽取----//
 
 
     /**

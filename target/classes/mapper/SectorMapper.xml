@@ -4,15 +4,15 @@
 <mapper namespace="com.digitaldeparturesystem.mapper.SectorMapper">
 
     <select id="findOneByEmail" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Clerk">
-        select * from clerk where clerkEmail = #{clerkEmail} and clerkStatus = 1;
+        select * from clerk where clerkEmail = #{clerkEmail};
     </select>
 
     <select id="findOneByClerkAccount" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Clerk">
-        select * from clerk where clerkAccount = #{clerkAccount} and clerkStatus = 1;
+        select * from clerk where clerkAccount = #{clerkAccount};
     </select>
 
     <select id="findOneById" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Clerk">
-        select * from clerk where clerkID = #{clerkId} and clerkStatus = 1;
+        select * from clerk where clerkID = #{clerkId};
     </select>
 
     <update id="updateClerk" parameterType="com.digitaldeparturesystem.pojo.Clerk">

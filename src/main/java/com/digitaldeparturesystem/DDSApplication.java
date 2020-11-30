@@ -56,14 +56,5 @@ public class DDSApplication {
     }
 
 
-    @Value("${file.uploadFolder}")
-    private String uploadFolder;
-    @Bean
-    MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation(uploadFolder);
-        return factory.createMultipartConfig();
-    }
-
 
 }

@@ -1,14 +1,22 @@
 package com.digitaldeparturesystem.controller.sector;
 
+import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.response.ResponseResult;
+import com.digitaldeparturesystem.service.IFinanceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @Slf4j
 @RestController
 @RequestMapping("/sector/finance")
 public class FinanceApi {
+
+    @Autowired
+    private IFinanceService financeService;
 
     /**
      * 根据学生id查询财务信息
@@ -17,7 +25,7 @@ public class FinanceApi {
      */
     @GetMapping("/{studentId}")
     public ResponseResult getFinanceByStudentId(@PathVariable("studentId")String studentId){
-        return null;
+        return financeService.getStudentByIdForFinance(studentId);
     }
 
     /**

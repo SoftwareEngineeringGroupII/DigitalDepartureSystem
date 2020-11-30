@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
@@ -21,8 +22,11 @@ public class AuthorityServiceImpl implements IAuthorityService {
     @Autowired
     private IdWorker idWorker;
 
+    @Resource
+    private AuthoritiesMapper authoritiesMapper;
+
     @Override
-    public ResponseResult addAuthority(Authorities authorities) {
+    public ResponseResult insertAuthority(Authorities authorities) {
         //检查数据
         if (TextUtils.isEmpty(authorities.getName())){
             return ResponseResult.FAILED("权限名不能为空");
@@ -39,20 +43,14 @@ public class AuthorityServiceImpl implements IAuthorityService {
         //补充数据
         authorities.setId(String.valueOf(idWorker.nextId()));
         authorities.setAvailable(1);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
         //插入
         authoritiesMapper.insertAuthority(authorities);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("权限增加成功");
     }
 
     @Override
     public ResponseResult updateAuthority(String authorityId, Authorities authorities) {
         //从数据库获取数据
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
         Authorities authorityFromDB = authoritiesMapper.getAuthorityById(authorityId);
         //检查数据
         if (!TextUtils.isEmpty(authorities.getName())){
@@ -63,42 +61,43 @@ public class AuthorityServiceImpl implements IAuthorityService {
         }
         //更新
         authoritiesMapper.updateAuthority(authorityFromDB);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("更新权限成功");
     }
 
     @Override
     public ResponseResult deleteAuthority(String authorityId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
         //查找数据是否存在
         Authorities authorityById = authoritiesMapper.getAuthorityById(authorityId);
         if (authorityById == null){
             return ResponseResult.FAILED("该权限不存在");
         }
-        //删除
+        //把一级权限下的二级权限删完
+        List<Authorities> children = authoritiesMapper.findChildrenByParentId(authorityId);
+        for (Authorities child : children) {
+            authoritiesMapper.deleteAuthorities(child.getId());
+        }
+        //删除一级权限
         authoritiesMapper.deleteAuthorities(authorityId);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("删除权限成功");
     }
 
     @Override
-    public ResponseResult getAllAuthorities() {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
-        List<Authorities> allAuthorities = authoritiesMapper.getAllAuthorities();
-        sqlSession.close();
+    public ResponseResult findAllAuthorities() {
+        //得到一级菜单
+        List<Authorities> allAuthorities = authoritiesMapper.findByParentIsNullOrderByIndex();
+        for (Authorities authority : allAuthorities) {
+            //得到二级菜单
+            authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
+        }
         return ResponseResult.SUCCESS("获取全部权限列表成功").setData(allAuthorities);
     }
 
     @Override
-    public ResponseResult getAuthorityById(String authorityId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
+    public ResponseResult findAuthorityById(String authorityId) {
+        //拿到数据
         Authorities authority = authoritiesMapper.getAuthorityById(authorityId);
-        sqlSession.close();
+        //查询子数据
+        authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
         return ResponseResult.SUCCESS("查找权限成功").setData(authority);
     }
 }

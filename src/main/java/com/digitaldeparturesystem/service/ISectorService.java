@@ -23,32 +23,21 @@ public interface ISectorService extends UserDetailsService {
 
     Clerk checkClerk();
 
-    ResponseResult getClerkInfo(String clerkId);
+    ResponseResult findClerkInfo(String clerkId);
 
     //---一卡通管理员---//
-
-    //上传公告
-    ResponseResult uploadNotice(Notice notice, MultipartFile photo) throws IOException;
-
-    //获取全部学生信息
-    public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);
 
     ResponseResult getStuInfo(String stuId);
 
     Clerk findClerkByAccount(String clerkAccount);
 
-    //查询所有学生
-    ResponseResult findAllByPage(Map<String,Object> map);
+    String createToken(HttpServletResponse httpServletResponse, Clerk clerk);
 
-    //根据学院类型、学生类型、审核状态分页查询
-    ResponseResult findAllByPageAndType(Map<String,Object> map);
-
-    //根据学号查询学生一卡通详情
-    ResponseResult getStudentByIdForCard(String studentId);
-
-    //审核学生一卡通,修改其审核、余额状态
-    ResponseResult doCheckForCard(String stuNumber);
-
-
+    /**
+     * 获取用户所拥有的权限
+     * @param clerkId
+     * @return
+     */
+    ResponseResult getAuthoritiesByUser(String clerkId);
 
 }

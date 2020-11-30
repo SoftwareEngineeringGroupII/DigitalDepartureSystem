@@ -14,6 +14,7 @@ public class Notice {
   private String remark; //备注
   private String noticeType; //公告类型
   private String isTop; //公告是否置顶
+  private String path;//图片路径
 
 
   public String getNoticeId() {
@@ -93,6 +94,14 @@ public class Notice {
 
   public void setIsTop(String isTop) {
     this.isTop = isTop;
+  }
+
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
   }
 
 }

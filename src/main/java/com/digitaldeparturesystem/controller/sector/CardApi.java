@@ -5,8 +5,10 @@ import com.digitaldeparturesystem.mapper.SectorMapper;
 import com.digitaldeparturesystem.mapper.StudentMapper;
 import com.digitaldeparturesystem.pojo.Card;
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
+import com.digitaldeparturesystem.service.ICardService;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.Constants;
 import com.digitaldeparturesystem.utils.MybatisUtils;
@@ -15,7 +17,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +33,17 @@ public class CardApi {
     @Autowired
     private ISectorService sectorService;
 
+    @Autowired
+    private ICardService cardService;
+
     /**
-     * 通过学生id查询一卡通信息
-     * @param studentId
+     * 通过学生学号查询一卡通信息
+     * @param studentId 学生学号
      * @return
      */
-    @GetMapping("/studentId/{studentId}")
-    public ResponseResult getCardByStudentId(@PathVariable("studentId")String studentId){
-        return sectorService.getStudentByIdForCard(studentId);
+    @GetMapping("/studentId/{studentNum}")
+    public ResponseResult getCardByStudentId(@PathVariable("studentNum")String studentId){
+        return cardService.getStudentByIdForCard(studentId);
     }
 
     /**
@@ -86,26 +94,22 @@ public class CardApi {
      * @return
      */
 
-    @GetMapping("/selectAllByPage")
-    public ResponseResult selectAllByPage(@RequestBody Map map){
-        return sectorService.findAllByPageAndType(map);
+    @GetMapping("/selectAllByPageAndType")
+    public ResponseResult selectAllByPageAndType(@RequestBody Map<String,Object> map){
+        return cardService.findAllByPageAndType(map);
     }
 
 
+    @Resource
+    private StudentMapper studentMapper;
     /**
-     *  获取全部一卡通列表
+     *  获取全部学生信息：仅限于学生表
      * @return
      */
     @GetMapping("/selectAll")
     public  ResponseResult selectAll(){
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
         List<Student> studentList = studentMapper.getStudentList();
-      //  System.out.println("studentList---->>>"+studentList);//[]
-      /*  if (studentList == null){
-            return ResponseResult.FAILED("查询失败");
-        }*/
-        sqlSession.close();
+
         return ResponseResult.SUCCESS("查询成功").setData(studentList);
     }
 
@@ -118,7 +122,22 @@ public class CardApi {
     @PutMapping("/checkCard/{stuNumber}")
     public ResponseResult  getCheck(@PathVariable("stuNumber") String stuNumber){
 
-        return sectorService.doCheckForCard(stuNumber);
+        return cardService.doCheckForCard(stuNumber);
+    }
+
+
+
+    /**
+     * 上传公告
+     * 识别上传公告人权限,ID,发布类型,
+     * @param notice
+     * @param photo
+     * @return
+     */
+    @PostMapping("/notice")
+    public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
+
+        return cardService.uploadNotice(notice,photo);
     }
 
 

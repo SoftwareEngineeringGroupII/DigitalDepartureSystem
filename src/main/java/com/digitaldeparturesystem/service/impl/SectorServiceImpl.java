@@ -7,8 +7,9 @@ import com.digitaldeparturesystem.mapper.SectorMapper;
 import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Refreshtoken;
+import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
-import com.digitaldeparturesystem.response.ResponseState;
+import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.*;
 import com.github.pagehelper.PageHelper;
@@ -32,9 +33,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +45,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -86,12 +86,16 @@ public class SectorServiceImpl implements ISectorService {
     @Autowired
     private RedisUtils redisUtils;
 
+
     /**
      *  生成图灵验证码
      * @param response
      * @param captchaKey
      * @throws Exception
      */
+    private Clerk clerkFromToken;
+
+
     @Override
     public void createCaptcha(HttpServletResponse response, String captchaKey) throws Exception {
         if (TextUtils.isEmpty(captchaKey) || captchaKey.length() < 13) {
@@ -142,6 +146,12 @@ public class SectorServiceImpl implements ISectorService {
     @Autowired
     private TaskService taskService;
 
+    @Resource
+    private SectorMapper sectorMapper;
+
+    @Resource
+    private AdminMapper adminMapper;
+
     /**
      * 发送邮箱验证码
      * 注册(register)：如果已经注册过了，就提示该邮箱已经注册
@@ -158,8 +168,6 @@ public class SectorServiceImpl implements ISectorService {
         if (emailAddress == null) {
             return ResponseResult.FAILED("邮箱地址不可以为空");
         }
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         //检查是否有初始化
         //根据类型：查询邮箱是否存在
         if ("register".equals(type) || "update".equals(type)) {
@@ -174,7 +182,6 @@ public class SectorServiceImpl implements ISectorService {
             }
         }
         //关闭sqlSession
-        sqlSession.close();
         //1、防止暴力发送(不断的发送):同一个邮箱，间隔要超过30s发一次，同一个Ip，最多只能发10次(如果是短信，最多只能发5次)
         String remoteAddr = request.getRemoteAddr();
         log.info("remoteAddr ==> " + remoteAddr);
@@ -246,9 +253,6 @@ public class SectorServiceImpl implements ISectorService {
             return ResponseResult.FAILED("部门不可以为空");
         }
         //数据库配置
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         Clerk clerkFromDbByUserName = sectorMapper.findOneByClerkAccount(clerkAccount);
         if (clerkFromDbByUserName != null) {
             return ResponseResult.FAILED("该用户已经注册");
@@ -302,12 +306,8 @@ public class SectorServiceImpl implements ISectorService {
         clerk.setClerkStatus("1");
         //第八步：保存到数据库
         adminMapper.addClerk(clerk);
-        //提交事务，关闭sqlSession
-        sqlSession.commit();
-        sqlSession.close();
-
         //第九步：返回结果
-        return ResponseResult.GET(ResponseState.JOIN_SUCCESS);
+        return ResponseResult.GET(ResponseStatus.JOIN_SUCCESS);
     }
 
     /**
@@ -332,11 +332,7 @@ public class SectorServiceImpl implements ISectorService {
             return ResponseResult.FAILED("密码不可以为空");
         }
         //数据库
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         Clerk clerkFromDb = sectorMapper.findOneByClerkAccount(clerkAccount);
-        //关闭
-        sqlSession.close();
         if (clerkFromDb == null) {
             return ResponseResult.FAILED("用户名或密码错误");
         }
@@ -365,13 +361,13 @@ public class SectorServiceImpl implements ISectorService {
      * @param clerkFromDb
      * @return token_key
      */
-    private String createToken(HttpServletResponse response, Clerk clerkFromDb) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RefreshTokenMapper tokenMapper = sqlSession.getMapper(RefreshTokenMapper.class);
+    public String createToken(HttpServletResponse response, Clerk clerkFromDb) {
         //删掉refreshToken的记录
         int deleteResult = tokenMapper.deleteAllByUserId(clerkFromDb.getClerkID());
         log.info("deleteResult of refresh token ===> " + deleteResult);
         //生成token
+        //给用户赋权限
+        findAuthorityToUser(clerkFromDb);
         Map<String, Object> claims = ClaimsUtils.clerk2Claims(clerkFromDb);
         //token默认有效2个小时
         String token = JwtUtil.createToken(claims);
@@ -381,13 +377,6 @@ public class SectorServiceImpl implements ISectorService {
         //保存token到redis里，有效期为2小时,key是tokenKey
         redisUtils.set(Constants.Clerk.KEY_TOKEN + tokenKey, token, Constants.TimeValueInSecond.HOUR_2);
         //把token写到cookies里
-//        //创建cookies
-//        Cookie cookie = new Cookie(Constants.User.COOKIE_TOKEN_KEY, tokenKey);
-//        //这个要动态获取，可以从request里提取
-//        cookie.setDomain("localhost");
-//        cookie.setMaxAge(60 * 60 * 24 * 365);
-//        cookie.setPath("/");
-//        response.addCookie(cookie);
         CookieUtils.setUpCookie(response, Constants.Clerk.COOKIE_TOKEN_KEY, tokenKey);
         //生成refreshToken,一个月的存活期
         String refreshTokenValue = JwtUtil.createRefreshToken(clerkFromDb.getClerkID(), Constants.TimeValueInMillions.MONTH);
@@ -402,12 +391,31 @@ public class SectorServiceImpl implements ISectorService {
         refreshToken.setUpdateTime(new Date());
         //保存进数据库
         tokenMapper.save(refreshToken);
-        //提交
-        sqlSession.commit();
-        //关闭
-        sqlSession.close();
         return tokenKey;
     }
+
+
+    @Override
+    public ResponseResult getAuthoritiesByUser(String clerkId) {
+        List<Role> roles = userRoleMapper.getRolesByUser(clerkId);
+        List<Authorities> authoritiesSet = new ArrayList<>();
+        for (Role role : roles) {
+            //找到一级菜单
+            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+            for (Authorities authority : authorities) {
+                //找到二级菜单
+                authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
+            }
+            authoritiesSet.addAll(authorities);
+        }
+        return ResponseResult.SUCCESS("查询用户权限成功").setData(authoritiesSet);
+    }
+
+    @Resource
+    private RefreshTokenMapper tokenMapper;
+
+    @Resource
+    private AuthoritiesMapper authoritiesMapper;
 
 
     /**
@@ -416,14 +424,15 @@ public class SectorServiceImpl implements ISectorService {
      */
     @Override
     public Clerk checkClerk() {
+        if (clerkFromToken != null){
+            return clerkFromToken;
+        }
         //拿到token_key(因为之前已经CookieUtils中setUpCookie时，把tokenKey通过(Constants.User.COOKIE_TOKEN_KEY,tokenKey)保存在cookie中了)
         String tokenKey = CookieUtils.getCookie(getRequest(), Constants.Clerk.COOKIE_TOKEN_KEY);
         log.info("checkUserBean tokenKey ==> " + tokenKey);
         //解析
-        Clerk clerk = parseByTokenKey(tokenKey);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        if (clerk == null) {
-            RefreshTokenMapper tokenMapper = sqlSession.getMapper(RefreshTokenMapper.class);
+        clerkFromToken = parseByTokenKey(tokenKey);
+        if (clerkFromToken == null) {
             //说明解析出错了(过期了)
             //1、去mysql查询refreshToken
             Refreshtoken refreshToken = tokenMapper.findOneByTokenKey(tokenKey);
@@ -438,8 +447,9 @@ public class SectorServiceImpl implements ISectorService {
                 //5、如果refreshToken有效，创建新的token，和新的refreshToken
                 //拿到用户id，去数据库查询，再在redis里面生成新的token
                 String clerkId = refreshToken.getUserId();
-                SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
                 Clerk clerkFromDb = sectorMapper.findOneById(clerkId);
+                //给clerk赋权限
+                findAuthorityToUser(clerkFromDb);
                 //如果这样写，因为事务还没有提交，所以该用户的密码直接没了
                 //userFromDb.setPassword("");
                 //在redis里面创建新的token,因为到这里的时候，redis里面久的token已经过期自动删除了，所以这里不必再手动删除了
@@ -451,11 +461,9 @@ public class SectorServiceImpl implements ISectorService {
                 log.info("refresh token 已经过期 =====");
                 //4、如果refreshToken过期了，就当前访问没有登录，提示用户登录
                 return null;
-            }finally {
-                sqlSession.close();
             }
         }
-        return clerk;
+        return clerkFromToken;
     }
 
 
@@ -468,9 +476,7 @@ public class SectorServiceImpl implements ISectorService {
      * @return
      */
     @Override
-    public ResponseResult getClerkInfo(String clerkId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+    public ResponseResult findClerkInfo(String clerkId) {
         //从数据里获取
         Clerk clerkFromDb = sectorMapper.findOneById(clerkId);
         //判断结果
@@ -486,6 +492,11 @@ public class SectorServiceImpl implements ISectorService {
         newClerk.setClerkStatus("");
         //返回结果
         return ResponseResult.SUCCESS("获取成功").setData(newClerk);
+    }
+
+    @Override
+    public ResponseResult getStuInfo(String stuId) {
+        return null;
     }
 
 
@@ -522,270 +533,49 @@ public class SectorServiceImpl implements ISectorService {
         return null;
     }
 
-    //-----2020.11.24 周二增加部分---- //
 
-    @Value("${photo.dir}")
-    private String realPath;
+    @Resource
+    private RoleAuthorityMapper roleAuthorityMapper;
 
-    /**
-     * 上传公告
-     * @param notice
-     * @param photo
-     * @return
-     */
-    @Override
-    public ResponseResult uploadNotice(Notice notice, MultipartFile photo) throws IOException {
-        //检验当前操作的用户是谁
-      /*  Clerk currentUser = checkClerk();
-        if (currentUser == null) {
-            return ResponseResult.ACCOUNT_NOT_LOGIN();
-        }
+    @Resource
+    private UserRoleMapper userRoleMapper;
 
-        //判断角色
-        if (!Constants.Clerk.POWER_ADMIN.equals(currentUser.getDepartment())) {
-            return ResponseResult.ERROR_403(); //权限不足:这里针对管理员发布公告权限,不清楚是否有其他具体权限要求
-        }
-*/
-        //检查数据:标题、内容不可以为空
-        if (TextUtils.isEmpty(notice.getTitle())) {
-            ResponseResult.FAILED("标题不可以为空！");
-        }
-
-        if (TextUtils.isEmpty(notice.getContent())) {
-            ResponseResult.FAILED("公告内容不可以为空！");
-        }
-
-        log.info("公告信息：[{}]",notice.toString());
-        log.info("公告图片：[{}]",photo.getOriginalFilename());
-        try{
-            String newFileName = idWorker.nextId() + "." + FilenameUtils.getExtension(photo.getOriginalFilename());
-            photo.transferTo(new File(realPath, newFileName));//保存到指定的路径文件路径中
-            // newNotice1.setPath(newFileName); ---这里数据库差图片路径字段
-            //设置数据
-            Notice newNotice = new Notice();
-            newNotice.setNoticeId(idWorker.nextId()+"");//公告ID
-            newNotice.setTitle(notice.getTitle());//标题
-            newNotice.setContent(notice.getContent());//内容
-            newNotice.setRemark(notice.getRemark());//设置备注
-            // newNotice1.setPublisherId(currentUser.getClerkID());//发布者ID
-            //newNotice1.setNoticeType(currentUser.getDepartment()); //发布者部门
-            newNotice.setCheckStatus("0");//默认未审核
-            newNotice.setIsTop(notice.getIsTop()); //默认非置顶:这里前端有个选择置不置顶,但是好像是超级管理员的事情
-            newNotice.setPublishTime(new Date());//发布时间
-            //保存数据
-            SqlSession  sqlSession = MybatisUtils.getSqlSession();
-            NoticeMapper sessionMapper = sqlSession.getMapper(NoticeMapper.class);
-            sessionMapper.save(newNotice);
-            sqlSession.commit();
-            sqlSession.close();
-        }catch (Exception e){
-            return ResponseResult.FAILED("上传公告失败!");
-        }
-        //返回结果
-        return ResponseResult.SUCCESS("公告添加成功");
-    }
-
-    //---获取学生信息---//
-
-    /**
-     *  分頁查詢
-     *  获取用户列表
-     *  需要管理员权限
-     * @param page
-     * @param size
-     * @param request
-     * @param response
-     * @return
-     */
-    @Override
-    public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response) {
-        //检验当前操作的用户是谁
-        Clerk currentUser = checkClerk();
-        if (currentUser == null) {
-            return ResponseResult.ACCOUNT_NOT_LOGIN();
-        }
-
-        //判断角色
-        if (!Constants.Clerk.POWER_ADMIN.equals(currentUser.getDepartment())) {
-            return ResponseResult.ERROR_403();
-        }
-
-        //获取用户列表
-        //分页查询
-        //size业限制一下，每一页不得少于5个
-        if (page < Constants.Page.DEFAULT_PAGE){
-            page = Constants.Page.DEFAULT_PAGE;
-        }
-
-        //根据学号排序
-        //升序
-        // Sort sort = new Sort(Sort.Direction.ASC,"stuId");
-        Sort sort = Sort.by(Sort.Order.asc("stuId"));
-        Pageable pageable = PageRequest.of(page-1,size,sort);
-
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
-        Page<Clerk> all =  sectorMapper.findAll(pageable);
-
-        return ResponseResult.SUCCESS("获取用户列表成功").setData(all);
-    }
-
-    /**
-     *  根据学号获取ID
-     * @param stuId
-     * @return
-     */
-    @Override
-    public ResponseResult getStuInfo(@PathVariable("stuId") String stuId) {
-        return null;
-    }
 
     /**
      * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
      */
     @Override
     public UserDetails loadUserByUsername(String clerkAccount) throws UsernameNotFoundException {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        //查角色
         Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
         if (byClerkAccount == null){
             throw new UsernameNotFoundException("用户不存在");
         }
-        //根据用户id查找权限
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
-        List<Authorities> permissions = authoritiesMapper.getRolePermissions(byClerkAccount.getClerkID());
+        return byClerkAccount;
+    }
+
+    private void findAuthorityToUser(Clerk byClerkAccount) {
+        List<Role> roles = userRoleMapper.getRolesByUser(byClerkAccount.getClerkID());
         //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Authorities permission : permissions) {
-            authorities.add(new SimpleGrantedAuthority(permission.getName()));
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        //查权限
+        for (Role role : roles) {
+            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+            for (Authorities authority : authorities) {
+                //添加权限
+                authorityList.add(new SimpleGrantedAuthority(authority.getUrl()));
+            }
         }
-        sqlSession.close();
-        return new User(byClerkAccount.getClerkAccount(),byClerkAccount.getClerkPwd(),authorities);
+        //赋值
+        byClerkAccount.setAuthorities(authorityList);
     }
 
 
     @Override
     public Clerk findClerkByAccount(String clerkAccount) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
-        sqlSession.close();
         return byClerkAccount;
     }
-
-
-
-    //-----一卡通管理-----//
-
-    //-----11.25 按条件分页查询-----//
-
-    /**
-     *  分页查询所有学生
-     * @param map
-     * @return
-     */
-    @Override
-    public ResponseResult findAllByPage(Map<String,Object> map) {
-        Integer page = (Integer)map.get("page");
-        Integer size = (Integer)map.get("size");
-
-        PageHelper.startPage(page,size);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
-        List<Student> userList = studentMapper.getStudentList();
-        PageInfo<Student> studentPageInfo = new PageInfo<>(userList);
-
-        int pageNum = studentPageInfo.getPageNum();
-        int pages = studentPageInfo.getPages();
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("list",userList);
-        map1.put("pageNum",pageNum);
-        map1.put("pages",pages);
-        return ResponseResult.SUCCESS("查询成功").setData(map1);
-    }
-
-
-    /**
-     * 分页查询 -- 带条件查询：学院类型、学生类型、审核状态
-     * 可在其他部门同样使用
-     * @param map
-     * @return
-     */
-    @Override
-    public ResponseResult findAllByPageAndType(Map<String,Object> map) {
-        Integer page = (Integer)map.get("page");
-        Integer size = (Integer)map.get("size");
-        String deptType = (String) map.get("stuDept");
-        String stuType = (String) map.get("stuType");
-        String cardStatus = (String) map.get("cardStatus");
-
-        Map<String,String> params = new HashMap<>();
-        params.put("stuDept",deptType);
-        params.put("stuType",stuType);
-        params.put("cardStatus",cardStatus);
-        log.info("params --- >"+params);
-
-        //pageHelper使用
-        PageHelper.startPage(page,size);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
-        List<Map<String,Object>> students = studentMapper.listStudentCardInfos(params);
-        PageInfo<Map<String,Object>> studentPageInfo = new PageInfo<>(students);
-        int pageNum = studentPageInfo.getPageNum();
-        int pages = studentPageInfo.getPages();
-        if (students.isEmpty()){
-            return ResponseResult.FAILED("没有数据");
-        }
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("list",students);
-        map1.put("pageNum",pageNum);
-        map1.put("pages",pages);
-        return ResponseResult.SUCCESS("查询成功").setData(map1);
-
-    }
-
-    //---11.26--//
-
-    /**
-     *  按学号查询一卡通详情
-     * @param studentId
-     * @return
-     */
-    @Override
-    public ResponseResult getStudentByIdForCard(String studentId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
-        Map<String, Object> studentByIdForCard = studentMapper.getStudentByIdForCard(studentId);
-        if (studentByIdForCard == null) {
-            return  ResponseResult.FAILED("查找失败！没有该学生的一卡通详情！");
-        }
-        sqlSession.close();
-        return ResponseResult.SUCCESS("查找成功").setData(studentByIdForCard);
-    }
-
-
-    /**
-     *  审核一卡通
-     * @param stuNumber
-     * @return
-     */
-    public  ResponseResult doCheckForCard(String stuNumber){
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
-        int i = studentMapper.doCheckCard(stuNumber);
-        if (i > 0){
-            return ResponseResult.SUCCESS("审核成功！");
-        }
-        sqlSession.commit();
-        sqlSession.close();
-        return ResponseResult.FAILED("审核失败！请重新操作");
-    }
-
-
-
-
-    //------//
-
 
 
 }

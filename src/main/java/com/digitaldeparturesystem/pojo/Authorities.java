@@ -1,10 +1,11 @@
 package com.digitaldeparturesystem.pojo;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Authorities {
+public class Authorities implements Serializable {
 
   private String id;
   private String name;
