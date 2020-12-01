@@ -23,10 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -74,19 +71,24 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                 authorityList.add(authority);
             }
         }
-        //保存进Redis
+        //权限保存进Redis
         redisUtils.set(Constants.Clerk.KEY_AUTHORITY_CONTENT + userDetails.getClerkID(), authorityList, Constants.TimeValueInSecond.HOUR_2);
         //获取用户token
         String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
+
         if (tokenKey == null){
             tokenKey = sectorService.createToken(httpServletResponse, userDetails);
         }
         httpServletResponse.setHeader("Content-type","text/html;charset=UTF-8");//设置相遇类型为html,编码为utf-8,处理相应页面显示的乱码
         httpServletResponse.setCharacterEncoding("UTF-8");//如果响应类型为文本,那么就需要设置文本的编码类型,然后浏览器使用这个编码来解读文本
 
+        Map<String,String> result = new HashMap<>();
+        result.put("clerkAccount",userDetails.getClerkAccount());
+        result.put("clerkPhoto",userDetails.getClerkPhoto());
+
         httpServletResponse.getWriter().
                 write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                        setJwtToken(tokenKey).setData(authorityList)));
+                        setData(JSON.toJSON(result))));
     }
 }
 
