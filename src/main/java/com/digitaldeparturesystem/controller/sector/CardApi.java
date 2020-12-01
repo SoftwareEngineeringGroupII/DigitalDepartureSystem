@@ -30,8 +30,6 @@ import java.util.Map;
 @RequestMapping("/sector/card")
 public class CardApi {
 
-    @Autowired
-    private ISectorService sectorService;
 
     @Autowired
     private ICardService cardService;
@@ -46,57 +44,17 @@ public class CardApi {
         return cardService.getStudentByIdForCard(studentId);
     }
 
-    /**
-     * 审核一卡通信息
-     * @param studentId
-     * @param card
-     * @return
-     */
-    @PostMapping("/studentId")
-    public ResponseResult checkCard(@PathVariable("studentId")String studentId, @RequestBody Card card){
-        return null;
-    }
 
     /**
-     * 获取全部一卡通列表
-     * @return
-     */
-    @GetMapping
-    public ResponseResult getAllCards(){
-        return null;
-    }
-
-    /**
-     * 获取已审核的一卡通列表
-     * @return
-     */
-    @GetMapping("/check")
-    public ResponseResult getCheckCards(){
-        return null;
-    }
-
-    /**
-     * 获取未审核的一卡通列表
-     * @return
-     */
-    @GetMapping("/uncheck")
-    public ResponseResult getUnCheckCards(){
-        return null;
-    }
-
-
-
-
-    //---11.25增加 一卡通 按条件分页查询：学院、学生类型、审核状态---//
-
-    /**
-     *  按学院、学生类型，审核状态
+     *  条件分页查询---按学院、学生类型，审核状态
      * @return
      */
 
-    @GetMapping("/selectAllByPageAndType")
-    public ResponseResult selectAllByPageAndType(@RequestBody Map<String,Object> map){
-        return cardService.findAllByPageAndType(map);
+    @GetMapping("/selectAllByPageAndType/{start}/{size}")
+    public ResponseResult selectAllByPageAndType(@PathVariable("start")Integer start, @PathVariable("size")Integer size,
+                                                 @RequestParam String stuDept,@RequestParam String stuType,
+                                                 @RequestParam String cardStatus){
+        return cardService.findAllByPageAndType(start,size,stuDept,stuType,cardStatus);
     }
 
 
@@ -119,10 +77,10 @@ public class CardApi {
      * @return
      */
 
-    @PutMapping("/checkCard/{stuNumber}")
-    public ResponseResult  getCheck(@PathVariable("stuNumber") String stuNumber){
+    @PutMapping("/checkCard/{stuId}")
+    public ResponseResult  getCheck(@PathVariable("stuId") String stuId){
 
-        return cardService.doCheckForCard(stuNumber);
+        return cardService.doCheckForCard(stuId);
     }
 
 
@@ -139,7 +97,6 @@ public class CardApi {
 
         return cardService.uploadNotice(notice,photo);
     }
-
 
 
 }

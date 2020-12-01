@@ -144,7 +144,7 @@ public class SectorApi {
     @GetMapping("/{stuId}")
     public ResponseResult getStuInfoByStuId(@PathVariable("stuId") String stuId){
 
-        return sectorService.getStuInfo(stuId);
+        return null;
     }
 
     /**

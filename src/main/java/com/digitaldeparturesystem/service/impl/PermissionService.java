@@ -8,10 +8,8 @@ import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.service.IAdminService;
 import com.digitaldeparturesystem.service.ISectorService;
-import com.digitaldeparturesystem.utils.Constants;
-import com.digitaldeparturesystem.utils.CookieUtils;
-import com.digitaldeparturesystem.utils.MybatisUtils;
-import com.digitaldeparturesystem.utils.TextUtils;
+import com.digitaldeparturesystem.utils.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,11 +26,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service("permission")
 public class PermissionService {
 
     @Autowired
     private ISectorService sectorService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     /**
      * 权限判断
@@ -41,18 +43,21 @@ public class PermissionService {
      * @return
      */
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        
-        Object userInfo = authentication.getPrincipal();
-        boolean hasPermission  = false;
-        if (userInfo instanceof UserDetails) {
-            Clerk clerk = (Clerk) userInfo;
+        //用用户cookies里面获取token
+        String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
+        //解析
+        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
+        boolean hasPermission = false;
+        if (clerk != null) {
+            //记录
+            log.info(IpUtil.getIpAddr(request) + " -- " + clerk.getClerkAccount() + " -- " + request.getRequestURI());
+            //从redis里面拿到权限
+            Set<Authorities> authorityList = (Set<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID());
             //获取资源
             Set<String> urls = new HashSet();
             //查url
-            if (clerk.getAuthorities() != null){
-                for (GrantedAuthority authority : clerk.getAuthorities()) {
-                    urls.add(authority.getAuthority());
-                }
+            for (Authorities authorities : authorityList) {
+                urls.add(authorities.getUrl());
             }
             //不需要权限，都可以访问
             //TODO:

@@ -27,8 +27,6 @@ public interface ISectorService extends UserDetailsService {
 
     //---一卡通管理员---//
 
-    ResponseResult getStuInfo(String stuId);
-
     Clerk findClerkByAccount(String clerkAccount);
 
     String createToken(HttpServletResponse httpServletResponse, Clerk clerk);

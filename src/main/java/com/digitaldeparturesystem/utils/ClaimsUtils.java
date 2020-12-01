@@ -5,9 +5,7 @@ import com.digitaldeparturesystem.pojo.Clerk;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ClaimsUtils {
 
@@ -27,7 +25,6 @@ public class ClaimsUtils {
         claims.put(CLERK_PHOTO, clerk.getClerkPhoto());
         claims.put(CLERK_EMAIL, clerk.getClerkEmail());
         claims.put(DEPARTMENT, clerk.getDepartment());
-        claims.put(AUTHORITIES, clerk.getAuthorities());
         return claims;
     }
     
@@ -45,7 +42,6 @@ public class ClaimsUtils {
         clerk.setClerkEmail(clerkEmail);
         String department = (String)claims.get(DEPARTMENT);
         clerk.setDepartment(department);
-        clerk.setAuthorities((List<? extends GrantedAuthority>) claims.get(AUTHORITIES));
         return clerk;
     }
 

@@ -19,4 +19,10 @@ public interface RoleAuthorityMapper {
      * @return
      */
     List<Authorities> getAuthorityNoParentByRole(String roleId);
+
+    /**
+     * 找到子菜单
+     * @return
+     */
+    List<Authorities> findChildrenByParentId(String parentId);
 }

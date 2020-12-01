@@ -7,7 +7,7 @@
         delete from refreshtoken where id = #{id};
     </delete>
 
-    <insert id="save" parameterType="com.digitaldeparturesystem.pojo.Refreshtoken">
+    <insert id="insertRefreshToken" parameterType="com.digitaldeparturesystem.pojo.Refreshtoken">
         insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime)
         values(#{id},#{refreshToken},#{userId},#{tokenKey},#{createTime},#{updateTime});
     </insert>

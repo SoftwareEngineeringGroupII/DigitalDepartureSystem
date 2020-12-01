@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.digitaldeparturesystem.mapper.CardMapper">
 
-    <!--分页查询一卡通-->
-
 
     <!--根据学院类型，学生类型，审核状态查询学生信息 - 一卡通-->
     <select id="listStudentCardInfos" resultType="java.util.Map" parameterType="map">
@@ -47,25 +45,17 @@
         ON s.stuID = c.stuID
         <where>
             <if test="stuId!=null and stuId!=''">
-                AND s.`stuNumber` = #{stuId}
+                AND s.`stuNumber` = #{stuNum}
             </if>
         </where>
     </select>
 
     <!--审核一卡通状态-->
     <update id="doCheckCard" parameterType="String">
-        update card
-        LEFT JOIN student s
-        ON s.stuID = card.stuID
-        SET
-        card.`cardBalance` = 0,
-        card.`cardStatus` = 1
-        <where>
-            <if test="stuId!=null and stuId!=''">
-                AND s.`stuNumber` = #{stuId}
-            </if>
-        </where>
+       update card set cardBalance=0,cardStatus=1 where stuID=#{stuId}
     </update>
+
+
 
 
 </mapper>

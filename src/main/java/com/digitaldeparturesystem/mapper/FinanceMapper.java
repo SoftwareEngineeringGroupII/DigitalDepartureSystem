@@ -12,4 +12,6 @@ public interface FinanceMapper {
 
     //按条件分页查询学生财务缴费情况
     List<Map<String,Object>> listStudentFinanceInfos(@Param("params")Map<String,String> params);
+
+    void doCheckForFinance(String stuID);
 }

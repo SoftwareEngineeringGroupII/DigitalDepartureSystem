@@ -23,7 +23,7 @@
     </select>
 
     <!--按条件分页查询财务处缴费审核情况：按学院、学生类型、审核状态-->
-    <select id="listStudentFinanceInfos" resultType="java.util.Map">
+    <select id="listStudentFinanceInfos" parameterType="map" resultType="java.util.Map">
         SELECT
            s.stuNumber,
            s.stuType,
@@ -39,14 +39,19 @@
             <if test="params.stuDept!=null and params.stuDept!=''">
                 AND s.stuDept = #{params.stuDept}
             </if>
-            <if test="params.stuDept!=null and params.stuDept!=''">
+            <if test="params.stuType!=null and params.stuType!=''">
                 AND s.stuType = #{params.stuType}
             </if>
-            <if test="params.stuDept!=null and params.stuDept!=''">
+            <if test="params.financeStatus!=null and params.financeStatus!=''">
                 AND f.financeStatus = #{params.financeStatus }
             </if>
         </where>
     </select>
+
+    <!--财务处审核-->
+    <update id="doCheckForFinance" parameterType="String">
+       update finance set expense=0 ,financeStatus=1 where stuID=#{stuID}
+    </update>
 
 
 </mapper>

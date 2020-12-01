@@ -18,18 +18,17 @@ public interface ICardService {
     ResponseResult uploadNotice(Notice notice, MultipartFile photo) throws IOException;
 
     //获取全部学生信息
-    public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);
+   // public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);
 
-    ResponseResult getStuInfo(String stuId);
-
-    Clerk findClerkByAccount(String clerkAccount);
 
 
     //查询所有学生
     ResponseResult findAllByPage(Map<String,Object> map);
 
     //根据学院类型、学生类型、审核状态分页查询
-    ResponseResult findAllByPageAndType(Map<String,Object> map);
+  //  ResponseResult findAllByPageAndType(Map<String,Object> map);
+
+    ResponseResult findAllByPageAndType(Integer start,Integer size,String stuDept,String stuType,String cardStatus);
 
     //根据学号查询学生一卡通详情
     ResponseResult getStudentByIdForCard(String studentId);

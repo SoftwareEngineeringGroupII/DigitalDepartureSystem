@@ -1,14 +1,12 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.FinanceMapper;
-import com.digitaldeparturesystem.mapper.StudentMapper;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IFinanceService;
 import com.digitaldeparturesystem.utils.IdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +36,7 @@ public class FinanceServiceImpl implements IFinanceService {
     }
 
 
+
     /**
      *  根据学号获取学生财务缴费情况
      * @param stuNum
@@ -52,18 +51,24 @@ public class FinanceServiceImpl implements IFinanceService {
         return ResponseResult.SUCCESS("查找成功！").setData(stuInfoFromFinance);
     }
 
+
+
     /**
-     *  财务处按条件分页查询
-     * @param map
+     *  按条件分页查询 ---- 2
+     * @param start
+     * @param size
+     * @param stuDept
+     * @param stuType
+     * @param financeStatus
      * @return
      */
-    @Override
-    public ResponseResult findAllByPageAndType(Map<String, Object> map) {
-        Integer page = (Integer) map.get("page");
-        Integer size = (Integer) map.get("size");
-        String stuDept = (String) map.get("stuDept");
-        String stuType = (String) map.get("stuType");
-        String financeStatus = (String) map.get("financeStatus");
+    public ResponseResult findAllByPageAndType(Integer start,Integer size,
+                                                String stuDept,String stuType,String financeStatus){
+
+        //判断类型,如果是所有类型的状态将其置空
+        stuDept = (stuDept.equals("所有学院") ?"":stuDept);
+        stuType =(stuType.equals("所有学生")?"":stuType);
+        financeStatus = (financeStatus.equals("所有状态")?"":financeStatus);
 
         Map<String,String> params = new HashMap<>();
         params.put("stuDept",stuDept);
@@ -71,32 +76,59 @@ public class FinanceServiceImpl implements IFinanceService {
         params.put("financeStatus",financeStatus);
         log.info("params --- >> "+params);
 
+        if(size==0){
+            //如果未设置显示条数，默认为5
+            size=5;
+        }
+
         //pageHelper使用
-        PageHelper.startPage(page,size);
+        //分页处理,显示第start页的size条数据
+        PageHelper.startPage(start,size);
         List<Map<String, Object>> students = financeMapper.listStudentFinanceInfos(params);
         PageInfo<Map<String, Object>> financePageInfo = new PageInfo<>(students);
         int pageNum = financePageInfo.getPageNum();
         int pages = financePageInfo.getPages();
+        long total = financePageInfo.getTotal();//获取记录总数
         if (students.isEmpty()) {
             return ResponseResult.FAILED("没有数据");
         }
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("list",students);
-        map1.put("pageNum",pageNum);
-        map1.put("pages",pages);
-        return ResponseResult.SUCCESS("查询成功").setData(map1);
+
+      /*  for (Map<String, Object> student : students) {
+            System.out.println(student);
+        }
+        System.out.println("共有"+total+"条数据");*/
+
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",students);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);
+        map.put("total",total);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
 
     }
+
+
+
+
+
 
     /**
      * 财务处审核
-     * @param stuNumber
+     * @param stuId
      * @return
      */
     @Override
-    public ResponseResult doCheckForFinance(String stuNumber) {
-        return null;
+    public ResponseResult doCheckForFinance(String stuId) {
+        try {
+            financeMapper.doCheckForFinance(stuId);
+            return ResponseResult.SUCCESS("审核成功");
+        }catch (Exception e){
+            return ResponseResult.FAILED("审核失败,请重新进行操作");
+        }
     }
+
+
 
 
 }

@@ -11,7 +11,7 @@
 
     <!--删除公告-->
     <delete id="deleteNotice" parameterType="String">
-
+        delete from notice where noticeID=#{noticeId}
     </delete>
 
 

@@ -12,7 +12,7 @@ public interface CardMapper {
     List<Map<String,Object>> listStudentCardInfos(@Param("params")Map<String,String> params);
 
     //根据学号查询一卡通详情
-    Map<String,Object> getStudentByIdForCard(String stuId);
+    Map<String,Object> getStudentByIdForCard(String stuNum);
 
     //根据学号审核学生一卡通
     int doCheckCard(String stuId);
