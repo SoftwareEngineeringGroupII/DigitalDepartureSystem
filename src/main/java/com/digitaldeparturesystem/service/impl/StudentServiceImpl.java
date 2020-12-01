@@ -19,7 +19,7 @@ public class StudentServiceImpl implements IStudentService {
     private IdWorker idWorker;
 
     @Override
-    public ResponseResult initManagerAccount(Student student, HttpServletRequest request) {
+    public ResponseResult findManagerAccount(Student student, HttpServletRequest request) {
         //检查是否在初始化
 
         //检查数据

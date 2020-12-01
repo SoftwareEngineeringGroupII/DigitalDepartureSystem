@@ -1,5 +1,11 @@
 package com.digitaldeparturesystem.config;
 
+import com.digitaldeparturesystem.config.security.*;
+import com.digitaldeparturesystem.mapper.AdminMapper;
+import com.digitaldeparturesystem.mapper.SectorMapper;
+import com.digitaldeparturesystem.mapper.UserRoleMapper;
+import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.service.ISectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +14,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * RBAC: role-base-access-control
@@ -23,55 +34,66 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private ISectorService sectorService;
+    AjaxAuthenticationEntryPoint authenticationEntryPoint;  //  未登陆时返回 JSON 格式的数据给前端（否则为 html）
+
+    @Autowired
+    AjaxAuthenticationSuccessHandler authenticationSuccessHandler;  // 登录成功返回的 JSON 格式数据给前端（否则为 html）
+
+    @Autowired
+    AjaxAuthenticationFailureHandler authenticationFailureHandler;  //  登录失败返回的 JSON 格式数据给前端（否则为 html）
+
+    @Autowired
+    AjaxLogoutSuccessHandler logoutSuccessHandler;  // 注销成功返回的 JSON 格式数据给前端（否则为 登录时的 html）
+
+    @Autowired
+    AjaxAccessDeniedHandler accessDeniedHandler;    // 无权访问返回的 JSON 格式数据给前端（否则为 403 html 页面）
+
+    @Autowired
+    ISectorService userDetailsService; // 自定义user
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    /**
-//     * 用户认证操作
-//     * @param auth
-//     * @throws Exception
-//     */
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        //添加用户，并给予权限
-////        auth.inMemoryAuthentication().withUser("aaa").password(bCryptPasswordEncoder.encode("1234")).roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("aaa").password("1234").roles("ADMIN");
-//        auth.userDetailsService(sectorService).passwordEncoder(bCryptPasswordEncoder);
-//    }
-
-
-    /**
-     * 用户授权操作
-     * @param http
-     * @throws Exception
-     */
     @Override
-    protected void configure(HttpSecurity http)throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 加入自定义的安全认证
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+    }
 
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()//允许所有
-                .anyRequest().authenticated()
-                .and().csrf().disable();
-//        http.csrf().disable();    //安全器令牌
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-//        http.formLogin()
-//
-//                //登录请求被拦截
-//                .loginPage("/sector/login").permitAll()
-//                //设置默认登录成功跳转页面
-//                .successForwardUrl("/main")
-//                .failureUrl("/login?error");   //登录失败的页面
+        // 去掉 CSRF
+        http.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 使用 JWT，关闭token
+                .and()
 
-//        http.authorizeRequests().antMatchers("*/**").permitAll();
+                .httpBasic().authenticationEntryPoint(authenticationEntryPoint)
 
-//        http.authorizeRequests().antMatchers("/static/**", "/assets/**").permitAll();    //文件下的所有都能访问
-//        http.authorizeRequests().antMatchers("/webjars/**").permitAll();
-//        http.logout().logoutUrl("/logout").permitAll();     //退出
+                .and()
+                .authorizeRequests()
+
+                .anyRequest()
+                .access("@permission.hasPermission(request,authentication)") // RBAC 动态 url 认证
 
 
-//        http.authorizeRequests().anyRequest().authenticated();    //除此之外的都必须通过请求验证才能访问
+                .and()
+                .formLogin()  //开启登录
+                .successHandler(authenticationSuccessHandler) // 登录成功
+                .failureHandler(authenticationFailureHandler) // 登录失败
+                .permitAll()
+
+                .and()
+                .logout()
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .permitAll();
+
+        // 记住我
+        http.rememberMe().rememberMeParameter("remember-me")
+                .userDetailsService(userDetailsService).tokenValiditySeconds(300);
+
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler); // 无权访问 JSON 格式的数据
+
     }
 
 }

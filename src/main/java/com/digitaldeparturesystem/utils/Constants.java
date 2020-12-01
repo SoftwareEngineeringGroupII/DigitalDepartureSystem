@@ -13,6 +13,7 @@ public interface Constants {
         String KEY_EMAIL_SEND_ADDRESS = "key_email_send_address_";
         String KEY_TOKEN = "key_token_";
         String COOKIE_TOKEN_KEY = "digital_department_system_token";
+        String KEY_AUTHORITY_CONTENT = "key_authority_content";
     }
 
     interface Setting{

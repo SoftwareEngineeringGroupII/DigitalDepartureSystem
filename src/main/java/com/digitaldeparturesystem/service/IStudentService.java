@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface IStudentService {
 
-    ResponseResult initManagerAccount(Student student, HttpServletRequest request);
+    ResponseResult findManagerAccount(Student student, HttpServletRequest request);
 
 }

@@ -12,6 +12,8 @@ import java.util.Map;
 
 public class StudentMapperTest {
 
+
+
     @Test
     public void getStudentList(){
         //第一步：获取SqlSession对象

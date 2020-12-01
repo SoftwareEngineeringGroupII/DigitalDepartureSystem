@@ -1,10 +1,11 @@
 package com.digitaldeparturesystem.utils;
 
+import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
 import io.jsonwebtoken.Claims;
+import org.springframework.security.core.GrantedAuthority;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ClaimsUtils {
 
@@ -14,6 +15,7 @@ public class ClaimsUtils {
     private static final String CLERK_PHOTO = "clerk_photo";
     private static final String CLERK_EMAIL = "clerk_email";
     private static final String DEPARTMENT = "department";
+    private static final String AUTHORITIES = "authorities";
 
     public static Map<String,Object> clerk2Claims(Clerk clerk){
         Map<String,Object> claims = new HashMap<>();

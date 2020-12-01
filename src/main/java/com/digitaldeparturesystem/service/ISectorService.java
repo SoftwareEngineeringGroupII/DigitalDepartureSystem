@@ -19,7 +19,16 @@ public interface ISectorService extends UserDetailsService {
 
     Clerk checkClerk();
 
-    ResponseResult getClerkInfo(String clerkId);
+    ResponseResult findClerkInfo(String clerkId);
 
     Clerk findClerkByAccount(String clerkAccount);
+
+    String createToken(HttpServletResponse httpServletResponse, Clerk clerk);
+
+    /**
+     * 获取用户所拥有的权限
+     * @param clerkId
+     * @return
+     */
+    ResponseResult getAuthoritiesByUser(String clerkId);
 }

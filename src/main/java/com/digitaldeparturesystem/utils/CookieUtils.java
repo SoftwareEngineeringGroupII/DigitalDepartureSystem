@@ -9,7 +9,10 @@ public class CookieUtils {
     //一年
     private static final int default_age = 60 * 60 * 34 * 365;
 
-    private static final String domain = "localhost";
+    //TODO:修改服务器的ip
+//    private static final String domain = "localhost";
+    private static final String domain = "192.168.172.131";
+
 
     /**
      * 设置cookie值
@@ -46,9 +49,11 @@ public class CookieUtils {
      */
     public static String getCookie(HttpServletRequest request, String key){
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (key.equals(cookie.getName())) {
-                return cookie.getValue();
+        if (cookies != null){
+            for (Cookie cookie : cookies) {
+                if (key.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
             }
         }
         return null;

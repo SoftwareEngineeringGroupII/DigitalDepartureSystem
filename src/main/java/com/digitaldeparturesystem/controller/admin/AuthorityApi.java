@@ -5,7 +5,6 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IAuthorityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -24,7 +23,7 @@ public class AuthorityApi {
      */
     @PostMapping()
     public ResponseResult addAuthority(@RequestBody Authorities authorities){
-        return authorityService.addAuthority(authorities);
+        return authorityService.insertAuthority(authorities);
     }
 
     /**
@@ -48,7 +47,7 @@ public class AuthorityApi {
      */
     @GetMapping()
     public ResponseResult getAllAuthorities(){
-        return authorityService.getAllAuthorities();
+        return authorityService.findAllAuthorities();
     }
 
     /**
@@ -58,6 +57,6 @@ public class AuthorityApi {
      */
     @GetMapping("/{authorityId}")
     public ResponseResult getAuthorityById(@PathVariable("authorityId")String authorityId){
-        return authorityService.getAuthorityById(authorityId);
+        return authorityService.findAuthorityById(authorityId);
     }
 }

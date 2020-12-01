@@ -1,7 +1,6 @@
 package com.digitaldeparturesystem.controller.admin;
 
 import com.digitaldeparturesystem.pojo.Clerk;
-import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IAdminService;
 import com.digitaldeparturesystem.service.ISectorService;
@@ -31,7 +30,7 @@ public class UserApi {
     @PostMapping("/join_in")
     public ResponseResult register(@RequestBody Clerk clerk,
                                    HttpServletRequest request) {
-        return adminService.registerClerk(clerk,request);
+        return adminService.insertClerk(clerk,request);
     }
 
     /**
@@ -60,7 +59,7 @@ public class UserApi {
      */
     @GetMapping("/{clerkId}")
     public ResponseResult getClerkById(@PathVariable("clerkId")String clerkId){
-        return adminService.getClerkById(clerkId);
+        return adminService.findClerkById(clerkId);
     }
 
     /**
@@ -69,23 +68,22 @@ public class UserApi {
      */
     @GetMapping()
     public ResponseResult getAllClerks(){
-        return adminService.getAllClerks();
+        return adminService.findAllClerks();
     }
 
     @PostMapping("/role/{clerkId}")
-    public ResponseResult addRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<Role> roles){
-        return adminService.addRoleToUser(clerkId,roles);
+    public ResponseResult addRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<String> roleIds){
+        return adminService.insertRoleToUser(clerkId,roleIds);
     }
 
     /**
      * 更新用户拥有的角色
      * @param clerkId
-     * @param roles
      * @return
      */
     @PutMapping("/role/{clerkId}")
-    public ResponseResult updateRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<Role> roles){
-        return adminService.addRoleToUser(clerkId,roles);
+    public ResponseResult updateRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<String> roleIds){
+        return adminService.insertRoleToUser(clerkId,roleIds);
     }
 
     /**
@@ -94,8 +92,12 @@ public class UserApi {
      */
     @GetMapping("/role/{clerkId}")
     public ResponseResult getRolesByUser(@PathVariable("clerkId")String clerkId){
-        return adminService.getRolesByUser(clerkId);
+        return adminService.findRolesByUser(clerkId);
     }
 
+    @GetMapping("/authorities/{clerkId}")
+    public ResponseResult getAuthoritiesByUser(@PathVariable("clerkId")String clerkId){
+        return sectorService.getAuthoritiesByUser(clerkId);
+    }
 
 }

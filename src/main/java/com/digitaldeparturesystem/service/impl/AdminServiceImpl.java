@@ -6,7 +6,7 @@ import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.pojo.Settings;
 import com.digitaldeparturesystem.response.ResponseResult;
-import com.digitaldeparturesystem.response.ResponseState;
+import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.IAdminService;
 import com.digitaldeparturesystem.utils.*;
 import org.apache.ibatis.session.SqlSession;
@@ -15,10 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -30,11 +29,23 @@ public class AdminServiceImpl implements IAdminService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Resource
+    private SettingsMapper settingsMapper;
+
+    @Resource
+    private AdminMapper adminMapper;
+
+    @Resource
+    private SectorMapper sectorMapper;
+
+    @Resource
+    private UserRoleMapper userRoleMapper;
+
+    @Resource
+    private AuthoritiesMapper authoritiesMapper;
+
     @Override
-    public ResponseResult initManagerAccount(Clerk clerk) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        //检查是否有初始化
-        SettingsMapper settingsMapper = sqlSession.getMapper(SettingsMapper.class);
+    public ResponseResult insertManagerAccount(Clerk clerk) {
         Settings adminAccountStatus = settingsMapper.findOneByKey(Constants.Setting.ADMIN_ACCOUNT_INIT_STATUS);
         if (adminAccountStatus != null){
             return ResponseResult.FAILED("管理员账号已初始化");
@@ -64,10 +75,7 @@ public class AdminServiceImpl implements IAdminService {
         clerk.setClerkPwd(encode);
 
         //保存到数据库
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         adminMapper.addClerk(clerk);
-        //提交事务
-        sqlSession.commit();
         //更新已经添加的标记
         //肯定没有的
         Settings settings = new Settings();
@@ -77,9 +85,6 @@ public class AdminServiceImpl implements IAdminService {
         settings.setKey(Constants.Setting.ADMIN_ACCOUNT_INIT_STATUS);
         settings.setValue("1");
         settingsMapper.addSetting(settings);
-        //提交数事务
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("初始化成功");
     }
 
@@ -92,8 +97,6 @@ public class AdminServiceImpl implements IAdminService {
      */
     @Override
     public ResponseResult findAuditMenu() {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
         List<Authorities> menus;
         //判断是否是后门用户
         if(clerkUtils.hasRole("ROLE_ADMIN")){
@@ -107,12 +110,11 @@ public class AdminServiceImpl implements IAdminService {
             menus = auditMenu(tempMenu);
         }
         //根据parentId，找出children
-        sqlSession.close();
         return ResponseResult.SUCCESS("查找成功").setData(menus);
     }
 
     @Override
-    public ResponseResult registerClerk(Clerk clerk, HttpServletRequest request) {
+    public ResponseResult insertClerk(Clerk clerk, HttpServletRequest request) {
         //第一步：检查当前用户名、姓名、部门是否已经注册
         String clerkAccount = clerk.getClerkAccount();
         if (TextUtils.isEmpty(clerkAccount)) {
@@ -125,9 +127,6 @@ public class AdminServiceImpl implements IAdminService {
             return ResponseResult.FAILED("部门不可以为空");
         }
         //数据库配置
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         Clerk clerkFromDbByUserName = sectorMapper.findOneByClerkAccount(clerkAccount);
         if (clerkFromDbByUserName != null) {
             return ResponseResult.FAILED("该用户已经注册");
@@ -159,33 +158,23 @@ public class AdminServiceImpl implements IAdminService {
         clerk.setClerkStatus("1");
         //第八步：保存到数据库
         adminMapper.addClerk(clerk);
-        //提交事务，关闭sqlSession
-        sqlSession.commit();
-        sqlSession.close();
         //第九步：返回结果
-        return ResponseResult.GET(ResponseState.JOIN_SUCCESS);
+        return ResponseResult.GET(ResponseStatus.JOIN_SUCCESS);
     }
 
     @Override
     public ResponseResult deleteClerkByStatus(String clerkId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         //查找clerk是否存在
         Clerk clerk = sectorMapper.findOneById(clerkId);
         if (clerk == null){
             return ResponseResult.FAILED("用户不存在");
         }
         adminMapper.deleteClerkByStatus(clerkId);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("用户删除成功");
     }
 
     @Override
     public ResponseResult updateClerk(String clerkId, Clerk clerk) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         //查询
         Clerk clerkFromDB = sectorMapper.findOneById(clerkId);
         if (clerkFromDB == null){
@@ -205,61 +194,50 @@ public class AdminServiceImpl implements IAdminService {
         }
         //修改
         sectorMapper.updateClerk(clerkFromDB);
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("用户信息更新成功");
     }
 
     @Override
-    public ResponseResult getClerkById(String clerkId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+    public ResponseResult findClerkById(String clerkId) {
         //查询
         Clerk clerk = sectorMapper.findOneById(clerkId);
-        sqlSession.close();
-        return ResponseResult.SUCCESS("查询用户成功").setData(clerk);
+        List<Clerk> clerkList = new ArrayList<>();
+        clerkList.add(clerk);
+        return ResponseResult.SUCCESS("查询用户成功").setData(clerkList);
     }
 
     @Override
-    public ResponseResult getAllClerks() {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+    public ResponseResult findAllClerks() {
         //查询
         List<Clerk> clerks = adminMapper.findAllClerks();
-        sqlSession.close();
         return ResponseResult.SUCCESS("查询所有用户成功").setData(clerks);
     }
 
     @Override
-    public ResponseResult addRoleToUser(String clerkId, List<Role> roles) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        UserRoleMapper userRoleMapper = sqlSession.getMapper(UserRoleMapper.class);
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+    public ResponseResult insertRoleToUser(String clerkId, List<String> roleIds) {
         Clerk clerk = sectorMapper.findOneById(clerkId);
         if (clerk == null){
             return ResponseResult.FAILED("该用户不存在");
         }
         userRoleMapper.deleteAllRoleByUser(clerkId);
-        for (Role role : roles) {
-            userRoleMapper.addRoleToUser(String.valueOf(idWorker.nextId()),clerkId,role.getId());
+        Map<String,String> map = new HashMap<>();
+        for (String roleId : roleIds) {
+            map.put("id",String.valueOf(idWorker.nextId()));
+            map.put("clerkId",clerkId);
+            map.put("roleId",roleId);
+            userRoleMapper.addRoleToUser(map);
         }
-        sqlSession.commit();
-        sqlSession.close();
         return ResponseResult.SUCCESS("用户角色添加成功");
     }
 
     @Override
-    public ResponseResult getRolesByUser(String clerkId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        UserRoleMapper userRoleMapper = sqlSession.getMapper(UserRoleMapper.class);
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+    public ResponseResult findRolesByUser(String clerkId) {
         Clerk clerk = sectorMapper.findOneById(clerkId);
         if (clerk == null){
             return ResponseResult.FAILED("该用户不存在");
         }
-        userRoleMapper.getRolesByUser(clerkId);
-        sqlSession.close();
-        return null;
+        List<Role> roles = userRoleMapper.getRolesByUser(clerkId);
+        return ResponseResult.SUCCESS("查询用户所拥有的角色成功").setData(roles);
     }
 
     /**
@@ -291,10 +269,7 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     public Authorities findByName(String name) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
         Authorities authority = authoritiesMapper.findByName(name);
-        sqlSession.close();
         return authority;
     }
 }

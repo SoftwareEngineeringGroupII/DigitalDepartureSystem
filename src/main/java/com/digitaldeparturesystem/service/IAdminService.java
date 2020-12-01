@@ -15,7 +15,7 @@ public interface IAdminService {
      * @param clerk
      * @return
      */
-    ResponseResult initManagerAccount(Clerk clerk);
+    ResponseResult insertManagerAccount(Clerk clerk);
 
     /**
      * 查找能展示的菜单
@@ -28,7 +28,7 @@ public interface IAdminService {
      * @param clerk
      * @return
      */
-    ResponseResult registerClerk(Clerk clerk, HttpServletRequest request);
+    ResponseResult insertClerk(Clerk clerk, HttpServletRequest request);
 
     /**
      * 删除用户
@@ -50,25 +50,25 @@ public interface IAdminService {
      * @param clerkId
      * @return
      */
-    ResponseResult getClerkById(String clerkId);
+    ResponseResult findClerkById(String clerkId);
 
     /**
      * 获取全部的clerk
      * @return
      */
-    ResponseResult getAllClerks();
+    ResponseResult findAllClerks();
 
     /**
      * 给用户添加角色
-     * @param roles
      * @return
      */
-    ResponseResult addRoleToUser(String clerkId, List<Role> roles);
+    ResponseResult insertRoleToUser(String clerkId, List<String> roleIds);
 
     /**
-     * 获取用户所拥有的权限
+     * 获取用户所拥有的角色
      * @param clerkId
      * @return
      */
-    ResponseResult getRolesByUser(String clerkId);
+    ResponseResult findRolesByUser(String clerkId);
+
 }

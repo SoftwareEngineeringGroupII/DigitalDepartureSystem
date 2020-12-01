@@ -43,10 +43,20 @@ public class SectorApi {
         return sectorService.doLogin(captcha, captchaKey, clerk);
     }
 
-//    @GetMapping("/login")
-//    public ResponseResult login() {
-//        return ResponseResult.ACCOUNT_NOT_LOGIN();
-//    }
+    @GetMapping("/login")
+    public ResponseResult login() {
+        return ResponseResult.ACCOUNT_NOT_LOGIN();
+    }
+
+    @GetMapping("/login/error")
+    public ResponseResult loginError(){
+        return ResponseResult.LOGIN_FAILED();
+    }
+
+    @GetMapping("/index")
+    public ResponseResult index(){
+        return ResponseResult.SUCCESS("登录成功");
+    }
 
     /**
      * 获取图灵验证码
