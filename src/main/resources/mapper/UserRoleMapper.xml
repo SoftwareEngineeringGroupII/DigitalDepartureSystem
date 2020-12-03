@@ -16,5 +16,9 @@
         insert into user_role(`id`,user_id,role_id)
         values (#{id},#{clerkId},#{roleId});
     </insert>
+    
+    <select id="findUserRoleData" resultType="java.lang.String">
+        select * from user_role where user_id = #{clerkId} and role_id = #{roleId};
+    </select>
 
 </mapper>

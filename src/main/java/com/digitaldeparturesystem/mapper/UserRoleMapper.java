@@ -26,4 +26,11 @@ public interface UserRoleMapper {
      * @param clerkId
      */
     List<Role> getRolesByUser(String clerkId);
+
+    /**
+     * 查询数据是否已经存在
+     * @param map
+     * @return
+     */
+    String findUserRoleData(Map<String,String> map);
 }

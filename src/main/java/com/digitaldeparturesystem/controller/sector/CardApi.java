@@ -9,13 +9,8 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
-import com.digitaldeparturesystem.service.ISectorService;
-import com.digitaldeparturesystem.utils.Constants;
-import com.digitaldeparturesystem.utils.MybatisUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

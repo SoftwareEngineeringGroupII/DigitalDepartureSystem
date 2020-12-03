@@ -34,7 +34,7 @@ public class RoleApi {
      * @return
      */
     @PutMapping("/{roleId}")
-    public ResponseResult updateClerk(@PathVariable("roleId") String roleId,@RequestBody Role role){
+    public ResponseResult updateRole(@PathVariable("roleId") String roleId,@RequestBody Role role){
         return roleService.updateRole(roleId,role);
     }
 
@@ -43,7 +43,7 @@ public class RoleApi {
      * @return
      */
     @DeleteMapping("/{roleId}")
-    public ResponseResult deleteClerk(@PathVariable String roleId){
+    public ResponseResult deleteRole(@PathVariable String roleId){
         return roleService.deleteRole(roleId);
     }
 
@@ -73,6 +73,11 @@ public class RoleApi {
         return roleService.insertAuthorityToRole(roleId,authorityIds);
     }
 
+    /**
+     * 获取用户拥有的权限
+     * @param roleId
+     * @return
+     */
     @GetMapping("/authority/{roleId}")
     public ResponseResult getAuthorityByRole(@PathVariable("roleId") String roleId){
         return roleService.findAuthorityByRole(roleId);

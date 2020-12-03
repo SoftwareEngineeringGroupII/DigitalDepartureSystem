@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SectorMapper {
 
@@ -35,4 +36,10 @@ public interface SectorMapper {
      * 修改clerk
      */
     void updateClerk(Clerk clerk);
+
+    /**
+     * 删除用户拥有的角色
+     * @param map
+     */
+    void deleteRoleToUser(Map<String, String> map);
 }

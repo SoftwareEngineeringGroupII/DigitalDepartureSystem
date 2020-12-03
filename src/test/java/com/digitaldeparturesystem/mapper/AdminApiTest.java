@@ -32,7 +32,7 @@ public class AdminApiTest {
         String clerkId = "78187113611054284111111";
         List<String> list = new ArrayList<>();
         list.add("782284404641759231111111111");
-//        ResponseResult responseResult = adminService.deleteRoleToUser(clerkId, list);
-//        System.out.println(responseResult);
+        ResponseResult responseResult = adminService.deleteRoleToUser(clerkId, list);
+        System.out.println(responseResult);
     }
 }
