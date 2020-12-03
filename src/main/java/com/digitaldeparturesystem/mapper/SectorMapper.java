@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.mapper;
 import com.digitaldeparturesystem.pojo.Clerk;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SectorMapper {
 
@@ -31,4 +32,10 @@ public interface SectorMapper {
      * 修改clerk
      */
     void updateClerk(Clerk clerk);
+
+    /**
+     * 删除用户拥有的角色
+     * @param map
+     */
+    void deleteRoleToUser(Map<String, String> map);
 }

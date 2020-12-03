@@ -45,14 +45,18 @@ public class PermissionService {
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         //用用户cookies里面获取token
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
-        //解析
-        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
+        Clerk clerk;
+        if (tokenKey == null){
+            clerk = sectorService.checkClerk();
+        }else {
+            clerk = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
+        }
         boolean hasPermission = false;
         if (clerk != null) {
             //记录
             log.info(IpUtil.getIpAddr(request) + " -- " + clerk.getClerkAccount() + " -- " + request.getRequestURI());
             //从redis里面拿到权限
-            List<Authorities> authorityList = (List<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID());
+            Set<Authorities> authorityList = (Set<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID());
             //获取资源
             Set<String> urls = new HashSet();
             //查url

@@ -43,11 +43,6 @@ public class SectorApi {
         return sectorService.doLogin(captcha, captchaKey, clerk);
     }
 
-    @GetMapping("/login")
-    public ResponseResult login() {
-        return ResponseResult.ACCOUNT_NOT_LOGIN();
-    }
-
     @GetMapping("/login/error")
     public ResponseResult loginError(){
         return ResponseResult.LOGIN_FAILED();
@@ -95,7 +90,6 @@ public class SectorApi {
      * 修改密码
      * @return
      */
-    @PreAuthorize("@permission.sector()")
     @PostMapping("/password")
     public ResponseResult updatePassword(@RequestBody Clerk clerk){
         return null;
@@ -106,7 +100,6 @@ public class SectorApi {
      * 获取用户信息
      * @return
      */
-    @PreAuthorize("@permission.sector()")
     @GetMapping("/{clerkId}")
     public ResponseResult getStudentInfo(@PathVariable("clerkId")String clerkId){
         return null;
@@ -116,7 +109,6 @@ public class SectorApi {
      * 修改用户信息user-info
      * @return
      */
-    @PreAuthorize("@permission.sector()")
     @PutMapping
     public ResponseResult updateStuInfo(@RequestBody Clerk clerk){
         return null;

@@ -30,11 +30,6 @@ public class AdminApi {
         return adminService.insertManagerAccount(clerk);
     }
 
-    @GetMapping("/menu")
-    public ResponseResult getAllMenu(){
-        return adminService.findAuditMenu();
-    }
-
     /**
      * 审核公告
      * @param articleId

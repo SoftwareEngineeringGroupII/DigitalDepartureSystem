@@ -10,8 +10,8 @@ public class CookieUtils {
     private static final int default_age = 60 * 60 * 34 * 365;
 
     //TODO:修改服务器的ip
-//    private static final String domain = "localhost";
-    private static final String domain = "192.168.172.131";
+    private static final String domain = "localhost";
+//    private static final String domain = "192.168.172.131";
 
 
     /**
