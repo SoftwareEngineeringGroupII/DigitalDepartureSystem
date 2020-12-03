@@ -82,13 +82,20 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         httpServletResponse.setHeader("Content-type","text/html;charset=UTF-8");//设置相遇类型为html,编码为utf-8,处理相应页面显示的乱码
         httpServletResponse.setCharacterEncoding("UTF-8");//如果响应类型为文本,那么就需要设置文本的编码类型,然后浏览器使用这个编码来解读文本
 
-        Map<String,String> result = new HashMap<>();
-        result.put("clerkAccount",userDetails.getClerkAccount());
-        result.put("clerkPhoto",userDetails.getClerkPhoto());
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:8085");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token,Authorization,ybg");
+
+
+//        Map<String,String> result = new HashMap<>();
+//        result.put("clerkAccount",userDetails.getClerkAccount());
+//        result.put("clerkPhoto",userDetails.getClerkPhoto());
 
         httpServletResponse.getWriter().
                 write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                        setData(JSON.toJSON(result))));
+                        setData(JSON.toJSON(userDetails))));
     }
 }
 

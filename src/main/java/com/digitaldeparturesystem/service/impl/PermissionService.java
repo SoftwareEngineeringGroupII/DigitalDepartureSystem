@@ -45,10 +45,11 @@ public class PermissionService {
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         //用用户cookies里面获取token
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
-        //解析*
-        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
-        if (clerk == null){
+        Clerk clerk;
+        if (tokenKey == null){
             clerk = sectorService.checkClerk();
+        }else {
+            clerk = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
         }
         boolean hasPermission = false;
         if (clerk != null) {

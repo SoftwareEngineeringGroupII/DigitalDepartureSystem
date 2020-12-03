@@ -88,5 +88,24 @@ public class Swagger2Configuration {
                 .build();
     }
 
+    @Bean
+    public Docket commonApiDocket(){
+        return new Docket(DocumentationType.SWAGGER_12)
+                .apiInfo(commonApiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.digitaldeparturesystem.controller.common"))
+                .paths(PathSelectors.any()) // 可以根据url路径设置哪些请求加入文档，忽略哪些请求
+                .build()
+                .groupName("公共接口");
+    }
+
+    private ApiInfo commonApiInfo() {
+        return new ApiInfoBuilder()
+                .title("数字离校系统接口文档") //设置文档的标题
+                .description("公共接口文档") // 设置文档的描述
+                .version(VERSION) // 设置文档的版本信息-> 1.0.0 Version information
+                .build();
+    }
+
 }
 

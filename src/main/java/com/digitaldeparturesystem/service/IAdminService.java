@@ -35,7 +35,7 @@ public interface IAdminService {
      * @param clerk
      * @return
      */
-    ResponseResult deleteClerkByStatus(String clerk);
+    ResponseResult deleteClerk(String clerk);
 
     /**
      * 更新用户
@@ -71,4 +71,11 @@ public interface IAdminService {
      */
     ResponseResult findRolesByUser(String clerkId);
 
+    /**
+     * 删除用户所拥有的角色
+     * @param clerkId
+     * @param roleIds
+     * @return
+     */
+    ResponseResult deleteRoleToUser(String clerkId, List<String> roleIds);
 }

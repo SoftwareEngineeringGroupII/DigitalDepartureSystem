@@ -24,4 +24,9 @@ public class CommonApi {
         return commonService.getMenu();
     }
 
+    @GetMapping("/login")
+    public ResponseResult login() {
+        return ResponseResult.ACCOUNT_NOT_LOGIN();
+    }
+
 }
