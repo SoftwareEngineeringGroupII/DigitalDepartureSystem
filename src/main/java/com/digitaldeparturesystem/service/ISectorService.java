@@ -1,11 +1,15 @@
 package com.digitaldeparturesystem.service;
 
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
 
 public interface ISectorService extends UserDetailsService {
 
@@ -80,4 +84,5 @@ public interface ISectorService extends UserDetailsService {
      * @return
      */
     ResponseResult getAuthoritiesByUser(String clerkId);
+
 }

@@ -2,8 +2,16 @@ package com.digitaldeparturesystem.controller.sector;
 
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
+import com.digitaldeparturesystem.service.ICardService;
+import com.digitaldeparturesystem.service.ISectorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @CrossOrigin
 @Slf4j
@@ -11,14 +19,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sector/notice")
 public class NoticeApi {
 
+    @Autowired
+    private ISectorService sectorService;
+
+    @Autowired
+    private ICardService cardService;
     /**
-     * 添加公告
+     * 上传公告
+     * 识别上传公告人权限,ID,发布类型,
      * @param notice
+     * @param photo
      * @return
      */
-    @PostMapping
-    public ResponseResult addNotice(@RequestBody Notice notice){
-        return null;
+    @PostMapping("/notice")
+    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
+
+        return cardService.uploadNotice(notice,photo);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.digitaldeparturesystem.controller.sector;
 
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ISectorService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @CrossOrigin
 @Slf4j
@@ -113,4 +120,40 @@ public class SectorApi {
     public ResponseResult updateStuInfo(@RequestBody Clerk clerk){
         return null;
     }
+
+
+
+
+
+
+
+
+    /**
+     * 根据学生学号查询学生
+     * @param stuId
+     * @return
+     */
+    @GetMapping("/{stuId}")
+    public ResponseResult getStuInfoByStuId(@PathVariable("stuId") String stuId){
+
+        return null;
+    }
+
+    /**
+     * 根据学院查询学生信息
+     * @param stuDept
+     * @return
+     */
+    public ResponseResult getStuInfoByDept(@PathVariable("stuDept")String stuDept){
+        return null;
+    }
+
+
+    public ResponseResult getStuInfoByNoPass(@RequestParam("type") String type){
+        return null;
+    }
+
+
+
+
 }

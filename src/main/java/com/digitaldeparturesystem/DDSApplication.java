@@ -5,12 +5,15 @@ import com.digitaldeparturesystem.utils.RedisUtils;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.servlet.MultipartConfigElement;
 import java.util.Random;
 
 @Slf4j
@@ -51,4 +54,7 @@ public class DDSApplication {
     public Gson createGson(){
         return new Gson();
     }
+
+
+
 }

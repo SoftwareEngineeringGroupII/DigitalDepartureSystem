@@ -178,6 +178,14 @@
             <version>2.11.2</version>
         </dependency>
 
+        <!--2020.11.24 周二增加部分-->
+        <!--文件上传-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+
         <!--JSON封装-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -191,6 +199,14 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>2.3.3.RELEASE</version>
         </dependency>
+
+        <!--        添加分页插件 pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.13</version>
+        </dependency>
+
     </dependencies>
 
     <build>
