@@ -1,14 +1,12 @@
 package com.digitaldeparturesystem.service.impl;
 
-import com.digitaldeparturesystem.mapper.AdminMapper;
-import com.digitaldeparturesystem.mapper.AuthoritiesMapper;
-import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
-import com.digitaldeparturesystem.mapper.SectorMapper;
+import com.digitaldeparturesystem.mapper.*;
 import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Refreshtoken;
+import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
-import com.digitaldeparturesystem.response.ResponseState;
+import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.*;
 import com.google.gson.Gson;
@@ -18,13 +16,10 @@ import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +28,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -66,6 +62,8 @@ public class SectorServiceImpl implements ISectorService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    private Clerk clerkFromToken;
 
     @Override
     public void createCaptcha(HttpServletResponse response, String captchaKey) throws Exception {
@@ -117,6 +115,12 @@ public class SectorServiceImpl implements ISectorService {
     @Autowired
     private TaskService taskService;
 
+    @Resource
+    private SectorMapper sectorMapper;
+
+    @Resource
+    private AdminMapper adminMapper;
+
     /**
      * 发送邮箱验证码
      * 注册(register)：如果已经注册过了，就提示该邮箱已经注册
@@ -133,8 +137,6 @@ public class SectorServiceImpl implements ISectorService {
         if (emailAddress == null) {
             return ResponseResult.FAILED("邮箱地址不可以为空");
         }
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         //检查是否有初始化
         //根据类型：查询邮箱是否存在
         if ("register".equals(type) || "update".equals(type)) {
@@ -149,7 +151,6 @@ public class SectorServiceImpl implements ISectorService {
             }
         }
         //关闭sqlSession
-        sqlSession.close();
         //1、防止暴力发送(不断的发送):同一个邮箱，间隔要超过30s发一次，同一个Ip，最多只能发10次(如果是短信，最多只能发5次)
         String remoteAddr = request.getRemoteAddr();
         log.info("remoteAddr ==> " + remoteAddr);
@@ -211,9 +212,6 @@ public class SectorServiceImpl implements ISectorService {
             return ResponseResult.FAILED("部门不可以为空");
         }
         //数据库配置
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         Clerk clerkFromDbByUserName = sectorMapper.findOneByClerkAccount(clerkAccount);
         if (clerkFromDbByUserName != null) {
             return ResponseResult.FAILED("该用户已经注册");
@@ -267,11 +265,8 @@ public class SectorServiceImpl implements ISectorService {
         clerk.setClerkStatus("1");
         //第八步：保存到数据库
         adminMapper.addClerk(clerk);
-        //提交事务，关闭sqlSession
-        sqlSession.commit();
-        sqlSession.close();
         //第九步：返回结果
-        return ResponseResult.GET(ResponseState.JOIN_SUCCESS);
+        return ResponseResult.GET(ResponseStatus.JOIN_SUCCESS);
     }
 
     @Override
@@ -289,11 +284,7 @@ public class SectorServiceImpl implements ISectorService {
             return ResponseResult.FAILED("密码不可以为空");
         }
         //数据库
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         Clerk clerkFromDb = sectorMapper.findOneByClerkAccount(clerkAccount);
-        //关闭
-        sqlSession.close();
         if (clerkFromDb == null) {
             return ResponseResult.FAILED("用户名或密码错误");
         }
@@ -320,9 +311,7 @@ public class SectorServiceImpl implements ISectorService {
      * @param clerkFromDb
      * @return token_key
      */
-    private String createToken(HttpServletResponse response, Clerk clerkFromDb) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        RefreshTokenMapper tokenMapper = sqlSession.getMapper(RefreshTokenMapper.class);
+    public String createToken(HttpServletResponse response, Clerk clerkFromDb) {
         //删掉refreshToken的记录
         int deleteResult = tokenMapper.deleteAllByUserId(clerkFromDb.getClerkID());
         log.info("deleteResult of refresh token ===> " + deleteResult);
@@ -335,14 +324,8 @@ public class SectorServiceImpl implements ISectorService {
         String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
         //保存token到redis里，有效期为2小时,key是tokenKey
         redisUtils.set(Constants.Clerk.KEY_TOKEN + tokenKey, token, Constants.TimeValueInSecond.HOUR_2);
-        //把token写到cookies里
-//        //创建cookies
-//        Cookie cookie = new Cookie(Constants.User.COOKIE_TOKEN_KEY, tokenKey);
-//        //这个要动态获取，可以从request里提取
-//        cookie.setDomain("localhost");
-//        cookie.setMaxAge(60 * 60 * 24 * 365);
-//        cookie.setPath("/");
-//        response.addCookie(cookie);
+        //把token写到cookies里，tokenKey在cookies里面的存活期我们不用关心，因为他只是一个key,只要redis里面的token过期了
+        //那么这个key就没用了
         CookieUtils.setUpCookie(response, Constants.Clerk.COOKIE_TOKEN_KEY, tokenKey);
         //生成refreshToken,一个月的存活期
         String refreshTokenValue = JwtUtil.createRefreshToken(clerkFromDb.getClerkID(), Constants.TimeValueInMillions.MONTH);
@@ -356,13 +339,19 @@ public class SectorServiceImpl implements ISectorService {
         refreshToken.setCreateTime(new Date());
         refreshToken.setUpdateTime(new Date());
         //保存进数据库
-        tokenMapper.save(refreshToken);
-        //提交
-        sqlSession.commit();
-        //关闭
-        sqlSession.close();
+        tokenMapper.insertRefreshToken(refreshToken);
         return tokenKey;
     }
+
+    @Override
+    public ResponseResult getAuthoritiesByUser(String clerkId) {
+        Clerk clerk = sectorMapper.findOneById(clerkId);
+        List<Authorities> authorityList = (List<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID());
+        return ResponseResult.SUCCESS("查询用户权限成功").setData(authorityList);
+    }
+
+    @Resource
+    private RefreshTokenMapper tokenMapper;
 
     /**
      * 本质：检查用户是否有登录，如果登陆了，久返回用户信息
@@ -371,14 +360,15 @@ public class SectorServiceImpl implements ISectorService {
      */
     @Override
     public Clerk checkClerk() {
+        if (clerkFromToken != null){
+            return clerkFromToken;
+        }
         //拿到token_key(因为之前已经CookieUtils中setUpCookie时，把tokenKey通过(Constants.User.COOKIE_TOKEN_KEY,tokenKey)保存在cookie中了)
         String tokenKey = CookieUtils.getCookie(getRequest(), Constants.Clerk.COOKIE_TOKEN_KEY);
-        log.info("checkUserBean tokenKey ==> " + tokenKey);
+        log.info("checkClerk tokenKey ==> " + tokenKey);
         //解析
-        Clerk clerk = parseByTokenKey(tokenKey);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        if (clerk == null) {
-            RefreshTokenMapper tokenMapper = sqlSession.getMapper(RefreshTokenMapper.class);
+        clerkFromToken = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
+        if (clerkFromToken == null) {
             //说明解析出错了(过期了)
             //1、去mysql查询refreshToken
             Refreshtoken refreshToken = tokenMapper.findOneByTokenKey(tokenKey);
@@ -393,7 +383,6 @@ public class SectorServiceImpl implements ISectorService {
                 //5、如果refreshToken有效，创建新的token，和新的refreshToken
                 //拿到用户id，去数据库查询，再在redis里面生成新的token
                 String clerkId = refreshToken.getUserId();
-                SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
                 Clerk clerkFromDb = sectorMapper.findOneById(clerkId);
                 //如果这样写，因为事务还没有提交，所以该用户的密码直接没了
                 //userFromDb.setPassword("");
@@ -401,25 +390,21 @@ public class SectorServiceImpl implements ISectorService {
                 String newTokenKey = createToken(getResponse(), clerkFromDb);
                 //返回token
                 log.info("create new token and refresh token =====");
-                return parseByTokenKey(newTokenKey);
+                return TokenUtils.parseByTokenKey(redisUtils,newTokenKey);
             } catch (Exception exception) {
                 log.info("refresh token 已经过期 =====");
                 //4、如果refreshToken过期了，就当前访问没有登录，提示用户登录
                 return null;
-            }finally {
-                sqlSession.close();
             }
         }
-        return clerk;
+        return clerkFromToken;
     }
 
     @Autowired
     private Gson gson;
 
     @Override
-    public ResponseResult getClerkInfo(String clerkId) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+    public ResponseResult findClerkInfo(String clerkId) {
         //从数据里获取
         Clerk clerkFromDb = sectorMapper.findOneById(clerkId);
         //判断结果
@@ -447,54 +432,22 @@ public class SectorServiceImpl implements ISectorService {
         return requestAttributes.getResponse();
     }
 
-    private Clerk parseByTokenKey(String tokenKey) {
-        //记得加前缀，通过前面保存的(tokenKey,token)拿到token
-        String token = (String) redisUtils.get(Constants.Clerk.KEY_TOKEN + tokenKey);
-        log.info("parseByTokenKey token ==> " + token);
-        if (token != null) {
-            try {
-                //说明有token，解析token
-                Claims claims = JwtUtil.parseJWT(token);
-                return ClaimsUtils.claims2Clerk(claims);
-            } catch (Exception e) {
-                //过期了
-                log.info("parseByTokenKey ==> " + tokenKey + " ========== 过期了");
-                return null;
-            }
-        }
-        return null;
-    }
-
     /**
      * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
      */
     @Override
     public UserDetails loadUserByUsername(String clerkAccount) throws UsernameNotFoundException {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
+        //查角色
         Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
         if (byClerkAccount == null){
             throw new UsernameNotFoundException("用户不存在");
         }
-        //根据用户id查找权限
-        AuthoritiesMapper authoritiesMapper = sqlSession.getMapper(AuthoritiesMapper.class);
-        List<Authorities> permissions = authoritiesMapper.getRolePermissions(byClerkAccount.getClerkID());
-        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Authorities permission : permissions) {
-            authorities.add(new SimpleGrantedAuthority(permission.getName()));
-        }
-        sqlSession.close();
-        return new User(byClerkAccount.getClerkAccount(),byClerkAccount.getClerkPwd(),authorities);
+        return byClerkAccount;
     }
-
 
     @Override
     public Clerk findClerkByAccount(String clerkAccount) {
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        SectorMapper sectorMapper = sqlSession.getMapper(SectorMapper.class);
         Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
-        sqlSession.close();
         return byClerkAccount;
     }
 }

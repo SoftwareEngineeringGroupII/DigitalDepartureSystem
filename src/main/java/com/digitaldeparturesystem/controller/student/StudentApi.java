@@ -26,7 +26,7 @@ public class StudentApi {
     public ResponseResult initManagerAccount(@RequestBody Student student, HttpServletRequest request){
         log.info("student name --> " + student.getStuName());
         log.info("student password --> " + student.getStuPwd());
-        return studentService.initManagerAccount(student,request);
+        return studentService.findManagerAccount(student,request);
     }
 
     /**

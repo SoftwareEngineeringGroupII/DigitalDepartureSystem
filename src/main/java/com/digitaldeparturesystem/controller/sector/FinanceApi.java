@@ -1,52 +1,56 @@
 package com.digitaldeparturesystem.controller.sector;
 
+import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.response.ResponseResult;
+import com.digitaldeparturesystem.service.IFinanceService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/sector/finance")
 public class FinanceApi {
 
+    @Autowired
+    private IFinanceService financeService;
+
     /**
-     * 根据学生id查询财务信息
+     * 根据学生学号查询财务信息
      * @param studentId
      * @return
      */
     @GetMapping("/{studentId}")
     public ResponseResult getFinanceByStudentId(@PathVariable("studentId")String studentId){
-        return null;
+        return financeService.getStudentByIdForFinance(studentId);
     }
 
-    /**
-     * 审核学生财务
-     * @param studentId
-     * @param finance
-     * @return
-     */
-    @PostMapping("/{studentId}")
-    public ResponseResult checkFinance(@PathVariable("studentId")String studentId,@RequestBody Finance finance){
-        return null;
-    }
+
 
     /**
-     * 获取已审核的学生财务清单
+     * 按条件分页查询
+     * @param start
+     * @param size
+     * @param stuDept
+     * @param stuType
+     * @param financeStatus
      * @return
      */
-    @GetMapping("/check")
-    public ResponseResult getCheckFinances(){
-        return null;
+    @GetMapping("/selectAllByPageAndType2/{start}/{size}")
+    public  ResponseResult selectAllByPageAndType2(@PathVariable("start")Integer start, @PathVariable("size")Integer size,
+                                                  @RequestParam String stuDept,@RequestParam String stuType,
+                                                  @RequestParam String financeStatus){
+        return financeService.findAllByPageAndType(start,size,stuDept,stuType,financeStatus);
     }
 
-    /**
-     * 获取未审核的学生财务清单
-     * @return
-     */
-    @GetMapping("/uncheck")
-    public ResponseResult getUnCheckFinances(){
-        return null;
+    @PutMapping("/{stuId}")
+    public ResponseResult doCheckForFinance(@PathVariable("stuId")String stuId){
+        return financeService.doCheckForFinance(stuId);
     }
 
 }

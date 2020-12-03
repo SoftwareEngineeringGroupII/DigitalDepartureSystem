@@ -13,7 +13,7 @@ public interface IRoleService {
      * @param role
      * @return
      */
-    ResponseResult addRole(Role role);
+    ResponseResult insertRole(Role role);
 
     /**
      * 更新角色
@@ -34,26 +34,25 @@ public interface IRoleService {
      * 获取全部角色
      * @return
      */
-    ResponseResult getAllRoles();
+    ResponseResult findAllRoles();
 
     /**
      * 通过id获取role
      * @return
      */
-    ResponseResult getRoleById(String roleId);
+    ResponseResult findRoleById(String roleId);
 
     /**
      * 为角色添加权限
      * @param roleId
-     * @param authoritiesList
      * @return
      */
-    ResponseResult addAuthorityToRole(String roleId, List<Authorities> authoritiesList);
+    ResponseResult insertAuthorityToRole(String roleId, List<String> authorityIds);
 
     /**
      * 通过角色id获取角色所拥有的权限
      * @param roleId
      * @return
      */
-    ResponseResult getAuthorityByRole(String roleId);
+    ResponseResult findAuthorityByRole(String roleId);
 }

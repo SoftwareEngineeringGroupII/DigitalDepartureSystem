@@ -1,6 +1,5 @@
 package com.digitaldeparturesystem.controller.admin;
 
-import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IRoleService;
@@ -26,7 +25,7 @@ public class RoleApi {
      */
     @PostMapping()
     public ResponseResult addRole(@RequestBody Role role){
-        return roleService.addRole(role);
+        return roleService.insertRole(role);
     }
 
     /**
@@ -35,7 +34,7 @@ public class RoleApi {
      * @return
      */
     @PutMapping("/{roleId}")
-    public ResponseResult updateClerk(@PathVariable("roleId") String roleId,@RequestBody Role role){
+    public ResponseResult updateRole(@PathVariable("roleId") String roleId,@RequestBody Role role){
         return roleService.updateRole(roleId,role);
     }
 
@@ -44,7 +43,7 @@ public class RoleApi {
      * @return
      */
     @DeleteMapping("/{roleId}")
-    public ResponseResult deleteClerk(@PathVariable String roleId){
+    public ResponseResult deleteRole(@PathVariable String roleId){
         return roleService.deleteRole(roleId);
     }
 
@@ -54,7 +53,7 @@ public class RoleApi {
      */
     @GetMapping("/getAllRoles")
     public ResponseResult getAllRoles(){
-        return roleService.getAllRoles();
+        return roleService.findAllRoles();
     }
 
     /**
@@ -62,7 +61,7 @@ public class RoleApi {
      */
     @GetMapping("/{roleId}")
     public ResponseResult getRoleById(@PathVariable("roleId") String roleId){
-        return roleService.getRoleById(roleId);
+        return roleService.findRoleById(roleId);
     }
 
     /**
@@ -70,12 +69,17 @@ public class RoleApi {
      * @return
      */
     @PostMapping("/authority/{roleId}")
-    public ResponseResult addAuthorityToRole(@PathVariable("roleId") String roleId, List<Authorities> authoritiesList){
-        return roleService.addAuthorityToRole(roleId,authoritiesList);
+    public ResponseResult addAuthorityToRole(@PathVariable("roleId") String roleId, @RequestBody List<String> authorityIds){
+        return roleService.insertAuthorityToRole(roleId,authorityIds);
     }
 
+    /**
+     * 获取用户拥有的权限
+     * @param roleId
+     * @return
+     */
     @GetMapping("/authority/{roleId}")
     public ResponseResult getAuthorityByRole(@PathVariable("roleId") String roleId){
-        return roleService.getAuthorityByRole(roleId);
+        return roleService.findAuthorityByRole(roleId);
     }
 }

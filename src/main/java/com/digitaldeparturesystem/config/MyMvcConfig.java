@@ -1,8 +1,5 @@
 package com.digitaldeparturesystem.config;
 
-
-//import com.sicnu.component.LoginHandlerInterceptor;
-
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +27,11 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 HttpServletResponse response = (HttpServletResponse) res;
                 String method = request.getMethod();
                 // this origin value could just as easily have come from a database
-                response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+                response.setHeader("Access-Control-Allow-Origin", "http://localhost:8085");
                 response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
                 response.setHeader("Access-Control-Max-Age", "3600");
                 response.setHeader("Access-Control-Allow-Credentials", "true");
-                response.setHeader("Access-Control-Allow-Headers", "Accept, Origin, X-Requested-With, Content-Type,Last-Modified,device,token");
+                response.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token,Authorization,ybg");
                 if ("OPTIONS".equals(method)) {//检测是options方法则直接返回200
                     response.setStatus(HttpStatus.OK.value());
                 } else {
@@ -49,5 +46,13 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
             }
         });
     }
+
+//    @Override
+//    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("swagger-ui.html")
+//                .addResourceLocations("classpath:/META-INF/resources/");
+//        registry.addResourceHandler("/webjars/**")
+//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+//    }
 }
 

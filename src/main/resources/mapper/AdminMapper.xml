@@ -12,13 +12,11 @@
     </insert>
 
     <select id="findAllClerks" resultType="com.digitaldeparturesystem.pojo.Clerk">
-        select * from clerk where clerkStatus = 1;
+        select * from clerk;
     </select>
 
     <update id="deleteClerkByStatus" parameterType="java.lang.String">
-        update clerk set
-        clerkStatus = 0
-        where clerkID = #{clerkId};
+        delete from clerk where clerkID = #{clerkId};
     </update>
 
 </mapper>

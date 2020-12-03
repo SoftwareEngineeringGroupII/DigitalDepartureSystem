@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Slf4j
 @CrossOrigin
 @RestController
@@ -29,7 +27,7 @@ public class AdminApi {
         log.info("admin name --> " + clerk.getClerkName());
         log.info("admin pwd --> " + clerk.getClerkPwd());
         log.info("admin account --> " + clerk.getClerkAccount());
-        return adminService.initManagerAccount(clerk);
+        return adminService.insertManagerAccount(clerk);
     }
 
     @GetMapping("/menu")
