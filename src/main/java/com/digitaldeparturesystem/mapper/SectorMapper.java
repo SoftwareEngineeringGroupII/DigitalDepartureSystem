@@ -30,8 +30,6 @@ public interface SectorMapper {
      */
     Clerk findOneById(String clerkId);
 
-    Page<Clerk> findAll(Pageable pageable);
-
     /**
      * 修改clerk
      */

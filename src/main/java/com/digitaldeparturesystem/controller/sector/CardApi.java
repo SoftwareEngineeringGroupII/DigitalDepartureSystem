@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -53,29 +56,15 @@ public class CardApi {
     }
 
 
-    @Resource
-    private StudentMapper studentMapper;
-    /**
-     *  获取全部学生信息：仅限于学生表
-     * @return
-     */
-    @GetMapping("/selectAll")
-    public  ResponseResult selectAll(){
-        List<Student> studentList = studentMapper.getStudentList();
-
-        return ResponseResult.SUCCESS("查询成功").setData(studentList);
-    }
-
-
     /**
      * 一卡通审核
      * @return
      */
 
-    @PutMapping("/checkCard/{stuId}")
-    public ResponseResult  getCheck(@PathVariable("stuId") String stuId){
+    @PutMapping("/checkCard/{stuNumber}")
+    public ResponseResult  getCheck(@PathVariable("stuNumber") String stuNumber){
 
-        return cardService.doCheckForCard(stuId);
+        return cardService.doCheckForCard(stuNumber);
     }
 
 
@@ -88,10 +77,38 @@ public class CardApi {
      * @return
      */
     @PostMapping("/notice")
-    public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
+    public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,
+                                        HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-        return cardService.uploadNotice(notice,photo);
+        return cardService.uploadNotice(notice,photo,request);
     }
+
+
+    /**
+     * 导出所有学生一卡通审核信息
+     * @param response
+     * @return
+     */
+    @GetMapping("/export")
+    public ResponseResult exportCard(HttpServletResponse response) {
+        try {
+            cardService.exportAllCard(response);
+        }catch (Exception e){
+            return ResponseResult.FAILED("导出失败");
+        }
+        return ResponseResult.SUCCESS("导出成功");
+    }
+
+    /**
+     *  查询所有一卡通信息
+     * @return
+     */
+    @GetMapping("/selectAll")
+    public ResponseResult selectAll(){
+        return cardService.selectAll();
+    }
+
+
 
 
 }

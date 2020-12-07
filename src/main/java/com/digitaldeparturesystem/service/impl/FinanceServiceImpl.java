@@ -1,6 +1,9 @@
 package com.digitaldeparturesystem.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.FinanceMapper;
+import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IFinanceService;
@@ -8,12 +11,17 @@ import com.digitaldeparturesystem.utils.IdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +47,16 @@ public class FinanceServiceImpl implements IFinanceService {
 
     /**
      *  根据学号获取学生财务缴费情况
-     * @param stuNum
+     * @param stuNumber
      * @return
      */
     @Override
-    public ResponseResult getStudentByIdForFinance(String stuNum) {
-        Map<String, Object> stuInfoFromFinance = financeMapper.getStudentByIdForFinance(stuNum);
-        if (stuInfoFromFinance.isEmpty()) {
+    public ResponseResult getStudentByIdForFinance(String stuNumber) {
+        if (stuNumber == null) {
+            return ResponseResult.FAILED("输入学号为空,请重新输入");
+        }
+        FinanceInfo stuInfoFromFinance = financeMapper.getStudentByIdForFinance(stuNumber);
+        if (stuInfoFromFinance==null) {
             return ResponseResult.FAILED("查找失败！没有该学号学生的财务信息");
         }
         return ResponseResult.SUCCESS("查找成功！").setData(stuInfoFromFinance);
@@ -54,7 +65,7 @@ public class FinanceServiceImpl implements IFinanceService {
 
 
     /**
-     *  按条件分页查询 ---- 2
+     *  按条件分页查询
      * @param start
      * @param size
      * @param stuDept
@@ -84,8 +95,10 @@ public class FinanceServiceImpl implements IFinanceService {
         //pageHelper使用
         //分页处理,显示第start页的size条数据
         PageHelper.startPage(start,size);
-        List<Map<String, Object>> students = financeMapper.listStudentFinanceInfos(params);
-        PageInfo<Map<String, Object>> financePageInfo = new PageInfo<>(students);
+       // List<Map<String, Object>> students = financeMapper.listStudentFinanceInfos(params);
+        List<FinanceInfo> students = financeMapper.listStudentFinanceInfos(params);
+        //PageInfo<Map<String, Object>> financePageInfo = new PageInfo<>(students);
+        PageInfo<FinanceInfo> financePageInfo = new PageInfo<>(students);
         int pageNum = financePageInfo.getPageNum();
         int pages = financePageInfo.getPages();
         long total = financePageInfo.getTotal();//获取记录总数
@@ -114,19 +127,96 @@ public class FinanceServiceImpl implements IFinanceService {
 
 
     /**
-     * 财务处审核
-     * @param stuId
+     * 财务处审核 根据学生学号：修改审核状态
+     * @param stuNum
      * @return
      */
     @Override
-    public ResponseResult doCheckForFinance(String stuId) {
+    public ResponseResult doCheckForFinance(String stuNum) {
         try {
-            financeMapper.doCheckForFinance(stuId);
+            financeMapper.doCheckForFinance(stuNum);
             return ResponseResult.SUCCESS("审核成功");
         }catch (Exception e){
             return ResponseResult.FAILED("审核失败,请重新进行操作");
         }
     }
+
+
+    /**
+     *  初始化查询已审核数据
+     * @return
+     */
+    public ResponseResult hadCheck(){
+       try {
+           List<FinanceInfo> students = financeMapper.listHadCheck();
+           if (students.isEmpty()){
+               return ResponseResult.FAILED("没有已审核数据信息！");
+           }
+           Map<String, Object> list = new HashMap<>();
+           list.put("students",students);
+           return ResponseResult.SUCCESS("查询到数据").setData(list);
+       }catch (Exception e){
+           return ResponseResult.FAILED("查询数据失败！请重新操作！");
+       }
+    }
+
+    /**
+     * 初始化查询未审核数据
+     * @return
+     */
+    public ResponseResult noCheck() {
+        try {
+            List<FinanceInfo> students = financeMapper.listNoCheck();
+            if (students.isEmpty()){
+                return ResponseResult.FAILED("没有未审核数据信息！");
+            }
+            Map<String, Object> list = new HashMap<>();
+            list.put("students",students);
+            return ResponseResult.SUCCESS("查询到数据").setData(list);
+        } catch (Exception e) {
+            return ResponseResult.FAILED("查询数据失败！请重新操作！");
+        }
+    }
+
+    /**
+     *  导出所有财务信息
+     * @param response
+     */
+    public void exportAllFinance(HttpServletResponse response) throws UnsupportedEncodingException {
+        //查询数据库中所有信息
+        List<FinanceInfo> financeInfos = financeMapper.listAllFinance();
+
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(),FinanceInfo.class,financeInfos);
+
+        response.setHeader("content-Type","application/vnd.ms-excel");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode("财务处审核表","UTF-8")+".xls");
+        response.setCharacterEncoding("UTF-8");
+
+        try{
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+/*
+    public ResponseResult selectAll(){
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("查询失败");
+        }
+        return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
+    }*/
+
+  public  ResponseResult selectAll(){
+      List<FinanceInfo> financeInfos = financeMapper.listAllFinance();
+      if (financeInfos.isEmpty()) {
+          return ResponseResult.FAILED("查询失败");
+      }
+      return ResponseResult.SUCCESS("查询成功").setData(financeInfos);
+
+  }
 
 
 

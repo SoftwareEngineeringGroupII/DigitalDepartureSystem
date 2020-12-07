@@ -1,6 +1,11 @@
 package com.digitaldeparturesystem.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import com.digitaldeparturesystem.mapper.CardMapper;
+import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.Constants;
@@ -8,13 +13,17 @@ import com.digitaldeparturesystem.utils.RedisUtils;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -80,5 +89,38 @@ public class TestController {
         System.out.println("clerk.getClerkAccount() --> " + clerk.getClerkAccount());
         return ResponseResult.SUCCESS("检查成功");
     }
+
+    @Resource
+    FinanceMapper financeMapper;
+
+    @Resource
+    CardMapper cardMapper;
+    /**
+     *  测试导出Excel功能
+     * @return
+     */
+    @GetMapping("/export")
+    public void export(HttpServletResponse response) throws UnsupportedEncodingException {
+        //查询数据库中所有数据
+        List<FinanceInfo> list = financeMapper.listNoCheck();
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), FinanceInfo.class,list);
+
+        response.setHeader("content-Type","application/vnd.ms-excel");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode("财务处审核表","UTF-8")+".xsl");
+        response.setCharacterEncoding("UTF-8");
+
+        try {
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
 
 }

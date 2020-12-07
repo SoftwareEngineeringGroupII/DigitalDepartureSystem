@@ -32,9 +32,9 @@ public class NoticeApi {
      * @return
      */
     @PostMapping("/notice")
-    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
+    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException {
 
-        return cardService.uploadNotice(notice,photo);
+        return cardService.uploadNotice(notice,photo,request);
     }
 
     /**

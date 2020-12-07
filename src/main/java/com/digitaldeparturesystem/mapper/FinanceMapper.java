@@ -1,5 +1,7 @@
 package com.digitaldeparturesystem.mapper;
 
+import com.digitaldeparturesystem.pojo.Finance;
+import com.digitaldeparturesystem.pojo.FinanceInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,10 +10,22 @@ import java.util.Map;
 public interface FinanceMapper {
 
     //根据学生学号查询财务缴费情况
-    Map<String,Object> getStudentByIdForFinance(String stuNumber);
+    FinanceInfo getStudentByIdForFinance(String stuNumber);
 
     //按条件分页查询学生财务缴费情况
-    List<Map<String,Object>> listStudentFinanceInfos(@Param("params")Map<String,String> params);
+    //List<Map<String,Object>> listStudentFinanceInfos(@Param("params")Map<String,String> params);
+    List<FinanceInfo> listStudentFinanceInfos(@Param("params")Map<String,String> params);
 
-    void doCheckForFinance(String stuID);
+    //根据学号审核财务状态
+    void doCheckForFinance(String stuNum);
+
+
+    //查询已经审核的财务情况
+    List<FinanceInfo> listHadCheck();
+
+    //查询未审核的财务情况
+    //List<Map<String,Object>> listNoCheck();
+    List<FinanceInfo> listNoCheck();
+
+    List<FinanceInfo> listAllFinance();
 }

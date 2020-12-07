@@ -1,11 +1,20 @@
 package com.digitaldeparturesystem.pojo;
 
 
+//import cn.afterturn.easypoi.excel.annotation.Excel;
+
 public class Finance {
 
+ // @Excel(name = "财务主键")
   private String financeId;
+
+  //@Excel(name = "学生ID")
   private String stuId;
+
+  //@Excel(name = "应缴费")
   private long expense;
+
+  //@Excel(name = "缴费情况")
   private String financeStatus;
 
 

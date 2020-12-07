@@ -1,9 +1,15 @@
 package com.digitaldeparturesystem.pojo;
 
 
-import java.util.Date;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class Student {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class Student implements UserDetails {
 
   private String stuId;
   private String stuNumber;
@@ -14,18 +20,26 @@ public class Student {
   private String stuContact;
   private String stuSex;
   private String stuStatus;
-  private Date stuInDate;
-  private Date stuOutData;
+  private String stuInDate;
+  private String stuOutDate;
   private String stuAddress;
   private String stuSpecialty;
   private String stuNation;
   private String stuFeature;
   private String stuType;
   private String stuCredit;
-  private String apartmentNum;
-  private String dormNum;
   private String stuPhoneNumber;
   private String stuPhoto;
+
+  private List<Role> userRoles;
+
+  public List<Role> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(List<Role> userRoles) {
+    this.userRoles = userRoles;
+  }
 
   public String getStuPhoneNumber() {
     return stuPhoneNumber;
@@ -123,21 +137,20 @@ public class Student {
     this.stuStatus = stuStatus;
   }
 
-
-  public Date getStuInDate() {
+  public String getStuInDate() {
     return stuInDate;
   }
 
-  public void setStuInDate(Date stuInDate) {
+  public void setStuInDate(String stuInDate) {
     this.stuInDate = stuInDate;
   }
 
-  public Date getStuOutData() {
-    return stuOutData;
+  public String getStuOutDate() {
+    return stuOutDate;
   }
 
-  public void setStuOutData(Date stuOutData) {
-    this.stuOutData = stuOutData;
+  public void setStuOutDate(String stuOutDate) {
+    this.stuOutDate = stuOutDate;
   }
 
   public String getStuAddress() {
@@ -193,22 +206,45 @@ public class Student {
     this.stuCredit = stuCredit;
   }
 
-
-  public String getApartmentNum() {
-    return apartmentNum;
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+    if (userRoles == null){
+      return authorities;
+    }
+    for (Role role : userRoles) {
+      authorities.add(new SimpleGrantedAuthority(role.getName()));
+    }
+    return authorities;
   }
 
-  public void setApartmentNum(String apartmentNum) {
-    this.apartmentNum = apartmentNum;
+  @Override
+  public String getPassword() {
+    return this.stuPwd;
   }
 
-
-  public String getDormNum() {
-    return dormNum;
+  @Override
+  public String getUsername() {
+    return this.stuPwd;
   }
 
-  public void setDormNum(String dormNum) {
-    this.dormNum = dormNum;
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
   }
 
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }

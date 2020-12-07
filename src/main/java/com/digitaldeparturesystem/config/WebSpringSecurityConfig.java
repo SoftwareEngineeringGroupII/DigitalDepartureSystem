@@ -7,6 +7,7 @@ import com.digitaldeparturesystem.mapper.UserRoleMapper;
 import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.service.ISectorService;
+import com.digitaldeparturesystem.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -52,12 +53,16 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
     ISectorService userDetailsService; // 自定义user
 
     @Autowired
+    IStudentService studentService; // 自定义user
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 加入自定义的安全认证
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(studentService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override

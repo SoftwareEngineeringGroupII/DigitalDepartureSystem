@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/sector/library")
-public class Library {
+public class LibraryApi {
 
     /**
-     * 通过学生Id查询图书馆细腻些
-     * @param studentId
+     * 通过学生学号查询图书馆详情
+     * @param stuNumber
      * @return
      */
-    @GetMapping("/studentId")
-    public ResponseResult getLibraryByStudentId(@PathVariable("studentId")String studentId){
+    @GetMapping("/stuNumber")
+    public ResponseResult getLibraryByStudentId(@PathVariable("stuNumber")String stuNumber){
         return null;
     }
 

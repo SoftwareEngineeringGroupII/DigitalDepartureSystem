@@ -8,6 +8,9 @@ import java.util.Map;
 
 public interface StudentMapper {
 
+    //找到学生，通过学生的Account
+    Student findOneByStudentAccount(String stuNumber);
+
     //获取学生列表
     List<Student> getStudentList();
 
@@ -34,4 +37,10 @@ public interface StudentMapper {
 
     //根据学号审核学生一卡通
     int doCheckCard(String stuId);
+
+    /**
+     * 插入学生
+     * @param student
+     */
+    void insertStudent(Student student);
 }
