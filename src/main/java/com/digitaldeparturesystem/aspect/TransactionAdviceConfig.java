@@ -40,11 +40,15 @@ public class TransactionAdviceConfig {
         source.addTransactionalMethod("insert*", txAttr_REQUIRED);
         source.addTransactionalMethod("delete*", txAttr_REQUIRED);
         source.addTransactionalMethod("update*", txAttr_REQUIRED);
+        source.addTransactionalMethod("create*", txAttr_REQUIRED);
+        source.addTransactionalMethod("check*", txAttr_REQUIRED);
+        source.addTransactionalMethod("add*", txAttr_REQUIRED);
         source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("login*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("change*", txAttr_REQUIRED_READONLY);
-        
+
         return new TransactionInterceptor(transactionManager, source);
     }
 

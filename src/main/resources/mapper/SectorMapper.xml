@@ -26,4 +26,8 @@
         clerkEmail = #{clerkEmail}
         where clerkID = #{clerkID};
     </update>
+
+    <delete id="deleteRoleToUser" parameterType="map">
+        delete from user_role where user_id = #{clerkId} and role_id = #{roleId};
+    </delete>
 </mapper>

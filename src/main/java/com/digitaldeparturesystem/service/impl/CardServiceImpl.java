@@ -9,9 +9,7 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
-import com.digitaldeparturesystem.utils.Constants;
 import com.digitaldeparturesystem.utils.IdWorker;
-import com.digitaldeparturesystem.utils.MybatisUtils;
 import com.digitaldeparturesystem.utils.TextUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -111,7 +109,6 @@ public class CardServiceImpl implements ICardService {
     }
 
 
-
     /**
      *  分页查询所有学生的所有信息(仅限于学生表)
      * @param map
@@ -124,8 +121,6 @@ public class CardServiceImpl implements ICardService {
 
         //pageHelper使用
         PageHelper.startPage(page,size);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
         List<Student> userList = studentMapper.getStudentList();
         PageInfo<Student> studentPageInfo = new PageInfo<>(userList);
 

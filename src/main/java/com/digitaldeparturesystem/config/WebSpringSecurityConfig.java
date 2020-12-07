@@ -79,6 +79,7 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .formLogin()  //开启登录
+//                .loginPage("/common/login")
                 .successHandler(authenticationSuccessHandler) // 登录成功
                 .failureHandler(authenticationFailureHandler) // 登录失败
                 .permitAll()

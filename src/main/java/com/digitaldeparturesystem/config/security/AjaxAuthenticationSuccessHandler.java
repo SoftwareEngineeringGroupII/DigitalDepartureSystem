@@ -23,10 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -74,19 +71,33 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                 authorityList.add(authority);
             }
         }
-        //保存进Redis
+        //权限保存进Redis
         redisUtils.set(Constants.Clerk.KEY_AUTHORITY_CONTENT + userDetails.getClerkID(), authorityList, Constants.TimeValueInSecond.HOUR_2);
         //获取用户token
         String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
-        if (tokenKey == null){
-            tokenKey = sectorService.createToken(httpServletResponse, userDetails);
+        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils, tokenKey);
+        //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
+        if (clerk == null){
+            //删除旧的refreshToken，创建新的refreshToken
+            sectorService.createToken(httpServletResponse, userDetails);
         }
         httpServletResponse.setHeader("Content-type","text/html;charset=UTF-8");//设置相遇类型为html,编码为utf-8,处理相应页面显示的乱码
         httpServletResponse.setCharacterEncoding("UTF-8");//如果响应类型为文本,那么就需要设置文本的编码类型,然后浏览器使用这个编码来解读文本
 
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:8085");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token,Authorization,ybg");
+
+
+//        Map<String,String> result = new HashMap<>();
+//        result.put("clerkAccount",userDetails.getClerkAccount());
+//        result.put("clerkPhoto",userDetails.getClerkPhoto());
+
         httpServletResponse.getWriter().
                 write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                        setJwtToken(tokenKey).setData(authorityList)));
+                        setData(JSON.toJSON(userDetails))));
     }
 }
 
