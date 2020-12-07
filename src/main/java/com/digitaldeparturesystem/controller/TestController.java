@@ -10,7 +10,6 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.Constants;
 import com.digitaldeparturesystem.utils.RedisUtils;
-import com.sun.deploy.net.URLEncoder;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Slf4j
@@ -106,7 +106,7 @@ public class TestController {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), FinanceInfo.class,list);
 
         response.setHeader("content-Type","application/vnd.ms-excel");
-        response.setHeader("Content-Disposition","attachment;filename="+URLEncoder.encode("财务处审核表","UTF-8")+".xsl");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode("财务处审核表","UTF-8")+".xsl");
         response.setCharacterEncoding("UTF-8");
 
         try {

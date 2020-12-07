@@ -9,7 +9,6 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.IAdminService;
 import com.digitaldeparturesystem.utils.*;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -163,7 +162,7 @@ public class AdminServiceImpl implements IAdminService {
         if (clerk == null){
             return ResponseResult.FAILED("用户不存在");
         }
-        adminMapper.deleteClerkByStatus(clerkId);
+        adminMapper.deleteClerk(clerkId);
         return ResponseResult.SUCCESS("用户删除成功");
     }
 

@@ -14,4 +14,8 @@
         values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkAccount},#{clerkPhoto},#{clerkStatus});
     </insert>
 
+    <delete id="deleteClerk" parameterType="java.lang.String">
+        delete from clerk where clerkID = #{clerkId};
+    </delete>
+
 </mapper>

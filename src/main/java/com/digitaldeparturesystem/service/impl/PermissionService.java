@@ -1,29 +1,19 @@
 package com.digitaldeparturesystem.service.impl;
 
-import com.digitaldeparturesystem.mapper.RoleAuthorityMapper;
-import com.digitaldeparturesystem.mapper.SectorMapper;
-import com.digitaldeparturesystem.mapper.UserRoleMapper;
 import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
-import com.digitaldeparturesystem.pojo.Role;
-import com.digitaldeparturesystem.service.IAdminService;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.service.ISectorService;
+import com.digitaldeparturesystem.service.IStudentService;
 import com.digitaldeparturesystem.utils.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -32,6 +22,9 @@ public class PermissionService {
 
     @Autowired
     private ISectorService sectorService;
+
+    @Autowired
+    private IStudentService studentService;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -45,13 +38,22 @@ public class PermissionService {
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         //用用户cookies里面获取token
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
-        Clerk clerk;
-        if (tokenKey == null){
-            clerk = sectorService.checkClerk();
-        }else {
-            clerk = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
+        Clerk clerk = null;
+        //解析管理员
+        try {
+            if (tokenKey == null){
+                clerk = sectorService.checkClerk();
+            }else {
+                clerk = TokenUtils.parseClerkByTokenKey(redisUtils,tokenKey);
+            }
+            if (clerk.getClerkID() == null){
+                clerk = null;
+            }
+        } catch (Exception e) {
+            clerk = null;
         }
         boolean hasPermission = false;
+        //管理员权限
         if (clerk != null) {
             //记录
             log.info(IpUtil.getIpAddr(request) + " -- " + clerk.getClerkAccount() + " -- " + request.getRequestURI());
@@ -76,9 +78,26 @@ public class PermissionService {
                 }
             }
             return hasPermission;
-        } else {
-            return false;
         }
+        //解析学生
+        Student student = null;
+        try {
+            if (tokenKey == null){
+                student = studentService.checkStudent();
+            }else {
+                student = TokenUtils.parseStudentByTokenKey(redisUtils,tokenKey);
+            }
+        } catch (Exception e) {
+
+        }
+        //学生权限
+        if (student != null){
+            //记录
+            log.info(IpUtil.getIpAddr(request) + " -- " + student.getStuNumber() + " -- " + request.getRequestURI());
+            AntPathMatcher antPathMatcher = new AntPathMatcher();
+            return antPathMatcher.match("/**", request.getRequestURI());
+        }
+        return false;
     }
 
 }

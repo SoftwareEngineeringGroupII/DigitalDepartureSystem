@@ -14,9 +14,9 @@
     </select>
 
     <!--对象中的属性可以换直接取出来-->
-    <insert id="addStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
-        insert into student (id,stuNumber,stuName,stuPwd,stuDept,stuClass,stuPhoneNumber,stuPicture,stuSex,stuStatus,stuInDate,stuOutDate,stuAddress,stuSpecialty,stuNation,stuFeature,stuType,stuCredit,apartmentNum,dormNum,stuContact)
-        values(#{id},#{stuNumber},#{stuName},#{stuPwd},#{stuDept},#{stuClass},#{stuPhoneNumber},#{stuPicture},#{stuSex},#{stuStatus},#{stuInDate},#{stuOutDate},#{stuAddress},#{stuSpecialty},#{stuNation},#{stuFeature},#{stuType},#{stuCredit},#{apartmentNum},#{dormNum},#{stuContact});
+    <insert id="insertStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
+        insert into student (stuID,stuNumber,stuName,stuPwd,stuDept,stuClass,stuPhoneNumber,stuPhoto,stuSex,stuStatus,stuInDate,stuOutDate,stuAddress,stuSpecialty,stuNation,stuFeature,stuType,stuCredit,stuContact)
+        values(#{stuId},#{stuNumber},#{stuName},#{stuPwd},#{stuDept},#{stuClass},#{stuPhoneNumber},#{stuPhoto},#{stuSex},#{stuStatus},#{stuInDate},#{stuOutDate},#{stuAddress},#{stuSpecialty},#{stuNation},#{stuFeature},#{stuType},#{stuCredit},#{stuContact});
     </insert>
 
     <!--对象中的属性可以换直接取出来-->
@@ -39,18 +39,7 @@
         stuFeature = #{stuFeature},
         stuType = #{stuType},
         stuCredit = #{stuCredit},
-        apartmentNum = #{apartmentNum},
-        dormNum = #{dormNum},
         stuContact = #{stuContact}
-        where id = #{id};
-    </insert>
-
-    <insert id="updateStudent2" parameterType="map">
-        update student set
-        stuName = #{name},
-        stuPwd = #{password},
-        stuPhoneNumber = #{phone},
-        stuAddress = #{address}
         where id = #{id};
     </insert>
 
@@ -59,5 +48,8 @@
         delete from digital_departure_system.tb_student where id = #{id};
     </insert>
 
+    <select id="findOneByStudentAccount" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuNumber = #{stuNumber};
+    </select>
 
 </mapper>

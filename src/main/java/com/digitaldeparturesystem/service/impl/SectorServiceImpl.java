@@ -1,10 +1,7 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.*;
-import com.digitaldeparturesystem.pojo.Authorities;
-import com.digitaldeparturesystem.pojo.Clerk;
-import com.digitaldeparturesystem.pojo.Refreshtoken;
-import com.digitaldeparturesystem.pojo.Role;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.ISectorService;
@@ -14,11 +11,8 @@ import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -367,7 +361,7 @@ public class SectorServiceImpl implements ISectorService {
         String tokenKey = CookieUtils.getCookie(getRequest(), Constants.Clerk.COOKIE_TOKEN_KEY);
         log.info("checkClerk tokenKey ==> " + tokenKey);
         //解析
-        clerkFromToken = TokenUtils.parseByTokenKey(redisUtils,tokenKey);
+        clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils,tokenKey);
         if (clerkFromToken == null) {
             //说明解析出错了(过期了)
             //1、去mysql查询refreshToken
@@ -390,7 +384,7 @@ public class SectorServiceImpl implements ISectorService {
                 String newTokenKey = createToken(getResponse(), clerkFromDb);
                 //返回token
                 log.info("create new token and refresh token =====");
-                return TokenUtils.parseByTokenKey(redisUtils,newTokenKey);
+                return TokenUtils.parseClerkByTokenKey(redisUtils,newTokenKey);
             } catch (Exception exception) {
                 log.info("refresh token 已经过期 =====");
                 //4、如果refreshToken过期了，就当前访问没有登录，提示用户登录
@@ -432,22 +426,30 @@ public class SectorServiceImpl implements ISectorService {
         return requestAttributes.getResponse();
     }
 
-    /**
-     * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
-     */
-    @Override
-    public UserDetails loadUserByUsername(String clerkAccount) throws UsernameNotFoundException {
-        //查角色
-        Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
-        if (byClerkAccount == null){
-            throw new UsernameNotFoundException("用户不存在");
-        }
-        return byClerkAccount;
-    }
+    @Resource
+    private StudentMapper studentMapper;
 
     @Override
     public Clerk findClerkByAccount(String clerkAccount) {
         Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(clerkAccount);
+        return byClerkAccount;
+    }
+
+    /**
+     * 表单登录的时候会调用loadUserByUsername来验证前端传过来的账号密码是否正确
+     */
+    @Override
+    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+        //查角色
+        Clerk byClerkAccount = sectorMapper.findOneByClerkAccount(account);
+        if (byClerkAccount == null){
+            Student student = studentMapper.findOneByStudentAccount(account);
+            if (student == null){
+                throw new UsernameNotFoundException("用户不存在");
+            }else {
+                return student;
+            }
+        }
         return byClerkAccount;
     }
 }

@@ -7,14 +7,14 @@ import com.digitaldeparturesystem.mapper.UserRoleMapper;
 import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Role;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ISectorService;
+import com.digitaldeparturesystem.service.IStudentService;
 import com.digitaldeparturesystem.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +32,8 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
     @Autowired
     private ISectorService sectorService;
 
-    @Resource
-    private SectorMapper sectorMapper;
+    @Autowired
+    private IStudentService studentService;
 
     @Resource
     private UserRoleMapper userRoleMapper;
@@ -54,33 +54,6 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        Clerk userDetails = (Clerk) authentication.getPrincipal();
-        //登录成功
-        log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> login success" );
-        log.info("账户名 ==> " + userDetails.getClerkAccount());
-        //获取用户的权限
-        List<Role> roles = userRoleMapper.getRolesByUser(userDetails.getClerkID());
-        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
-        Set<Authorities> authorityList = new HashSet<>();
-        //查权限
-        for (Role role : roles) {
-            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
-            for (Authorities authority : authorities) {
-                AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
-                //添加权限
-                authorityList.add(authority);
-            }
-        }
-        //权限保存进Redis
-        redisUtils.set(Constants.Clerk.KEY_AUTHORITY_CONTENT + userDetails.getClerkID(), authorityList, Constants.TimeValueInSecond.HOUR_2);
-        //获取用户token
-        String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
-        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils, tokenKey);
-        //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
-        if (clerk == null){
-            //删除旧的refreshToken，创建新的refreshToken
-            sectorService.createToken(httpServletResponse, userDetails);
-        }
         httpServletResponse.setHeader("Content-type","text/html;charset=UTF-8");//设置相遇类型为html,编码为utf-8,处理相应页面显示的乱码
         httpServletResponse.setCharacterEncoding("UTF-8");//如果响应类型为文本,那么就需要设置文本的编码类型,然后浏览器使用这个编码来解读文本
 
@@ -91,13 +64,64 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token,Authorization,ybg");
 
 
-//        Map<String,String> result = new HashMap<>();
-//        result.put("clerkAccount",userDetails.getClerkAccount());
-//        result.put("clerkPhoto",userDetails.getClerkPhoto());
+        Object principal = authentication.getPrincipal();
+        Clerk clerk = null;
+        log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> login success" );
+        if (principal instanceof Clerk){
+            clerk = (Clerk)principal;
+            //登录成功
+            log.info("管理员账户名 ==> " + clerk.getClerkAccount());
+        }
+        Student student = null;
+        if (principal instanceof Student){
+            student = (Student) principal;
+            //登录成功
+            log.info("学生账户名 ==> " + student.getStuNumber());
+        }
 
-        httpServletResponse.getWriter().
-                write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                        setData(JSON.toJSON(userDetails))));
+        List<Role> roles = new ArrayList<>();
+        if (clerk != null){
+            //获取用户的权限
+            roles = userRoleMapper.getRolesByUser(clerk.getClerkID());
+            //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
+            Set<Authorities> authorityList = new HashSet<>();
+            //查权限
+            for (Role role : roles) {
+                List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+                for (Authorities authority : authorities) {
+                    AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
+                    //添加权限
+                    authorityList.add(authority);
+                }
+            }
+            //权限保存进Redis
+            redisUtils.set(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID(), authorityList, Constants.TimeValueInSecond.HOUR_2);
+            //获取用户token
+            String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
+            Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
+            //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
+            if (clerkFromToken == null){
+                //删除旧的refreshToken，创建新的refreshToken
+                sectorService.createToken(httpServletResponse, clerk);
+            }
+            httpServletResponse.getWriter().
+                    write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                            setData(JSON.toJSON(clerk))));
+        }
+        if(student != null){
+            //获取用户token
+            String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
+            Student studentFromToken = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
+            //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
+            if (studentFromToken == null){
+                //删除旧的refreshToken，创建新的refreshToken
+                studentService.createToken(httpServletResponse, student);
+            }
+            httpServletResponse.getWriter().
+                    write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                            setData(JSON.toJSON(student))));
+        }
+
     }
 }
 
