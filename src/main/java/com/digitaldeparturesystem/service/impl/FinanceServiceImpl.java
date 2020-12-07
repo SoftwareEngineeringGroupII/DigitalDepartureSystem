@@ -3,7 +3,6 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.FinanceMapper;
-import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
@@ -11,7 +10,7 @@ import com.digitaldeparturesystem.service.IFinanceService;
 import com.digitaldeparturesystem.utils.IdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.net.URLEncoder;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,6 +201,23 @@ public class FinanceServiceImpl implements IFinanceService {
         }
     }
 
+/*
+    public ResponseResult selectAll(){
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("查询失败");
+        }
+        return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
+    }*/
+
+  public  ResponseResult selectAll(){
+      List<FinanceInfo> financeInfos = financeMapper.listAllFinance();
+      if (financeInfos.isEmpty()) {
+          return ResponseResult.FAILED("查询失败");
+      }
+      return ResponseResult.SUCCESS("查询成功").setData(financeInfos);
+
+  }
 
 
 

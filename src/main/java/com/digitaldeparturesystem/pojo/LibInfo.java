@@ -2,24 +2,26 @@ package com.digitaldeparturesystem.pojo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 
-public class CardInfo  {
-    @Excel(name = "学号" ,width = 20)
+public class LibInfo {
+
+    @Excel(name = "学号")
     private String stuNumber;
 
     @Excel(name = "姓名")
     private String stuName;
 
-    @Excel(name = "学院",width = 20)
-    private String stuDept;
+    @Excel(name = "学院")
+    private String  stuDept;
 
-    @Excel(name = "学生类型")
+    @Excel(name = "类型")
     private String stuType;
 
-    @Excel(name = "一卡通余额")
-    private String cardBalance;
+    @Excel(name = "未归还书数")
+    private String AllBook;
 
-    @Excel(name = "一卡通状态")
-    private String cardStatus;
+    @Excel(name = "通过状态")
+    private String libStatus;
+
 
     public String getStuNumber() {
         return stuNumber;
@@ -53,19 +55,24 @@ public class CardInfo  {
         this.stuType = stuType;
     }
 
-    public String getCardBalance() {
-        return cardBalance;
+    public String getAllBook() {
+        return AllBook;
     }
 
-    public void setCardBalance(String cardBalance) {
-        this.cardBalance = cardBalance;
+    public void setAllBook(String allBook) {
+        AllBook = allBook;
     }
 
-    public String getCardStatus() {
-        return cardStatus;
+    public String getLibStatus() {
+        return libStatus;
     }
 
-    public void setCardStatus(String cardStatus) {
-        this.cardStatus = cardStatus;
+    public void setLibStatus(String libStatus) {
+        this.libStatus = libStatus;
     }
+
+
+
+
+
 }

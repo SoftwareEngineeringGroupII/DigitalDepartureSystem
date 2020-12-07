@@ -16,7 +16,7 @@ public interface ICardService {
 
 
     //上传公告
-    ResponseResult uploadNotice(Notice notice, MultipartFile photo) throws IOException;
+    ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException;
 
     //获取全部学生信息
    // public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);
@@ -39,6 +39,9 @@ public interface ICardService {
 
     //导出所有学生一卡通信息
     void exportAllCard(HttpServletResponse response) throws UnsupportedEncodingException;
+
+    //查询所有一卡通情况
+    ResponseResult selectAll(HttpServletRequest request);
 
 }
 

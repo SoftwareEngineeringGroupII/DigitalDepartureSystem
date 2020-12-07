@@ -106,13 +106,21 @@ public class DormApi {
     @GetMapping("/export")
     public ResponseResult exportDorm(HttpServletResponse response){
         try {
-
+            dormService.exportAllDorm(response);
         }catch (Exception e){
             return ResponseResult.FAILED("导出失败");
         }
         return ResponseResult.SUCCESS("导出成功");
     }
 
+    /**
+     *  查询所有退寝状态
+     * @return
+     */
+    @GetMapping("/selectAll")
+    public ResponseResult selectAll(){
+        return dormService.selectAll();
+    }
 
 
 }

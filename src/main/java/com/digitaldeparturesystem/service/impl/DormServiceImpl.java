@@ -9,7 +9,6 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.net.URLEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +153,18 @@ public class DormServiceImpl implements IDormService {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     *  查询所有退寝状态
+     * @return
+     */
+    public ResponseResult selectAll(){
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("查询失败");
+        }
+        return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
     }
 
 

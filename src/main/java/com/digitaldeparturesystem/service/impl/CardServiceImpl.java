@@ -8,11 +8,9 @@ import com.digitaldeparturesystem.mapper.StudentMapper;
 import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
-import com.digitaldeparturesystem.utils.IdWorker;
-import com.digitaldeparturesystem.utils.TextUtils;
+import com.digitaldeparturesystem.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.net.URLEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,11 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,9 +64,12 @@ public class CardServiceImpl implements ICardService {
      * @return
      */
     @Override
-    public ResponseResult uploadNotice(Notice notice, MultipartFile photo) throws IOException {
+    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException {
 
         //获取当前用户信息
+        String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
+        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils, tokenKey);
+       // log.info("职工姓名"+clerk.getClerkName()+"");
 
         //检查数据:标题、内容不可以为空
         if (TextUtils.isEmpty(notice.getTitle())) {
@@ -88,8 +92,8 @@ public class CardServiceImpl implements ICardService {
             newNotice.setTitle(notice.getTitle());//标题
             newNotice.setContent(notice.getContent());//内容
             newNotice.setRemark(notice.getRemark());//设置备注
-            //newNotice1.setPublisherId(currentUser.getClerkID());//获取当前发布者ID
-            //newNotice1.setNoticeType(currentUser.getDepartment()); //获取当前发布者部门
+            newNotice.setPublisherId(clerk.getClerkID());//获取当前发布者ID
+            newNotice.setNoticeType(clerk.getDepartment()); //获取当前发布者部门
             newNotice.setCheckStatus("0");//默认未审核
             newNotice.setIsTop(notice.getIsTop()); //默认非置顶:这里前端有个选择置不置顶,但是好像是超级管理员的事情
             newNotice.setPublishTime(new Date());//发布时间
@@ -244,6 +248,28 @@ public class CardServiceImpl implements ICardService {
         }
     }
 
+    @Autowired
+    private RedisUtils redisUtils;
+
+    /**
+     * 查询所有一卡通情况
+     * @return
+     */
+    public ResponseResult selectAll(HttpServletRequest request){
+
+        /*
+        String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
+        Clerk clerk = TokenUtils.parseByTokenKey(redisUtils, tokenKey);
+        log.info("职工姓名"+clerk.getClerkName()+"");
+        log.info("职工用户名"+clerk.getUsername()+"");
+        */
+
+        List<CardInfo> cardInfos = cardMapper.listAllCard();
+        if (cardInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有数据");
+        }
+        return ResponseResult.SUCCESS("查询一卡通成功").setData(cardInfos);
+    }
 
 
 
