@@ -104,8 +104,8 @@ public class CardApi {
      * @return
      */
     @GetMapping("/selectAll")
-    public ResponseResult selectAll(HttpServletRequest request){
-        return cardService.selectAll(request);
+    public ResponseResult selectAll(){
+        return cardService.selectAll();
     }
 
 

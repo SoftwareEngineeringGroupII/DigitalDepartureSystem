@@ -248,6 +248,15 @@ public class CardServiceImpl implements ICardService {
         }
     }
 
+    @Override
+    public ResponseResult selectAll() {
+        List<CardInfo> cardInfos = cardMapper.listAllCard();
+        if (cardInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有数据");
+        }
+        return ResponseResult.SUCCESS("查询成功").setData(cardInfos);
+    }
+
     @Autowired
     private RedisUtils redisUtils;
 

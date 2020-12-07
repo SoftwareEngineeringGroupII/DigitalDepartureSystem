@@ -41,7 +41,7 @@ public interface ICardService {
     void exportAllCard(HttpServletResponse response) throws UnsupportedEncodingException;
 
     //查询所有一卡通情况
-    ResponseResult selectAll(HttpServletRequest request);
+    ResponseResult selectAll();
 
 }
 

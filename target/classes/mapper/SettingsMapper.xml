@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口-->
+<mapper namespace="com.digitaldeparturesystem.mapper.SettingsMapper">
+
+    <!--select查询语句-->
+
+    <!--对象中的属性可以换直接取出来-->
+    <select id="findOneByKey" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Settings">
+        select * from settings where `key` = #{key};
+    </select>
+
+    <insert id="addSetting" parameterType="com.digitaldeparturesystem.pojo.Settings">
+        insert into settings(id,`key`,`value`,createTime,updateTime) values (#{id},#{key},#{value},#{createTime},#{updateTime});
+    </insert>
+
+</mapper>
