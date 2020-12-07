@@ -1,0 +1,70 @@
+[2020/12/04-08:40:47] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/04-08:40:51] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/04-08:40:51] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018180(String)
+[2020/12/04-08:40:51] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/04-08:40:52] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/04-08:41:09] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/04-08:41:09] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018180(String)
+[2020/12/04-08:41:09] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/04-08:41:10] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/04-08:41:14] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/04-08:41:14] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018180(String)
+[2020/12/04-08:41:14] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/04-08:41:15] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/04-08:41:25] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/04-08:41:25] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110(String)
+[2020/12/04-08:41:25] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 账户名 ==> 2018110
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 1
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 782284404641759232(String)
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 0
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 781871136110542848(String)
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 1
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 1
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/04-08:41:26] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 784338567924023296(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODE4NzExMzYxMTA1NDI4NDgiLCJpYXQiOjE2MDcwNDI0ODYsImV4cCI6MTYwOTYzNDQ4Nn0.iQpKWZ148W8xCk_62A5tF4oG8r_OuoAgxdGUfqgBY8k(String), 781871136110542848(String), 6885a3755615b49a0ded0540c9f21601(String), 2020-12-04 08:41:26.899(Timestamp), 2020-12-04 08:41:26.899(Timestamp)
+[2020/12/04-08:41:27] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/04-08:41:38] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /common/menu
+[2020/12/04-08:41:43] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /common/menu
+[2020/12/04-08:41:50] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /
+[2020/12/04-08:41:58] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-ui.html
+[2020/12/04-08:41:58] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/04-08:41:58] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/04-08:41:58] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/04-08:41:58] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/04-08:41:58] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/04-08:41:58] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/04-08:41:59] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:41:59] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/ui
+[2020/12/04-08:41:59] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:00] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/security
+[2020/12/04-08:42:00] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources
+[2020/12/04-08:42:00] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/04-08:42:00] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /
+[2020/12/04-08:42:00] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/04-08:42:00] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/04-08:42:00] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/04-08:42:00] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/04-08:42:00] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /csrf
+[2020/12/04-08:42:02] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/04-08:42:04] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/04-08:42:04] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:06] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:06] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/04-08:42:09] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:10] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:11] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:12] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:13] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:14] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:15] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:16] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:17] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:42:18] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:56:22] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/04-08:56:23] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png

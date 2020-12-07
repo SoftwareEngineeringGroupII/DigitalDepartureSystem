@@ -19,7 +19,7 @@ public class DetailsApi {
     /**
      * 显示学生个人信息
      */
-    @PostMapping("/student_details")
+    @GetMapping("/student_details")
     public ResponseResult showDetails(@RequestBody Student student) {
         return detailsService.showStuDetails(student);
     }

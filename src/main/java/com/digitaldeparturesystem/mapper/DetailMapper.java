@@ -2,10 +2,12 @@ package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.Student;
 
+import java.util.Map;
+
 public interface DetailMapper {
     /**
      * 展示学生信息
-     * @param student
+     * @param stuNumber
      */
-    void showDetails(Student student);
+    Map<String,Object> showDetails(Student stuNumber);
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口-->
+<mapper namespace="com.digitaldeparturesystem.mapper.MassageMapper">
+
+    <!--select查询语句-->
+
+    <!--按ID查找反馈-->
+    <select id="findOneById" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Message">
+        select * from message where `id` = #{messageId};
+    </select>
+    <!--添加新的反馈-->
+    <insert id="addMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
+        insert into message(messageId,sendId,`title`,'content',messagedate) values (#{messageId},#{sendId},#{title},#{content},#{messagedate});
+    </insert>
+    <!--删除已发布的反馈-->
+    <delete id="deleteMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
+        delete from digital_departure_system.tb_message where messageId = #{messageId};
+    </delete>
+
+</mapper>

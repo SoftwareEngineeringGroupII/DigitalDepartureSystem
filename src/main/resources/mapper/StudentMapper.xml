@@ -13,10 +13,14 @@
         select * from student where id = #{id};
     </select>
 
+    <select id="getStudentByNumber" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuNumber = #{stuNumber};
+    </select>
+
     <!--对象中的属性可以换直接取出来-->
     <insert id="addStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
-        insert into student (id,stuNumber,stuName,stuPwd,stuDept,stuClass,stuPhoneNumber,stuPicture,stuSex,stuStatus,stuInDate,stuOutDate,stuAddress)
-        values(#{id},#{stuNumber},#{stuName},#{stuPwd},#{stuDept},#{stuClass},#{stuPhoneNumber},#{stuPicture},#{stuSex},#{stuStatus},#{stuInDate},#{stuOutDate},#{stuAddress});
+        insert into student (id,stuNumber,stuName,stuPwd,stuDept,stuClass,stuPhoneNumber,stuPicture,stuSex,stuStatus,stuInDate,stuOutDate,stuAddress,stuSpecialty,stuNation,stuFeature,stuType,stuCredit,apartmentNum,dormNum,stuContact)
+        values(#{id},#{stuNumber},#{stuName},#{stuPwd},#{stuDept},#{stuClass},#{stuPhoneNumber},#{stuPicture},#{stuSex},#{stuStatus},#{stuInDate},#{stuOutDate},#{stuAddress},#{stuSpecialty},#{stuNation},#{stuFeature},#{stuType},#{stuCredit},#{apartmentNum},#{dormNum},#{stuContact});
     </insert>
 
     <!--对象中的属性可以换直接取出来-->
@@ -33,7 +37,15 @@
         stuStatus = #{stuStatus},
         stuInDate = #{stuInDate},
         stuOutDate = #{stuOutDate},
-        stuAddress = #{stuAddress}
+        stuAddress = #{stuAddress},
+        stuSpecialty = #{stuSpecialty},
+        stuNation = #{stuNation},
+        stuFeature = #{stuFeature},
+        stuType = #{stuType},
+        stuCredit = #{stuCredit},
+        apartmentNum = #{apartmentNum},
+        dormNum = #{dormNum},
+        stuContact = #{stuContact}
         where id = #{id};
     </insert>
 
@@ -48,9 +60,8 @@
 
     <!--对象中的属性可以换直接取出来-->
     <insert id="deleteStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
-        delete from digital_departure_system.tb_student where id = #{id};
+        delete from digital_departure_system.tb_student where stuNumber = #{stuNumber};
     </insert>
-
 
 
 </mapper>

@@ -1,0 +1,424 @@
+[2020/12/06-13:43:35] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on LAPTOP-R1DD2K67 with PID 37520 (C:\Users\47314\Desktop\dds\DigitalDepartureSystem-ls\target\classes started by 47314 in C:\Users\47314\Desktop\dds\DigitalDepartureSystem-ls)
+[2020/12/06-13:43:35] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/06-13:43:35] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/06-13:43:41] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 7.038 seconds (JVM running for 8.789)
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110(String)
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 账户名 ==> 2018110
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 1
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 0
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 1
+[2020/12/06-13:43:58] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 1
+[2020/12/06-13:43:59] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/06-13:43:59] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 785139482901872640(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODE4NzExMzYxMTA1NDI4NDgiLCJpYXQiOjE2MDcyMzM0MzksImV4cCI6MTYwOTgyNTQzOX0.0SpFGlh_KjCYa3zaYJKtGBuRmWYREAifPWeI0GT0IUU(String), 781871136110542848(String), 3e57cbe6530126f08460d46fc2344e31(String), 2020-12-06 13:43:59.91(Timestamp), 2020-12-06 13:43:59.91(Timestamp)
+[2020/12/06-13:43:59] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/06-13:44:05] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /common/menu
+[2020/12/06-13:44:09] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-ui.html
+[2020/12/06-13:44:09] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/06-13:44:09] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/06-13:44:09] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/06-13:44:09] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/06-13:44:09] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/06-13:44:09] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/06-13:44:09] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:44:10] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/ui
+[2020/12/06-13:44:10] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:44:10] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/security
+[2020/12/06-13:44:10] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources
+[2020/12/06-13:44:10] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /
+[2020/12/06-13:44:10] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/06-13:44:10] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/06-13:44:10] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/06-13:44:10] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /csrf
+[2020/12/06-13:44:10] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/06-13:44:10] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/06-13:44:12] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/06-13:44:13] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:44:13] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/06-13:44:15] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:44:17] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/06-13:44:17] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:44:19] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:44:22] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-13:52:30] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284517887967232(String)
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785141626807779328(String), 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-13:52:31] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-13:52:31] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/06-14:49:06] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785156205159907328(String), 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-14:50:26] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-15:16:55] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on LAPTOP-R1DD2K67 with PID 11300 (C:\Users\47314\Desktop\dds\DigitalDepartureSystem-ls\target\classes started by 47314 in C:\Users\47314\Desktop\dds\DigitalDepartureSystem-ls)
+[2020/12/06-15:16:55] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/06-15:16:55] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/06-15:17:01] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 7.209 seconds (JVM running for 8.872)
+[2020/12/06-15:17:09] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-ui.html
+[2020/12/06-15:17:10] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/06-15:17:10] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/06-15:17:10] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/06-15:17:10] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/06-15:17:10] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/06-15:17:10] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/06-15:17:10] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:17:10] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/ui
+[2020/12/06-15:17:10] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:17:10] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/security
+[2020/12/06-15:17:10] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources
+[2020/12/06-15:17:10] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:17:10] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/06-15:17:10] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/06-15:17:10] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /
+[2020/12/06-15:17:10] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/06-15:17:10] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /csrf
+[2020/12/06-15:17:11] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/06-15:17:11] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/06-15:17:21] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:17:21] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/06-15:17:21] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/06-15:18:46] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284517887967232(String)
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785163338895065088(String), 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-15:18:47] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-15:18:47] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/06-15:26:06] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:26:08] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:27:07] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/782284404641759232
+[2020/12/06-15:27:07] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:27:07] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-15:27:07] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:27:07] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-15:27:07] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785165437477322752(String), 782284404641759232(String), 782238358867804160(String)
+[2020/12/06-15:27:08] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/782284517887967232
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284517887967232(String)
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785165711457648640(String), 782284517887967232(String), 782340613067505664(String)
+[2020/12/06-15:28:13] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-15:30:19] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:30:19] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:30:20] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:30:23] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:30:24] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:30:55] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785166394911096832(String), 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-15:30:56] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782240771519545344(String)
+[2020/12/06-15:36:24] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 0
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782240771519545344(String)
+[2020/12/06-15:36:29] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 0
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110(String)
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 账户名 ==> 2018110
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 1
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ?;
+[2020/12/06-15:50:14] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782238358867804160(String)
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 3
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ?;
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782242309801508864(String)
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ?;
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782242394375454720(String)
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ?;
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782242476986466304(String)
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 1
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 1
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 785171256881184768(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODE4NzExMzYxMTA1NDI4NDgiLCJpYXQiOjE2MDcyNDEwMTUsImV4cCI6MTYwOTgzMzAxNX0.Ei25cwZABdwruQaEB2MSEl9D9T_aR9-0cNhOTpX6pt8(String), 781871136110542848(String), 028934301714e630294cca5c4ea46a60(String), 2020-12-06 15:50:15.417(Timestamp), 2020-12-06 15:50:15.417(Timestamp)
+[2020/12/06-15:50:15] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/06-15:50:18] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-ui.html
+[2020/12/06-15:50:18] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/06-15:50:19] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/06-15:50:19] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/06-15:50:19] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/06-15:50:19] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/06-15:50:19] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/06-15:50:19] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:50:19] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/ui
+[2020/12/06-15:50:19] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:50:19] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/security
+[2020/12/06-15:50:19] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources
+[2020/12/06-15:50:19] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/06-15:50:19] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /
+[2020/12/06-15:50:19] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/06-15:50:19] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/06-15:50:19] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/06-15:50:19] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /csrf
+[2020/12/06-15:50:19] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/06-15:50:21] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/06-15:50:22] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/06-15:50:22] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:50:25] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:50:25] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/06-15:50:26] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:51:15] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/781917504145457152
+[2020/12/06-15:51:16] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:51:16] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 781917504145457152(String)
+[2020/12/06-15:51:16] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:51:16] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-15:51:16] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785171511429300224(String), 781917504145457152(String), 781913361745969152(String)
+[2020/12/06-15:51:16] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-15:51:16] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/06-15:52:38] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/782284210374180864
+[2020/12/06-15:52:38] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:52:38] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284210374180864(String)
+[2020/12/06-15:52:38] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:52:38] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-15:52:38] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785171859086770176(String), 782284210374180864(String), 781871152153755648(String)
+[2020/12/06-15:52:39] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/782284682124328960
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284682124328960(String)
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785172444540305408(String), 782284682124328960(String), 782243531082170368(String)
+[2020/12/06-15:54:58] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-15:56:02] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:56:04] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:56:06] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284517887967232(String)
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-15:56:29] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-15:56:30] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-15:56:30] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-15:56:30] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785172828050685952(String), 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-15:56:30] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785173501966286848(String), 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-15:59:10] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-16:03:48] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/782284404641759232
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785174749947887616(String), 782284404641759232(String), 782240771519545344(String)
+[2020/12/06-16:04:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-16:07:12] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleByName] : ==>  Preparing: select * from role where name = ?;
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleByName] : ==> Parameters: 首页(String)
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleByName] : <==      Total: 0
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.addRole] : ==>  Preparing: insert into role(id,`code`,`name`,`index`) values(?,?,?,?);
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.addRole] : ==> Parameters: 785175802399424512(String), ROLE_FIRSTPAGE(String), 首页(String), 11(Long)
+[2020/12/06-16:08:19] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.addRole] : <==    Updates: 1
+[2020/12/06-16:08:53] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/role/authority/785175802399424512
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 785175802399424512(String)
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==>  Preparing: insert into role_authority (`id`,`role_id`,`authority_id`) values (?,?,?);
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : ==> Parameters: 785176081459052544(String), 785175802399424512(String), 782240771519545344(String)
+[2020/12/06-16:09:25] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.addAuthorityToRole] : <==    Updates: 1
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 785175802399424512(String)
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 785175802399424512(String)
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785176348632023040(String), 781871136110542848(String), 785175802399424512(String)
+[2020/12/06-16:10:29] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/781871136110542848
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 0
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 785175802399424512(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 785175802399424512(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785177268493221888(String), 781871136110542848(String), 785175802399424512(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284404641759232(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785177269197864960(String), 781871136110542848(String), 782284404641759232(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 782284517887967232(String)
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-16:14:08] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-16:14:09] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-16:14:09] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-16:14:09] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785177269885730816(String), 781871136110542848(String), 782284517887967232(String)
+[2020/12/06-16:14:09] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-17:27:43] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on LAPTOP-R1DD2K67 with PID 39660 (C:\Users\47314\Desktop\dds\DigitalDepartureSystem-ls\target\classes started by 47314 in C:\Users\47314\Desktop\dds\DigitalDepartureSystem-ls)
+[2020/12/06-17:27:43] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/06-17:27:43] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/06-17:27:47] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 4.209 seconds (JVM running for 5.177)
+[2020/12/06-17:28:06] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-ui.html
+[2020/12/06-17:28:06] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/06-17:28:06] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/06-17:28:06] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/06-17:28:06] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/06-17:28:06] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/06-17:28:06] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/06-17:28:06] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-17:28:06] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/ui
+[2020/12/06-17:28:06] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-17:28:06] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/security
+[2020/12/06-17:28:06] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources
+[2020/12/06-17:28:07] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /
+[2020/12/06-17:28:07] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/06-17:28:07] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /v2/api-docs
+[2020/12/06-17:28:07] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/06-17:28:07] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /csrf
+[2020/12/06-17:28:07] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/06-17:28:07] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/06-17:28:09] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-17:28:09] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/06-17:28:11] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-16x16.png
+[2020/12/06-17:28:11] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/06-17:28:54] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /admin/user/role/783001698883862528
+[2020/12/06-17:28:55] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==>  Preparing: select * from clerk where clerkID = ?;
+[2020/12/06-17:28:55] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : ==> Parameters: 783001698883862528(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneById] : <==      Total: 1
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==>  Preparing: delete from user_role where user_id = ?;
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : ==> Parameters: 783001698883862528(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.deleteAllRoleByUser] : <==    Updates: 1
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 785175802399424512(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 783001698883862528(String), 785175802399424512(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785196090889601024(String), 783001698883862528(String), 785175802399424512(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==>  Preparing: select * from role where id = ?;
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : ==> Parameters: 781917350797508608(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleMapper.getRoleById] : <==      Total: 1
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==>  Preparing: select * from user_role where user_id = ? and role_id = ?;
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : ==> Parameters: 783001698883862528(String), 781917350797508608(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.findUserRoleData] : <==      Total: 0
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==>  Preparing: insert into user_role(`id`,user_id,role_id) values (?,?,?);
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : ==> Parameters: 785196091820736512(String), 783001698883862528(String), 781917350797508608(String)
+[2020/12/06-17:28:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.addRoleToUser] : <==    Updates: 1
+[2020/12/06-17:28:57] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @RequestMapping("/student")
-public class StudentApi {
+public class  StudentApi {
 
     @Autowired
     private IStudentService studentService;
@@ -73,11 +73,11 @@ public class StudentApi {
 
     /**
      * 获取用户信息
-     * @param stuId
+     * @param stuNumber
      * @return
      */
-    @GetMapping("/{stuId}")
-    public ResponseResult getStudentInfo(@PathVariable("stuId")String stuId){
+    @GetMapping("/{stuNumber}")
+    public ResponseResult getStudentInfo(@PathVariable("stuNumber")String stuNumber){
         return null;
     }
 
