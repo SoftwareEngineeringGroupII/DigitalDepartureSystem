@@ -9,18 +9,15 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
-import com.digitaldeparturesystem.service.ISectorService;
-import com.digitaldeparturesystem.utils.Constants;
-import com.digitaldeparturesystem.utils.MybatisUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -77,10 +74,10 @@ public class CardApi {
      * @return
      */
 
-    @PutMapping("/checkCard/{stuId}")
-    public ResponseResult  getCheck(@PathVariable("stuId") String stuId){
+    @PutMapping("/checkCard/{stuNumber}")
+    public ResponseResult  getCheck(@PathVariable("stuNumber") String stuNumber){
 
-        return cardService.doCheckForCard(stuId);
+        return cardService.doCheckForCard(stuNumber);
     }
 
 
@@ -96,6 +93,21 @@ public class CardApi {
     public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
 
         return cardService.uploadNotice(notice,photo);
+    }
+
+    /**
+     * 导出所有学生一卡通审核信息
+     * @param response
+     * @return
+     */
+    @GetMapping("/export")
+    public ResponseResult exportCard(HttpServletResponse response) {
+        try {
+            cardService.exportAllCard(response);
+        }catch (Exception e){
+            return ResponseResult.FAILED("导出失败");
+        }
+        return ResponseResult.SUCCESS("导出成功");
     }
 
 

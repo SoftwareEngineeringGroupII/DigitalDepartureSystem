@@ -324,7 +324,8 @@ public class SectorServiceImpl implements ISectorService {
         String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
         //保存token到redis里，有效期为2小时,key是tokenKey
         redisUtils.set(Constants.Clerk.KEY_TOKEN + tokenKey, token, Constants.TimeValueInSecond.HOUR_2);
-        //把token写到cookies里
+        //把token写到cookies里，tokenKey在cookies里面的存活期我们不用关心，因为他只是一个key,只要redis里面的token过期了
+        //那么这个key就没用了
         CookieUtils.setUpCookie(response, Constants.Clerk.COOKIE_TOKEN_KEY, tokenKey);
         //生成refreshToken,一个月的存活期
         String refreshTokenValue = JwtUtil.createRefreshToken(clerkFromDb.getClerkID(), Constants.TimeValueInMillions.MONTH);

@@ -1,32 +1,25 @@
 package com.digitaldeparturesystem.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.CardMapper;
 import com.digitaldeparturesystem.mapper.NoticeMapper;
-import com.digitaldeparturesystem.mapper.SectorMapper;
 import com.digitaldeparturesystem.mapper.StudentMapper;
-import com.digitaldeparturesystem.pojo.Clerk;
-import com.digitaldeparturesystem.pojo.Notice;
-import com.digitaldeparturesystem.pojo.Student;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
-import com.digitaldeparturesystem.utils.Constants;
 import com.digitaldeparturesystem.utils.IdWorker;
-import com.digitaldeparturesystem.utils.MybatisUtils;
 import com.digitaldeparturesystem.utils.TextUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.deploy.net.URLEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.ibatis.session.SqlSession;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -34,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -111,12 +105,14 @@ public class CardServiceImpl implements ICardService {
     }
 
 
-
-    /**
+/*
+    */
+/**
      *  分页查询所有学生的所有信息(仅限于学生表)
      * @param map
      * @return
-     */
+     *//*
+
     @Override
     public ResponseResult findAllByPage(Map<String,Object> map) {
         Integer page = (Integer)map.get("page");
@@ -124,8 +120,6 @@ public class CardServiceImpl implements ICardService {
 
         //pageHelper使用
         PageHelper.startPage(page,size);
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);
         List<Student> userList = studentMapper.getStudentList();
         PageInfo<Student> studentPageInfo = new PageInfo<>(userList);
 
@@ -137,6 +131,7 @@ public class CardServiceImpl implements ICardService {
         map1.put("pages",pages);
         return ResponseResult.SUCCESS("查询成功").setData(map1);
     }
+*/
 
 
 
@@ -151,7 +146,11 @@ public class CardServiceImpl implements ICardService {
         if (studentByIdForCard == null) {
             return  ResponseResult.FAILED("查找失败！没有该学生的一卡通详情！");
         }
-        return ResponseResult.SUCCESS("查找成功").setData(studentByIdForCard);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("detail",studentByIdForCard);
+
+        return ResponseResult.SUCCESS("查找成功").setData(map);
     }
 
 
@@ -161,6 +160,9 @@ public class CardServiceImpl implements ICardService {
      * @return
      */
     public  ResponseResult doCheckForCard(String stuNumber){
+        if (stuNumber == null) {
+            return ResponseResult.FAILED("输入学号为空,请重新输入");
+        }
         int i = studentMapper.doCheckCard(stuNumber);
         if (i > 0){
             return ResponseResult.SUCCESS("审核成功！");
@@ -169,6 +171,15 @@ public class CardServiceImpl implements ICardService {
     }
 
 
+    /**
+     * 按条件分页查询一卡通信息
+     * @param start
+     * @param size
+     * @param stuDept
+     * @param stuType
+     * @param cardStatus
+     * @return
+     */
     public  ResponseResult findAllByPageAndType(Integer start,Integer size,String stuDept,String stuType,String cardStatus){
         //判断类型,如果是所有类型的状态将其置空
         stuDept = (stuDept.equals("所有学院") ?"":stuDept);
@@ -189,8 +200,8 @@ public class CardServiceImpl implements ICardService {
         //pageHelper使用
         //分页处理,显示第start页的size条数据
         PageHelper.startPage(start,size);
-        List<Map<String, Object>> students = cardMapper.listStudentCardInfos(params);
-        PageInfo<Map<String, Object>> cardPageInfo = new PageInfo<>(students);
+        List<CardInfo> students = cardMapper.listStudentCardInfos(params);
+        PageInfo<CardInfo> cardPageInfo = new PageInfo<>(students);
         int pageNum = cardPageInfo.getPageNum();
         int pages = cardPageInfo.getPages();
         long total = cardPageInfo.getTotal();//获取记录总数
@@ -203,10 +214,35 @@ public class CardServiceImpl implements ICardService {
         map.put("pageNum",pageNum);
         map.put("pages",pages);
         map.put("total",total);
+
         return ResponseResult.SUCCESS("查询成功").setData(map);
 
     }
 
+
+
+
+    /**
+     *  导出所有财务信息
+     * @param response
+     */
+    public void exportAllCard(HttpServletResponse response) throws UnsupportedEncodingException {
+        //查询数据库中所有信息
+        List<CardInfo> cardInfos = cardMapper.listAllCard();
+
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(),CardInfo.class,cardInfos);
+
+        response.setHeader("content-Type","application/vnd.ms-excel");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode("一卡通审核表","UTF-8")+".xls");
+        response.setCharacterEncoding("UTF-8");
+
+        try{
+            workbook.write(response.getOutputStream());
+            workbook.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
 
 

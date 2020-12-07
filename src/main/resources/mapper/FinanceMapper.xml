@@ -3,7 +3,7 @@
 <mapper namespace="com.digitaldeparturesystem.mapper.FinanceMapper">
 
     <!--根据学号查询学生财务缴费情况-->
-    <select id="getStudentByIdForFinance" parameterType="String" resultType="java.util.Map">
+    <select id="getStudentByIdForFinance" parameterType="String" resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
         select
           s.`stuNumber`,
           s.`stuName`,
@@ -23,12 +23,12 @@
     </select>
 
     <!--按条件分页查询财务处缴费审核情况：按学院、学生类型、审核状态-->
-    <select id="listStudentFinanceInfos" parameterType="map" resultType="java.util.Map">
+    <select id="listStudentFinanceInfos" parameterType="map" resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
         SELECT
            s.stuNumber,
-           s.stuType,
-           s.stuDept,
            s.stuName,
+           s.stuDept,
+           s.stuType,
            f.expense,
            f.financeStatus
         FROM
@@ -50,8 +50,48 @@
 
     <!--财务处审核-->
     <update id="doCheckForFinance" parameterType="String">
-       update finance set expense=0 ,financeStatus=1 where stuID=#{stuID}
+       update finance  set expense=0 ,financeStatus=1
+         where stuID=(select student.stuID from student where stuNumber = #{stuNum})
     </update>
 
+    <!--查询已经审核的财务-->
+    <select id="listHadCheck" resultType="com.digitaldeparturesystem.pojo.FinanceInfo" >
+        SELECT
+         s.stuNumber,
+         s.stuName,
+         s.stuDept,
+         s.stuType,
+         f.expense
+         FROM student s
+         LEFT JOIN finance f
+         ON s.stuID = f.stuID
+         where  f.financeStatus=1
+    </select>
+
+    <select id="listNoCheck"  resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
+       SELECT
+         s.stuNumber,
+         s.stuName,
+         s.stuDept,
+         s.stuType,
+         f.expense
+         FROM student s
+         LEFT JOIN finance f
+         ON s.stuID = f.stuID
+         where  f.financeStatus=0
+    </select>
+
+    <!--查询所有学生财务缴费情况-->
+    <select id="listAllFinance" resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
+      SELECT
+         s.stuNumber,
+         s.stuName,
+         s.stuDept,
+         s.stuType,
+         f.expense
+         FROM student s
+         LEFT JOIN finance f
+         ON s.stuID = f.stuID
+    </select>
 
 </mapper>

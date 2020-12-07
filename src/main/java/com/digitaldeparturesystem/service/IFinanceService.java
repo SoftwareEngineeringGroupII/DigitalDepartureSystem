@@ -4,6 +4,8 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public interface IFinanceService {
@@ -23,5 +25,13 @@ public interface IFinanceService {
     //审核学生一卡通,修改其审核、余额状态
     ResponseResult doCheckForFinance(String stuNumber);
 
+    //查询已经审核的财务情况
+    ResponseResult hadCheck();
+
+    //查询未审核的财务情况
+    ResponseResult noCheck();
+
+    //导出财务所有信息
+    void exportAllFinance(HttpServletResponse response) throws UnsupportedEncodingException;
 
 }

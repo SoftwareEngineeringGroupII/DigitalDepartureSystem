@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class Library {
 
     /**
-     * 通过学生Id查询图书馆细腻些
-     * @param studentId
+     * 通过学生学号查询图书馆详情
+     * @param stuNumber
      * @return
      */
-    @GetMapping("/studentId")
-    public ResponseResult getLibraryByStudentId(@PathVariable("studentId")String studentId){
+    @GetMapping("/stuNumber")
+    public ResponseResult getLibraryByStudentId(@PathVariable("stuNumber")String stuNumber){
         return null;
     }
 

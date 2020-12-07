@@ -4,6 +4,9 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+
 public interface IDormService {
 
     //上传公告
@@ -21,4 +24,7 @@ public interface IDormService {
 
     //审核学生后勤处,修改其审核、余额状态
     ResponseResult doCheckForDorm(String stuNumber);
+
+    //导出所有学生退寝状态审核表
+    void exportAllDorm(HttpServletResponse response) throws UnsupportedEncodingException;
 }
