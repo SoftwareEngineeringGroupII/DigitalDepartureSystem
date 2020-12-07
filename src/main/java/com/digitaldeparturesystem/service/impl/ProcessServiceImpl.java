@@ -17,11 +17,16 @@ import static com.digitaldeparturesystem.utils.TextUtils.isEmpty;
 public class ProcessServiceImpl implements IProcessService {
     /**
      * 显示离校进度审核状况
-     * @param process
+     * @param processid
      * @return
      */
     @Override
-    public ResponseResult showProcess(Process process) {
+    public ResponseResult showProcess(String processid) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult addProcess(Process process) {
         return null;
     }
 }

@@ -59,7 +59,7 @@
     </insert>
 
     <!--对象中的属性可以换直接取出来-->
-    <insert id="deleteStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
+    <insert id="deleteStudent" parameterType="java.lang.String">
         delete from digital_departure_system.tb_student where stuNumber = #{stuNumber};
     </insert>
 

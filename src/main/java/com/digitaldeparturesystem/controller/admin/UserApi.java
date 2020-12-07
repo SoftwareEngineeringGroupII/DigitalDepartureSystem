@@ -71,6 +71,12 @@ public class UserApi {
         return adminService.findAllClerks();
     }
 
+    /**
+     * 给用户赋权
+     * @param clerkId
+     * @param roleIds
+     * @return
+     */
     @PostMapping("/role/{clerkId}")
     public ResponseResult addRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<String> roleIds){
         return adminService.insertRoleToUser(clerkId,roleIds);

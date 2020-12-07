@@ -4,7 +4,7 @@ package com.digitaldeparturesystem.pojo;
 public class Logistics {
 
   private String logisticsId;
-  private String apartmentStatus;
+  private String logisticsStatus;
   private String stuId;
 
 
@@ -18,11 +18,11 @@ public class Logistics {
 
 
   public String getApartmentStatus() {
-    return apartmentStatus;
+    return logisticsStatus;
   }
 
   public void setApartmentStatus(String apartmentStatus) {
-    this.apartmentStatus = apartmentStatus;
+    this.logisticsStatus = apartmentStatus;
   }
 
 

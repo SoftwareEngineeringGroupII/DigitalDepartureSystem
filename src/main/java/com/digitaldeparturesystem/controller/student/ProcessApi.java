@@ -19,7 +19,7 @@ public class ProcessApi {
     /**
      * 进程审核状态
      */
-    @PostMapping("/student_process")
+    @GetMapping("/student_process")
     public ResponseResult showProcess(@RequestBody Process process){
         return null;
     }

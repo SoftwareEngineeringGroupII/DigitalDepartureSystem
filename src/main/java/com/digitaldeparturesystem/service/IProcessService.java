@@ -4,5 +4,6 @@ import com.digitaldeparturesystem.pojo.Process;
 import com.digitaldeparturesystem.response.ResponseResult;
 
 public interface IProcessService {
-    ResponseResult showProcess(Process process);
+    ResponseResult showProcess(String processid);
+    ResponseResult addProcess(Process process);
 }
