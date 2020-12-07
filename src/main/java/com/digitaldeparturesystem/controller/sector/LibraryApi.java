@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/sector/library")
-public class Library {
+public class LibraryApi {
 
     /**
      * 通过学生学号查询图书馆详情

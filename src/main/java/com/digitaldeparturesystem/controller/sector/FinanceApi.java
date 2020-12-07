@@ -94,4 +94,13 @@ public class FinanceApi {
            financeService.exportAllFinance(response);
     }
 
+    /**
+     * 查询所有
+     * @return
+     */
+    @GetMapping("/selectAll")
+    public ResponseResult selectAll(){
+        return financeService.selectAll();
+    }
+
 }

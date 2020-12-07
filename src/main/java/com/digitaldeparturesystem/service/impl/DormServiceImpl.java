@@ -155,6 +155,18 @@ public class DormServiceImpl implements IDormService {
 
     }
 
+    /**
+     *  查询所有退寝状态
+     * @return
+     */
+    public ResponseResult selectAll(){
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("查询失败");
+        }
+        return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
+    }
+
 
 
 

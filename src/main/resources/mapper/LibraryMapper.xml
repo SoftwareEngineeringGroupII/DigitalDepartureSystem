@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.digitaldeparturesystem.mapper.LibraryMapper">
     
+    <select id="listAllLibrary" resultType="com.digitaldeparturesystem.pojo.LibInfo">
 
+      SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS all_books,l.`libStatus`
+      FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus;
+
+    </select>
 
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -55,20 +56,6 @@ public class CardApi {
     }
 
 
-    @Resource
-    private StudentMapper studentMapper;
-    /**
-     *  获取全部学生信息：仅限于学生表
-     * @return
-     */
-    @GetMapping("/selectAll")
-    public  ResponseResult selectAll(){
-        List<Student> studentList = studentMapper.getStudentList();
-
-        return ResponseResult.SUCCESS("查询成功").setData(studentList);
-    }
-
-
     /**
      * 一卡通审核
      * @return
@@ -90,10 +77,12 @@ public class CardApi {
      * @return
      */
     @PostMapping("/notice")
-    public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo) throws IOException {
+    public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,
+                                        HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-        return cardService.uploadNotice(notice,photo);
+        return cardService.uploadNotice(notice,photo,request);
     }
+
 
     /**
      * 导出所有学生一卡通审核信息
@@ -109,6 +98,17 @@ public class CardApi {
         }
         return ResponseResult.SUCCESS("导出成功");
     }
+
+    /**
+     *  查询所有一卡通信息
+     * @return
+     */
+    @GetMapping("/selectAll")
+    public ResponseResult selectAll(HttpServletRequest request){
+        return cardService.selectAll(request);
+    }
+
+
 
 
 }

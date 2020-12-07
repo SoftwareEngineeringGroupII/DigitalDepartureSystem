@@ -3,7 +3,6 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.FinanceMapper;
-import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
@@ -201,6 +200,23 @@ public class FinanceServiceImpl implements IFinanceService {
         }
     }
 
+/*
+    public ResponseResult selectAll(){
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("查询失败");
+        }
+        return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
+    }*/
+
+  public  ResponseResult selectAll(){
+      List<FinanceInfo> financeInfos = financeMapper.listAllFinance();
+      if (financeInfos.isEmpty()) {
+          return ResponseResult.FAILED("查询失败");
+      }
+      return ResponseResult.SUCCESS("查询成功").setData(financeInfos);
+
+  }
 
 
 

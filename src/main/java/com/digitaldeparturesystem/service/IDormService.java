@@ -27,4 +27,7 @@ public interface IDormService {
 
     //导出所有学生退寝状态审核表
     void exportAllDorm(HttpServletResponse response) throws UnsupportedEncodingException;
+
+    //查询所有
+    ResponseResult selectAll();
 }
