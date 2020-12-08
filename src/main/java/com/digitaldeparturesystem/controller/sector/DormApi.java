@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.PrinterGraphics;
 
 @CrossOrigin
 @Slf4j
@@ -121,6 +122,20 @@ public class DormApi {
     public ResponseResult selectAll(){
         return dormService.selectAll();
     }
+
+
+    /**
+     *  分页查询所有的数据
+     * @param start
+     * @param size
+     * @return
+     */
+    @GetMapping("/findAllByPage")
+    public ResponseResult selectAllByPage(@RequestParam("start")Integer start,@RequestParam("size")Integer size){
+        return dormService.selectAllByPage(start,size);
+    }
+
+
 
 
 }

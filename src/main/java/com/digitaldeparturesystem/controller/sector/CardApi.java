@@ -109,10 +109,21 @@ public class CardApi {
     }
 
 
+    /**
+     * 分页查询所有一卡通信息
+     * @param start
+     * @param size
+     * @return
+     */
     @GetMapping("/findAllByPage")
     public  ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size")Integer size){
         return cardService.findAllByPage(start,size);
     }
+
+
+
+
+
 
 
 }

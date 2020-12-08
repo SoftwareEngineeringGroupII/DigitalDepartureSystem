@@ -280,6 +280,7 @@ public class CardServiceImpl implements ICardService {
         return ResponseResult.SUCCESS("查询一卡通成功").setData(cardInfos);
     }
 
+
     /**
      * 分页查询所有
      * @return
