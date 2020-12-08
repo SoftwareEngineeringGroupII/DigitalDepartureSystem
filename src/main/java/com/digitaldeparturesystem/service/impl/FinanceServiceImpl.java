@@ -209,6 +209,10 @@ public class FinanceServiceImpl implements IFinanceService {
         return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
     }*/
 
+    /**
+     * 查询所有财务情况
+     * @return
+     */
   public  ResponseResult selectAll(){
       List<FinanceInfo> financeInfos = financeMapper.listAllFinance();
       if (financeInfos.isEmpty()) {
@@ -217,6 +221,36 @@ public class FinanceServiceImpl implements IFinanceService {
       return ResponseResult.SUCCESS("查询成功").setData(financeInfos);
 
   }
+
+    /**
+     * 分页查询所有
+     * @param start
+     * @param size
+     * @return
+     */
+  public ResponseResult findAllByPage(Integer start,Integer size){
+      if (size == null) {
+          size = 5;
+      }
+      PageHelper.startPage(start,size);
+      List<FinanceInfo> financeInfos = financeMapper.listAllFinance();
+      if (financeInfos.isEmpty()) {
+          return ResponseResult.FAILED("没有数据");
+      }
+      PageInfo<FinanceInfo> financeInfoPageInfo = new PageInfo<>(financeInfos);
+      long total = financeInfoPageInfo.getTotal();
+      int pageNum = financeInfoPageInfo.getPageNum();
+      int pages = financeInfoPageInfo.getPages();
+      int pageSize = financeInfoPageInfo.getPageSize();
+      Map<String,Object> map = new HashMap<>();
+      map.put("total",total);
+      map.put("pageNum",pageNum);
+      map.put("pages",pages);
+      map.put("pageSize",pageSize);
+      return ResponseResult.SUCCESS("查询成功").setData(map);
+
+  }
+
 
 
 
