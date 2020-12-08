@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,15 +52,13 @@ public class DormServiceImpl implements IDormService {
      */
     @Override
     public ResponseResult getStudentByIdForFinance(String studentId) {
-        Map<String, Object> studentByIdForDorm = dormMapper.getStudentByIdForDorm(studentId);
-        if (studentByIdForDorm.isEmpty()) {
+        DormInfo studentByIdForDorm = dormMapper.getStudentByIdForDorm(studentId);
+        if (studentByIdForDorm==null) {
             return ResponseResult.FAILED("查找失败,没有该学生的财务信息");
         }
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("detail",studentByIdForDorm);
-
-        return ResponseResult.SUCCESS("查找成功").setData(map);
+        List<DormInfo> list = new ArrayList<>();
+        list.add(studentByIdForDorm);
+        return ResponseResult.SUCCESS("查找成功").setData(list);
     }
 
 
@@ -187,6 +186,7 @@ public class DormServiceImpl implements IDormService {
         int pages = dormInfoPageInfo.getPages();
         int pageSize = dormInfoPageInfo.getPageSize();
         Map<String,Object> map = new HashMap<>();
+        map.put("list",dormInfos);
         map.put("total",total);
         map.put("pageNum",pageNum);
         map.put("pages",pages);

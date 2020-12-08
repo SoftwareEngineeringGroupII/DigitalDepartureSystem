@@ -11,10 +11,23 @@
     </select>
     
     <!--查询每个人借阅图书详情-->
-    <select id="bookDetail" resultType="java.util.Map">
+    <select id="bookDetail" resultType="java.util.Map" parameterType="String">
         select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName,b.
          from book b,student s where b.stuID = s.stuID and stuNumber=#{stuNumber}
     </select>
+
+    <!--根据学号和图书Id审核归还情况-->
+    <update id="checkLibrary">
+        update book set book.returnStatus=1
+          where bookID=#{bookId} and
+            stuId=(select stuId from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--根据最终归还情况确定图书馆审核状态-->
+    <update id="changeLibrary">
+        update lib set lib.libStatus=0
+          where
+    </update>
 
 
 

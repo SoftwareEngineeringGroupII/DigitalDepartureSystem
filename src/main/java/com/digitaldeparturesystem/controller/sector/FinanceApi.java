@@ -105,7 +105,7 @@ public class FinanceApi {
 
 
     /**
-     * 分页查询所有
+     * 分页查询所有财务信息
      * @param start
      * @param size
      * @return
@@ -114,6 +114,7 @@ public class FinanceApi {
     public ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size") Integer size){
         return financeService.findAllByPage(start,size);
     }
+
 
 
 

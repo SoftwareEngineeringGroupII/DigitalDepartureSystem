@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @Slf4j
 @RestController
 @RequestMapping("/sector/card")
