@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/sector/finance")
