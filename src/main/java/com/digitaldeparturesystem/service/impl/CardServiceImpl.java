@@ -29,10 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service  //一卡通
@@ -147,14 +144,13 @@ public class CardServiceImpl implements ICardService {
     @Override
     public ResponseResult getStudentByIdForCard(String studentId) {
         Map<String, Object> studentByIdForCard = cardMapper.getStudentByIdForCard(studentId);
+
         if (studentByIdForCard == null) {
             return  ResponseResult.FAILED("查找失败！没有该学生的一卡通详情！");
         }
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("detail",studentByIdForCard);
-
-        return ResponseResult.SUCCESS("查找成功").setData(map);
+        List<Map<String,Object>> list = new ArrayList<>();
+        list.add(studentByIdForCard);
+        return ResponseResult.SUCCESS("查找成功").setData(list);
     }
 
 
@@ -167,7 +163,7 @@ public class CardServiceImpl implements ICardService {
         if (stuNumber == null) {
             return ResponseResult.FAILED("输入学号为空,请重新输入");
         }
-        int i = studentMapper.doCheckCard(stuNumber);
+        int i = cardMapper.doCheckCard(stuNumber);
         if (i > 0){
             return ResponseResult.SUCCESS("审核成功！");
         }
@@ -225,7 +221,6 @@ public class CardServiceImpl implements ICardService {
 
 
 
-
     /**
      *  导出所有财务信息
      * @param response
@@ -248,12 +243,17 @@ public class CardServiceImpl implements ICardService {
         }
     }
 
+    /**
+     *  查询所有一卡通数据
+     * @return
+     */
     @Override
     public ResponseResult selectAll() {
         List<CardInfo> cardInfos = cardMapper.listAllCard();
         if (cardInfos.isEmpty()) {
             return ResponseResult.FAILED("没有数据");
         }
+
         return ResponseResult.SUCCESS("查询成功").setData(cardInfos);
     }
 
@@ -278,6 +278,35 @@ public class CardServiceImpl implements ICardService {
             return ResponseResult.FAILED("没有数据");
         }
         return ResponseResult.SUCCESS("查询一卡通成功").setData(cardInfos);
+    }
+
+    /**
+     * 分页查询所有
+     * @return
+     */
+    public ResponseResult findAllByPage(Integer start,Integer size){
+        if (size == 0){
+            size = 5;
+        }
+
+        PageHelper.startPage(start,size);
+        List<CardInfo> cardInfos = cardMapper.listAllCard();
+        if (cardInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有数据");
+        }
+        PageInfo<CardInfo> cardInfoPageInfo = new PageInfo<>(cardInfos);
+        long total = cardInfoPageInfo.getTotal();//总记录数
+        int pageNum = cardInfoPageInfo.getPageNum();//当前页
+        int pages = cardInfoPageInfo.getPages();//总页数
+        int pageSize = cardInfoPageInfo.getPageSize();
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",cardInfos);
+        map.put("total",total);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);//总页数
+        map.put("pageSize",pageSize);
+
+        return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
 

@@ -88,7 +88,8 @@
          s.stuName,
          s.stuDept,
          s.stuType,
-         f.expense
+         f.expense,
+         f.financeStatus
          FROM student s
          LEFT JOIN finance f
          ON s.stuID = f.stuID
