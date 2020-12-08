@@ -28,6 +28,7 @@ public class CookieUtils {
         Cookie cookie = new Cookie(key, value);
         cookie.setPath("/");
         cookie.setDomain(domain);
+        //不设置cookies的时间，关闭浏览器，自动清除
         cookie.setMaxAge(age);
         response.addCookie(cookie);
     }
