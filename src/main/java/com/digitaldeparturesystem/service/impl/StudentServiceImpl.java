@@ -105,6 +105,7 @@ public class StudentServiceImpl implements IStudentService {
         Map<String,String> map = new HashMap<>();
         map.put("clerkId",student.getStuId());
         map.put("roleId",roleFromDb.getId());
+        map.put("id",String.valueOf(idWorker.nextId()));
         userRoleMapper.addRoleToUser(map);
         //第八步：保存到数据库
         studentMapper.insertStudent(student);
