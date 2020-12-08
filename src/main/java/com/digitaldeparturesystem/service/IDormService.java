@@ -30,4 +30,7 @@ public interface IDormService {
 
     //查询所有
     ResponseResult selectAll();
+
+    //分页查询所有
+    ResponseResult selectAllByPage(Integer start,Integer size);
 }

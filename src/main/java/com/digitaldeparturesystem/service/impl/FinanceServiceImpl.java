@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.FinanceMapper;
+import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,12 +57,15 @@ public class FinanceServiceImpl implements IFinanceService {
         if (stuNumber == null) {
             return ResponseResult.FAILED("输入学号为空,请重新输入");
         }
-        FinanceInfo stuInfoFromFinance = financeMapper.getStudentByIdForFinance(stuNumber);
-        if (stuInfoFromFinance==null) {
+        FinanceInfo studentByIdForFinance = financeMapper.getStudentByIdForFinance(stuNumber);
+        if (studentByIdForFinance==null) {
             return ResponseResult.FAILED("查找失败！没有该学号学生的财务信息");
         }
-        return ResponseResult.SUCCESS("查找成功！").setData(stuInfoFromFinance);
+        List<FinanceInfo> list = new ArrayList<>();
+        list.add(studentByIdForFinance);
+        return ResponseResult.SUCCESS("查找成功！").setData(list);
     }
+
 
 
 
@@ -120,8 +125,6 @@ public class FinanceServiceImpl implements IFinanceService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
 
     }
-
-
 
 
 
@@ -243,6 +246,7 @@ public class FinanceServiceImpl implements IFinanceService {
       int pages = financeInfoPageInfo.getPages();
       int pageSize = financeInfoPageInfo.getPageSize();
       Map<String,Object> map = new HashMap<>();
+      map.put("list",financeInfos);
       map.put("total",total);
       map.put("pageNum",pageNum);
       map.put("pages",pages);

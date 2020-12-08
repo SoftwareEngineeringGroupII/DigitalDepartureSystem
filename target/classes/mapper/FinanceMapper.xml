@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.digitaldeparturesystem.mapper.FinanceMapper">
+
+    <!--根据学号查询学生财务缴费情况-->
+    <select id="getStudentByIdForFinance" parameterType="String" resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
+        select
+          s.`stuNumber`,
+          s.`stuName`,
+          s.`stuDept`,
+          s.`stuType`,
+          f.`expense`,
+          f.`financeStatus`
+          FROM
+           student s
+           LEFT JOIN finance f
+           ON s.stuID = f.stuID
+           <where>
+               <if test="stuNumber!=null and stuId!=''">
+                   AND s.`stuNumber` = #{stuNumber}
+               </if>
+           </where>
+    </select>
+
+    <!--按条件分页查询财务处缴费审核情况：按学院、学生类型、审核状态-->
+    <select id="listStudentFinanceInfos" parameterType="map" resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
+        SELECT
+           s.stuNumber,
+           s.stuName,
+           s.stuDept,
+           s.stuType,
+           f.expense,
+           f.financeStatus
+        FROM
+          student s
+        LEFT JOIN finance f
+        ON s.stuID = f.stuID
+        <where>
+            <if test="params.stuDept!=null and params.stuDept!=''">
+                AND s.stuDept = #{params.stuDept}
+            </if>
+            <if test="params.stuType!=null and params.stuType!=''">
+                AND s.stuType = #{params.stuType}
+            </if>
+            <if test="params.financeStatus!=null and params.financeStatus!=''">
+                AND f.financeStatus = #{params.financeStatus }
+            </if>
+        </where>
+    </select>
+
+    <!--财务处审核-->
+    <update id="doCheckForFinance" parameterType="String">
+       update finance  set expense=0 ,financeStatus=1
+         where stuID=(select student.stuID from student where stuNumber = #{stuNum})
+    </update>
+
+    <!--查询已经审核的财务-->
+    <select id="listHadCheck" resultType="com.digitaldeparturesystem.pojo.FinanceInfo" >
+        SELECT
+         s.stuNumber,
+         s.stuName,
+         s.stuDept,
+         s.stuType,
+         f.expense
+         FROM student s
+         LEFT JOIN finance f
+         ON s.stuID = f.stuID
+         where  f.financeStatus=1
+    </select>
+
+    <select id="listNoCheck"  resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
+       SELECT
+         s.stuNumber,
+         s.stuName,
+         s.stuDept,
+         s.stuType,
+         f.expense
+         FROM student s
+         LEFT JOIN finance f
+         ON s.stuID = f.stuID
+         where  f.financeStatus=0
+    </select>
+
+    <!--查询所有学生财务缴费情况-->
+    <select id="listAllFinance" resultType="com.digitaldeparturesystem.pojo.FinanceInfo">
+      SELECT
+         s.stuNumber,
+         s.stuName,
+         s.stuDept,
+         s.stuType,
+         f.expense,
+         f.financeStatus
+         FROM student s
+         LEFT JOIN finance f
+         ON s.stuID = f.stuID
+    </select>
+
+</mapper>

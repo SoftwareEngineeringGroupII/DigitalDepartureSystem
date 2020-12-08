@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.DormMapper;
 import com.digitaldeparturesystem.pojo.DormInfo;
+import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
@@ -166,6 +167,35 @@ public class DormServiceImpl implements IDormService {
         }
         return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
     }
+
+    /**
+     * 分页查询所有的退寝状态
+     * @return
+     */
+    public ResponseResult selectAllByPage(Integer start,Integer size){
+        if (size == null) {
+            size = 5;
+        }
+        PageHelper.startPage(start,size);
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有数据");
+        }
+        PageInfo<DormInfo> dormInfoPageInfo = new PageInfo<>(dormInfos);
+        long total = dormInfoPageInfo.getTotal();
+        int pageNum = dormInfoPageInfo.getPageNum();
+        int pages = dormInfoPageInfo.getPages();
+        int pageSize = dormInfoPageInfo.getPageSize();
+        Map<String,Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);
+        map.put("pageSize",pageSize);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
+    }
+
+
+
 
 
 
