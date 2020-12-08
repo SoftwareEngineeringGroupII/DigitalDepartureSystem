@@ -39,6 +39,9 @@ public interface IFinanceService {
     //查询所有学生财务缴费情况
     ResponseResult selectAll();
 
+    //分页查询所有
+    ResponseResult findAllByPage(Integer start,Integer size);
+
 
 
 }

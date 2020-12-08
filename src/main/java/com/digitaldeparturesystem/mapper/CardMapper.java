@@ -16,7 +16,9 @@ public interface CardMapper {
     Map<String,Object> getStudentByIdForCard(String stuNum);
 
     //根据学号审核学生一卡通
-    int doCheckCard(String stuId);
+    int doCheckCard(String stuNumber);
 
     List<CardInfo> listAllCard();
+
+   // List<CardInfo> findAllByPage;
 }

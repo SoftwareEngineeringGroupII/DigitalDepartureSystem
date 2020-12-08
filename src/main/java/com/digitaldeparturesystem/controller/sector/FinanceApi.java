@@ -103,4 +103,18 @@ public class FinanceApi {
         return financeService.selectAll();
     }
 
+
+    /**
+     * 分页查询所有
+     * @param start
+     * @param size
+     * @return
+     */
+    @GetMapping("/selectAllByPage")
+    public ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size") Integer size){
+        return financeService.findAllByPage(start,size);
+    }
+
+
+
 }

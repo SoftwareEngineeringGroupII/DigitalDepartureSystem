@@ -109,6 +109,10 @@ public class CardApi {
     }
 
 
+    @GetMapping("/findAllByPage")
+    public  ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size")Integer size){
+        return cardService.findAllByPage(start,size);
+    }
 
 
 }

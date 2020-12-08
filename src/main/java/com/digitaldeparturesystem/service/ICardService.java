@@ -43,6 +43,9 @@ public interface ICardService {
     //查询所有一卡通情况
     ResponseResult selectAll();
 
+    //分页查询所有一卡通情况
+    ResponseResult findAllByPage(Integer start,Integer size);
+
 }
 
 

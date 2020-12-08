@@ -65,10 +65,27 @@
 
     <!--审核一卡通状态-->
     <update id="doCheckCard" parameterType="String">
-       update card set cardBalance=0,cardStatus=1 where stuID=#{stuId}
+       update card set cardBalance=0,cardStatus=1
+       where stuID=(select stuID from student where stuNumber=#{stuNumber})
     </update>
 
 
+<!--
+    &lt;!&ndash;分页查询所有一卡通状态&ndash;&gt;
+    <select id="findAllByPage" resultType="com.digitaldeparturesystem.pojo.CardInfo">
+      select
+        s.`stuNumber`,
+        s.`stuName`,
+        s.`stuDept`,
+        s.`stuType`,
+        c.`cardBalance`,
+        c.`cardStatus`
+        FROM
+         student s
+        LEFT JOIN card c
+         ON s.stuID = c.stuID
+    </select>
+-->
 
 
 
