@@ -2,6 +2,7 @@ package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICommonService;
 import com.digitaldeparturesystem.utils.Constants;
@@ -32,15 +33,22 @@ public class CommonServiceImpl implements ICommonService {
         //用用户cookies里面获取token
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
         //解析*
-        Clerk clerk = TokenUtils.parseClerkByTokenKey(redisUtils,tokenKey);
-
+        Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
+        //权限信息
+        Set<Authorities> authorityFromDB;
+        if (clerkFromToken == null||clerkFromToken.getClerkID() == null){
+            Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
+            authorityFromDB = (Set<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + student.getStuId());
+        }else{
+            authorityFromDB = (Set<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerkFromToken.getClerkID());
+        }
+        //权限
         Set<Authorities> authorityList = new TreeSet<>(new Comparator<Authorities>() {
             @Override
             public int compare(Authorities o1, Authorities o2) {
                 return (int)(o1.getIndex() - o2.getIndex());
             }
         });
-        Set<Authorities> authorityFromDB = (Set<Authorities>) redisUtils.get(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID());
         for (Authorities authorities : authorityFromDB) {
             authorityList.add(authorities);
         }

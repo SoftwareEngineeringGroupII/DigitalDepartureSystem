@@ -79,23 +79,9 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
             log.info("学生账户名 ==> " + student.getStuNumber());
         }
 
-        List<Role> roles = new ArrayList<>();
         if (clerk != null){
-            //获取用户的权限
-            roles = userRoleMapper.getRolesByUser(clerk.getClerkID());
-            //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
-            Set<Authorities> authorityList = new HashSet<>();
-            //查权限
-            for (Role role : roles) {
-                List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
-                for (Authorities authority : authorities) {
-                    AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
-                    //添加权限
-                    authorityList.add(authority);
-                }
-            }
-            //权限保存进Redis
-            redisUtils.set(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerk.getClerkID(), authorityList, Constants.TimeValueInSecond.HOUR_2);
+            //获取用户权限
+            getUserAuthority(clerk.getClerkID());
             //获取用户token
             String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
             Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
@@ -109,6 +95,8 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                             setData(JSON.toJSON(clerk))));
         }
         if(student != null){
+            //获取用户的权限
+            getUserAuthority(student.getStuId());
             //获取用户token
             String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
             Student studentFromToken = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
@@ -122,6 +110,25 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                             setData(JSON.toJSON(student))));
         }
 
+    }
+
+    private void getUserAuthority(String userId) {
+        //获取用户的权限
+        List<Role> roles;
+        roles = userRoleMapper.getRolesByUser(userId);
+        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
+        Set<Authorities> authorityList = new HashSet<>();
+        //查权限
+        for (Role role : roles) {
+            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+            for (Authorities authority : authorities) {
+                AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper, authority);
+                //添加权限
+                authorityList.add(authority);
+            }
+        }
+        //权限保存进Redis
+        redisUtils.set(Constants.Clerk.KEY_AUTHORITY_CONTENT + userId, authorityList, Constants.TimeValueInSecond.HOUR_2);
     }
 }
 

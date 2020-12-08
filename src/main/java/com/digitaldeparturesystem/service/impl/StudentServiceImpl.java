@@ -1,8 +1,8 @@
 package com.digitaldeparturesystem.service.impl;
 
-import com.digitaldeparturesystem.mapper.RefreshTokenMapper;
-import com.digitaldeparturesystem.mapper.StudentMapper;
+import com.digitaldeparturesystem.mapper.*;
 import com.digitaldeparturesystem.pojo.Refreshtoken;
+import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseStatus;
@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -99,11 +100,26 @@ public class StudentServiceImpl implements IStudentService {
         //第七布：补全数据
         student.setStuId(String.valueOf(idWorker.nextId()));
         student.setStuStatus("1");
+        //添加权限
+        Role roleFromDb = roleMapper.getRoleByCode("ROLE_STUDENT");
+        Map<String,String> map = new HashMap<>();
+        map.put("clerkId",student.getStuId());
+        map.put("roleId",roleFromDb.getId());
+        userRoleMapper.addRoleToUser(map);
         //第八步：保存到数据库
         studentMapper.insertStudent(student);
         //第九步：返回结果
         return ResponseResult.GET(ResponseStatus.JOIN_SUCCESS);
     }
+
+    @Resource
+    private RoleMapper roleMapper;
+
+    @Resource
+    private UserRoleMapper userRoleMapper;
+
+    @Resource
+    private RoleAuthorityMapper roleAuthorityMapper;
 
     @Autowired
     private RedisUtils redisUtils;
