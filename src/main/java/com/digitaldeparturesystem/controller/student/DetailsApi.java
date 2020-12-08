@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping("/student")
@@ -19,8 +19,8 @@ public class DetailsApi {
     /**
      * 显示学生个人信息
      */
-    @GetMapping("/student_details")
-    public ResponseResult showDetails(@RequestBody Student student) {
-        return detailsService.showStuDetails(student);
+    @GetMapping("/studentId/{studentNum}")
+    public ResponseResult showDetails(@PathVariable("studentNum") String stuId) {
+        return detailsService.showStuDetailsById(stuId);
     }
 }

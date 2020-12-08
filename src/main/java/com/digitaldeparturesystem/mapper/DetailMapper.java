@@ -7,7 +7,7 @@ import java.util.Map;
 public interface DetailMapper {
     /**
      * 展示学生信息
-     * @param stuNumber
+     * @param stuId
      */
-    Map<String,Object> showDetails(Student stuNumber);
+    Map<String,Object> showDetailsById(String stuId);
 }

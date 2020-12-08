@@ -4,5 +4,7 @@ import com.digitaldeparturesystem.pojo.Process;
 
 public interface ProcessMapper {
     //获取进程审核状态
-    void showProcess(Process process);
+    String showProcess(String stuID);
+    //添加进程信息
+    void addProcess(Process process);
 }

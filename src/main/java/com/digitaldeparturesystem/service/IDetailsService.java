@@ -7,5 +7,5 @@ import java.util.ResourceBundle;
 
 public interface IDetailsService {
     //获取学生个人信息
-    ResponseResult showStuDetails(Student student);
+    ResponseResult showStuDetailsById(String stuId);
 }

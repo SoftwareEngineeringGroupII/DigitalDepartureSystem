@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -22,17 +23,18 @@ public class DetailsServiceImpl implements IDetailsService {
     private DetailMapper detailMapper;
     /**
      * 学生信息显示
-     * @param stuNumber
+     * @param stuId
      * @return
      */
+
     @Override
-    public ResponseResult showStuDetails(Student stuNumber) {
-        Map<String,Object> studetails = detailMapper.showDetails(stuNumber);
-        if (studetails.isEmpty()){
+    public ResponseResult showStuDetailsById(String stuId) {
+        Map<String,Object> studetails = detailMapper.showDetailsById(stuId);
+        if (studetails == null){
             return ResponseResult.FAILED("查看个人信息失败！");
         }
-        else{
-            return ResponseResult.SUCCESS("查看成功！").setData(studetails);
-        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("detail",showStuDetailsById(stuId));
+        return ResponseResult.SUCCESS("查找成功").setData(map);
     }
 }
