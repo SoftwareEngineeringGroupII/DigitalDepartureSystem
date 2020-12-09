@@ -15,7 +15,7 @@ public interface DormMapper {
     void doCheckForDorm(String stuNum);
 
     //根据学号获取学生退寝情况
-    Map<String,Object> getStudentByIdForDorm(String stuNumber);
+    DormInfo getStudentByIdForDorm(String stuNumber);
 
     //导出所有学生退寝情况
     List<DormInfo> listAllDorm();

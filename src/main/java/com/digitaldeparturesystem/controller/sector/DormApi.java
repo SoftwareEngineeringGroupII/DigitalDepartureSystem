@@ -26,7 +26,7 @@ public class DormApi {
      * @param stuNumber
      * @return
      */
-    @GetMapping("/stuNumber")
+    @GetMapping("/stuNumber/{stuNumber}")
     public ResponseResult getDormByStudentId(@PathVariable("stuNumber")String stuNumber){
         return dormService.getStudentByIdForFinance(stuNumber);
     }
@@ -36,11 +36,10 @@ public class DormApi {
     /**
      * 审核一卡通信息
      * @param stuNumber
-     * @param dorm
      * @return
      */
-    @PostMapping("/stuNumber")
-    public ResponseResult checkDorm(@PathVariable("stuNumber")String stuNumber, @RequestBody Dorm dorm){
+    @PutMapping("/stuNumber/{stuNumber}")
+    public ResponseResult checkDorm(@PathVariable("stuNumber")String stuNumber){
         return dormService.doCheckForDorm(stuNumber);
     }
 

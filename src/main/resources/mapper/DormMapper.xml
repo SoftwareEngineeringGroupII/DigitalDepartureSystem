@@ -35,21 +35,25 @@
     </update>
 
    <!-- 根据学号获取学生退寝情况-->
-    <select id="getStudentByIdForDorm" parameterType="String" resultType="java.util.Map">
+    <select id="getStudentByIdForDorm" parameterType="String" resultType="com.digitaldeparturesystem.pojo.DormInfo">
         select
-          s.stuID,
-          s.dormNum,
-          s.stuName,
-          s.stuType,
-          s.stuDept,
-          s.stuSex,
-          d.isLeave,
-          d.dormNumber,
-          d.dormName
-          FROM
-            student s
-            LEFT JOIN dorm d
-            ON s.stuID =  d.stuID
+         s.`stuNumber`,
+         s.`stuName`,
+         s.`stuDept`,
+         s.`stuType`,
+         d.`dormName`,
+         d.`dormNumber`,
+         d.`isLeave`
+        FROM
+        student s
+        LEFT JOIN dorm d
+        ON s.stuID = d.stuID
+        <where>
+            <if test="stuNumber!=null and stuId!=''">
+                AND s.`stuNumber` = #{stuNumber}
+            </if>
+        </where>
+
     </select>
 
     <!--查询所有学生退寝情况-->
