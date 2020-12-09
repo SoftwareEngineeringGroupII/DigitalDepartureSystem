@@ -79,6 +79,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
             log.info("学生账户名 ==> " + student.getStuNumber());
         }
 
+        String token = "";
         if (clerk != null){
             //获取用户权限
             getUserAuthority(clerk.getClerkID());
@@ -88,11 +89,11 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
             //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
             if (clerkFromToken == null){
                 //删除旧的refreshToken，创建新的refreshToken
-                sectorService.createToken(httpServletResponse, clerk);
+                token = sectorService.createToken(httpServletResponse, clerk);
             }
             httpServletResponse.getWriter().
                     write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                            setData(JSON.toJSON(clerk))));
+                            setData(JSON.toJSON(clerk)).setToken(token)));
         }
         if(student != null){
             //获取用户的权限
@@ -103,11 +104,11 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
             //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
             if (studentFromToken == null){
                 //删除旧的refreshToken，创建新的refreshToken
-                studentService.createToken(httpServletResponse, student);
+                token = studentService.createToken(httpServletResponse, student);
             }
             httpServletResponse.getWriter().
                     write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                            setData(JSON.toJSON(student))));
+                            setData(JSON.toJSON(student)).setToken(token)));
         }
 
     }

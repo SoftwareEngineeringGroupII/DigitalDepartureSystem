@@ -29,6 +29,11 @@ public interface Constants {
         int MIN_SIZE = 10;
     }
 
+    interface CommonApi{
+        String SEND_EMAIL = "/common/sendEmail/**";
+        String RECOVERED_PWD = "/common/recoveredPwd/**";
+    }
+
 
 
     /**

@@ -8,11 +8,13 @@ import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.service.IStudentService;
+import com.digitaldeparturesystem.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -66,6 +68,15 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        //不拦截的api
+        web.ignoring().antMatchers(
+                "/common/**",
+                Constants.CommonApi.SEND_EMAIL,
+                Constants.CommonApi.RECOVERED_PWD);//找回密码接口
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         // 去掉 CSRF
@@ -77,6 +88,9 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+
+                .antMatchers("/common/**").permitAll()
+                .anyRequest().authenticated()
 
                 .anyRequest()
                 .access("@permission.hasPermission(request,authentication)") // RBAC 动态 url 认证
