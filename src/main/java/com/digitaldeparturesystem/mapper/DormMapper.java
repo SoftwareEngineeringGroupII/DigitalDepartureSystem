@@ -1,6 +1,7 @@
 package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.DormInfo;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 
 import java.util.List;
@@ -19,5 +20,8 @@ public interface DormMapper {
 
     //导出所有学生退寝情况
     List<DormInfo> listAllDorm();
+
+    //查询某个学生是否存在
+    Student findStuByStuNumber(String stuNumber);
 
 }

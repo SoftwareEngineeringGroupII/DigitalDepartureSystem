@@ -1,0 +1,808 @@
+[2020/12/09-19:02:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 17640 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-19:02:13] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-19:02:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-19:02:28] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 15.987 seconds (JVM running for 20.96)
+[2020/12/09-19:03:39] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 管理员账户名 ==> 2018110427
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 783001698883862528(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 2
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 785175802399424512(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782240771519545344(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 781917350797508608(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781909496053104640(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 4
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910062275756032(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910318585479168(String)
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-19:03:40] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910535728791552(String)
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781911407137390592(String)
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 783001698883862528(String)
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 1
+[2020/12/09-19:03:41] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 1
+[2020/12/09-19:03:45] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/09-19:03:45] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 786307118532657152(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODMwMDE2OTg4ODM4NjI1MjgiLCJpYXQiOjE2MDc1MTE4MjUsImV4cCI6MTYxMDEwMzgyNX0.m4Y6b9ar2VsTKrzDQSxP-xbshQ0ljEv0vV2wXkW9RT8(String), 783001698883862528(String), 8fbd1a8c879612e0379ae8188dcdff89(String), 2020-12-09 19:03:45.938(Timestamp), 2020-12-09 19:03:45.938(Timestamp)
+[2020/12/09-19:03:46] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/09-19:03:46] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /favicon.ico
+[2020/12/09-19:04:01] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-19:04:01] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-19:04:01] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-19:04:01] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-19:04:01] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-19:04:01] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-19:04:02] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-19:04:02] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-19:04:02] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-19:04:03] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-19:04:03] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-19:04:03] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:04:03] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-19:04:03] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-19:04:03] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-19:04:03] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-19:04:03] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-19:04:04] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-19:04:06] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:04:09] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/checkLibrary/2018110551/1010
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==>  Preparing: update book set book.returnStatus=1 where bookID=? and stuId=(select stuId from student where stuNumber=?)
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==> Parameters: 1010(String), 2018110551(String)
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : <==    Updates: 1
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==>  Preparing: SELECT COUNT(*) AS sumbook FROM book WHERE returnStatus=0 AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=?)
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : <==      Total: 1
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : ==>  Preparing: update lib set lib.libStatus=1 where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:06:09] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : <==    Updates: 1
+[2020/12/09-19:06:10] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-19:23:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 16472 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-19:23:13] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-19:23:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-19:23:23] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 11.211 seconds (JVM running for 14.468)
+[2020/12/09-19:23:44] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-19:23:44] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-19:23:44] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-19:23:44] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-19:23:44] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-19:23:44] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-19:23:44] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-19:23:44] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-19:23:45] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-19:23:45] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-19:23:45] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:23:45] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-19:23:45] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-19:23:46] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-19:23:46] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-19:23:46] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-19:23:46] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-19:23:49] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-19:23:55] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-19:24:21] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findPaper/2018110551
+[2020/12/09-19:24:23] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==>  Preparing: select paper from lib where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:24:23] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:24:23] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : <==      Total: 1
+[2020/12/09-19:24:23] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-19:24:31] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findPaper/201811055
+[2020/12/09-19:24:31] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==>  Preparing: select paper from lib where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:24:31] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==> Parameters: 201811055(String)
+[2020/12/09-19:24:31] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : <==      Total: 0
+[2020/12/09-19:28:24] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 9320 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-19:28:24] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-19:28:24] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-19:28:30] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 6.446 seconds (JVM running for 8.311)
+[2020/12/09-19:28:47] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-19:28:47] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-19:28:47] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-19:28:47] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-19:28:47] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-19:28:47] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-19:28:47] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-19:28:47] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-19:28:47] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-19:28:47] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-19:28:48] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:28:48] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-19:28:48] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-19:28:48] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-19:28:48] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-19:28:48] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-19:28:48] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-19:28:49] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-19:28:51] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:28:53] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-19:29:04] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findPaper/2018110551
+[2020/12/09-19:29:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==>  Preparing: select paper from lib where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:29:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:29:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : <==      Total: 1
+[2020/12/09-19:29:04] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-19:29:09] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findPaper/201811055
+[2020/12/09-19:39:40] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 13920 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-19:39:40] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-19:39:40] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-19:39:44] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.189 seconds (JVM running for 7.21)
+[2020/12/09-19:40:13] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-19:40:13] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-19:40:13] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-19:40:13] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-19:40:13] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-19:40:13] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-19:40:14] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-19:40:14] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-19:40:14] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-19:40:14] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-19:40:14] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:40:14] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-19:40:14] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-19:40:14] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-19:40:14] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-19:40:14] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-19:40:14] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-19:40:17] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-19:40:21] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-19:40:36] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/checkLibrary/2018110551/1010
+[2020/12/09-19:40:37] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==>  Preparing: update book set book.returnStatus=1 where bookID=? and stuId=(select stuId from student where stuNumber=?)
+[2020/12/09-19:40:37] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==> Parameters: 1010(String), 2018110551(String)
+[2020/12/09-19:40:37] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : <==    Updates: 1
+[2020/12/09-19:40:37] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==>  Preparing: SELECT COUNT(*) AS sumbook FROM book WHERE returnStatus=0 AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=?)
+[2020/12/09-19:40:37] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:40:37] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : <==      Total: 1
+[2020/12/09-19:40:37] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/checkLibrary/2018110551/1009
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==>  Preparing: update book set book.returnStatus=1 where bookID=? and stuId=(select stuId from student where stuNumber=?)
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==> Parameters: 1009(String), 2018110551(String)
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : <==    Updates: 1
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==>  Preparing: SELECT COUNT(*) AS sumbook FROM book WHERE returnStatus=0 AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=?)
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : <==      Total: 1
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==>  Preparing: select paper from lib where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:40:52] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : <==      Total: 1
+[2020/12/09-19:42:09] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-19:42:09] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-19:42:09] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-19:42:09] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-19:42:09] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-19:42:09] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-19:42:10] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-19:42:10] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-19:42:10] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-19:42:10] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-19:42:10] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-19:42:10] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-19:42:10] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-19:42:10] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-19:42:10] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-19:42:10] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-19:42:10] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-19:42:12] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-19:42:12] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/checkLibrary/2018110551/1009
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==>  Preparing: update book set book.returnStatus=1 where bookID=? and stuId=(select stuId from student where stuNumber=?)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==> Parameters: 1009(String), 2018110551(String)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : <==    Updates: 1
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==>  Preparing: SELECT COUNT(*) AS sumbook FROM book WHERE returnStatus=0 AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=?)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : <==      Total: 1
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==>  Preparing: select paper from lib where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : <==      Total: 1
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : ==>  Preparing: update lib set lib.libStatus=1 where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : ==> Parameters: 2018110551(String)
+[2020/12/09-19:42:33] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : <==    Updates: 1
+[2020/12/09-19:42:34] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-20:35:33] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 15884 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-20:35:33] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-20:35:33] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-20:35:46] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 13.362 seconds (JVM running for 16.15)
+[2020/12/09-20:38:26] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-20:38:26] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-20:38:26] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-20:38:26] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-20:38:26] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-20:38:27] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-20:38:28] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-20:38:28] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-20:38:28] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-20:38:28] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-20:38:28] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-20:38:28] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-20:38:28] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-20:38:29] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-20:38:29] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-20:38:29] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-20:38:29] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-20:38:35] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-20:38:37] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-20:38:53] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-20:38:54] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName,b. from book b,student s where b.stuID = s.stuID and stuNumber=?
+[2020/12/09-20:38:54] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-20:38:55] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-20:40:32] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 15928 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-20:40:32] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-20:40:32] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-20:40:43] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 13.061 seconds (JVM running for 17.338)
+[2020/12/09-20:40:59] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-20:41:00] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-20:41:00] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-20:41:00] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-20:41:00] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-20:41:00] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-20:41:00] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-20:41:01] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-20:41:01] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-20:41:01] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-20:41:01] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-20:41:01] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-20:41:01] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-20:41:01] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-20:41:02] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-20:41:03] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-20:41:03] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-20:41:04] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-20:41:05] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-20:41:16] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-20:41:17] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName, from book b,student s where b.stuID = s.stuID and stuNumber=?
+[2020/12/09-20:41:17] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-20:41:18] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-20:45:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 16512 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-20:45:13] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-20:45:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-20:45:25] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 13.427 seconds (JVM running for 18.082)
+[2020/12/09-20:45:44] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-20:45:44] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-20:45:44] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-20:45:44] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-20:45:44] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-20:45:44] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-20:45:44] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-20:45:45] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-20:45:45] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-20:45:45] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-20:45:45] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-20:45:45] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-20:45:45] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-20:45:46] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-20:45:46] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-20:45:46] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-20:45:46] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-20:45:47] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-20:45:51] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-20:46:03] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110552
+[2020/12/09-20:46:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName from book b,student s where b.stuID = s.stuID and stuNumber=?
+[2020/12/09-20:46:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110552(String)
+[2020/12/09-20:46:05] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 0
+[2020/12/09-20:46:05] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-20:48:35] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-20:48:36] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName from book b,student s where b.stuID = s.stuID and stuNumber=?
+[2020/12/09-20:48:36] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-20:48:36] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-20:50:31] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 3764 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-20:50:31] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-20:50:31] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-20:50:36] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.066 seconds (JVM running for 6.862)
+[2020/12/09-20:50:45] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-20:50:45] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-20:50:45] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-20:50:45] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-20:50:45] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-20:50:45] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-20:50:45] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-20:50:45] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-20:50:45] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-20:50:46] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-20:50:46] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-20:50:46] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-20:50:46] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-20:50:46] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-20:50:46] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-20:50:46] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-20:50:46] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-20:50:49] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-20:50:49] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-20:51:03] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-20:51:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName from book b,student s where b.stuID = s.stuID and stuNumber=?
+[2020/12/09-20:51:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-20:51:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-20:51:04] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-20:54:08] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 2760 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-20:54:08] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-20:54:08] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-20:54:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.256 seconds (JVM running for 7.174)
+[2020/12/09-20:54:31] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-20:54:31] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-20:54:31] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-20:54:31] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-20:54:31] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-20:54:31] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-20:54:31] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-20:54:31] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-20:54:31] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-20:54:32] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-20:54:32] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-20:54:32] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-20:54:32] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-20:54:32] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-20:54:32] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-20:54:32] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-20:54:32] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-20:54:55] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-20:54:55] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-20:55:06] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-20:55:07] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select s.stuNumber,s.stuName,s.stuDept,s.stuType,b.bookNum,b.bookName,b.returnStatus from book b,student s where b.stuID = s.stuID and stuNumber=?
+[2020/12/09-20:55:07] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-20:55:07] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-20:55:07] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-21:21:45] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 8080 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-21:21:45] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-21:21:45] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-21:21:49] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.408 seconds (JVM running for 7.442)
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 管理员账户名 ==> 2018110427
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 783001698883862528(String)
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 2
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 785175802399424512(String)
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782240771519545344(String)
+[2020/12/09-21:22:04] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 781917350797508608(String)
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781909496053104640(String)
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 4
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910062275756032(String)
+[2020/12/09-21:22:05] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910318585479168(String)
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910535728791552(String)
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781911407137390592(String)
+[2020/12/09-21:22:06] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-21:22:07] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/09-21:22:07] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 783001698883862528(String)
+[2020/12/09-21:22:07] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 0
+[2020/12/09-21:22:07] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 0
+[2020/12/09-21:22:08] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/09-21:22:08] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 786341943134126080(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODMwMDE2OTg4ODM4NjI1MjgiLCJpYXQiOjE2MDc1MjAxMjgsImV4cCI6MTYxMDExMjEyOH0.2M_GUoBXYASRrt_sD9s6e1RIvJLhkIf4i1VZ95AJuRA(String), 783001698883862528(String), 3d0542a81f11dc5cf26273b8bdc4f184(String), 2020-12-09 21:22:08.77(Timestamp), 2020-12-09 21:22:08.77(Timestamp)
+[2020/12/09-21:22:08] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/09-21:22:09] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /favicon.ico
+[2020/12/09-21:22:12] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-21:22:12] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-21:22:12] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-21:22:12] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-21:22:12] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-21:22:12] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-21:22:13] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-21:22:13] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-21:22:13] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-21:22:14] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-21:22:14] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-21:22:14] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-21:22:14] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-21:22:14] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-21:22:14] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-21:22:14] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-21:22:15] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-21:22:17] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-21:22:21] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-21:22:33] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 2018110551(String)
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 1
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS all_books,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` AND stuNumber=? GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==> Parameters: 2018110551(String)
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : <==      Total: 1
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select b.bookNum,b.bookName,b.returnStatus from book b where b.stuID = (select stuID from student where stuNumber=?)
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-21:22:34] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-21:22:34] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-21:24:58] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 20380 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-21:24:58] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-21:24:58] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-21:25:02] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.16 seconds (JVM running for 7.07)
+[2020/12/09-21:25:13] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-21:25:14] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-21:25:14] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-21:25:14] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-21:25:14] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-21:25:14] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-21:25:14] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-21:25:14] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-21:25:15] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-21:25:15] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-21:25:16] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-21:25:16] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-21:25:16] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-21:25:16] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-21:25:16] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-21:25:16] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-21:25:16] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-21:25:21] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-21:25:21] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-21:25:29] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 2018110551(String)
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 1
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` AND stuNumber=? GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==> Parameters: 2018110551(String)
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : <==      Total: 1
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select b.bookNum,b.bookName,b.returnStatus from book b where b.stuID = (select stuID from student where stuNumber=?)
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-21:25:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-21:25:31] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-21:26:07] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/201811055
+[2020/12/09-21:26:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-21:26:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 201811055(String)
+[2020/12/09-21:26:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 0
+[2020/12/09-21:59:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 3476 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-21:59:13] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-21:59:13] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-21:59:18] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.423 seconds (JVM running for 7.491)
+[2020/12/09-21:59:27] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-21:59:47] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-21:59:57] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-22:00:04] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-22:00:04] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:00:04] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-22:00:04] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==>  Preparing: select * from student where stuNumber = ?;
+[2020/12/09-22:00:04] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:00:04] [http-nio-8888-exec-4] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : <==      Total: 0
+[2020/12/09-22:00:05] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/09-22:01:00] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-22:01:00] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:01:00] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-22:01:00] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==>  Preparing: select * from student where stuNumber = ?;
+[2020/12/09-22:01:00] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:01:00] [http-nio-8888-exec-5] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : <==      Total: 0
+[2020/12/09-22:01:01] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==>  Preparing: select * from student where stuNumber = ?;
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : <==      Total: 0
+[2020/12/09-22:01:27] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/09-22:01:40] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : checkClerk tokenKey ==> null
+[2020/12/09-22:01:40] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==>  Preparing: select * from refreshtoken where tokenKey = ?;
+[2020/12/09-22:01:40] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==> Parameters: null
+[2020/12/09-22:01:40] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : <==      Total: 0
+[2020/12/09-22:01:40] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : refresh token is null =====
+[2020/12/09-22:01:40] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.StudentServiceImpl] : checkClerk tokenKey ==> null
+[2020/12/09-22:01:41] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==>  Preparing: select * from refreshtoken where tokenKey = ?;
+[2020/12/09-22:01:41] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==> Parameters: null
+[2020/12/09-22:01:41] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : <==      Total: 0
+[2020/12/09-22:01:41] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.StudentServiceImpl] : refresh token is null =====
+[2020/12/09-22:01:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-22:01:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:01:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-22:01:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==>  Preparing: select * from student where stuNumber = ?;
+[2020/12/09-22:01:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:01:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.StudentMapper.findOneByStudentAccount] : <==      Total: 0
+[2020/12/09-22:01:44] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationFailureHandler] : 0:0:0:0:0:0:0:1 ==> login failure
+[2020/12/09-22:01:58] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : checkClerk tokenKey ==> null
+[2020/12/09-22:01:58] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==>  Preparing: select * from refreshtoken where tokenKey = ?;
+[2020/12/09-22:01:58] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==> Parameters: null
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : <==      Total: 0
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : refresh token is null =====
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.StudentServiceImpl] : checkClerk tokenKey ==> null
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==>  Preparing: select * from refreshtoken where tokenKey = ?;
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==> Parameters: null
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : <==      Total: 0
+[2020/12/09-22:01:59] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.StudentServiceImpl] : refresh token is null =====
+[2020/12/09-22:02:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-22:02:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110(String)
+[2020/12/09-22:02:04] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 管理员账户名 ==> 2018110
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 781871136110542848(String)
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 3
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 785175802399424512(String)
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782240771519545344(String)
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 782284404641759232(String)
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782238358867804160(String)
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 3
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:05] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782242309801508864(String)
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782242394375454720(String)
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782242476986466304(String)
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 782284517887967232(String)
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782340613067505664(String)
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 4
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782340815467839488(String)
+[2020/12/09-22:02:06] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782340932077879296(String)
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782341024738443264(String)
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782341136919298048(String)
+[2020/12/09-22:02:07] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:02:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/09-22:02:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 781871136110542848(String)
+[2020/12/09-22:02:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 1
+[2020/12/09-22:02:08] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 1
+[2020/12/09-22:02:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/09-22:02:08] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 786352009560195072(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODE4NzExMzYxMTA1NDI4NDgiLCJpYXQiOjE2MDc1MjI1MjgsImV4cCI6MTYxMDExNDUyOH0.mAedoIv_RK_Z2xSiM8_TuIvl8uvaLJO88Og9QEgZS88(String), 781871136110542848(String), 3aa6faf9c89a4d4c97290a76db136b5f(String), 2020-12-09 22:02:08.793(Timestamp), 2020-12-09 22:02:08.793(Timestamp)
+[2020/12/09-22:02:09] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/09-22:02:34] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-ui.html
+[2020/12/09-22:02:34] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-22:02:34] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-22:02:34] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-22:02:34] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-22:02:34] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-22:02:36] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/ui
+[2020/12/09-22:02:36] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-22:02:37] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources/configuration/security
+[2020/12/09-22:02:38] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /swagger-resources
+[2020/12/09-22:02:41] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /v2/api-docs
+[2020/12/09-22:02:41] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /
+[2020/12/09-22:02:41] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-22:02:41] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-22:02:41] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js.map
+[2020/12/09-22:02:41] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-22:02:41] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js.map
+[2020/12/09-22:02:42] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /csrf
+[2020/12/09-22:02:42] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-22:02:42] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-22:02:42] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-22:02:42] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110 -- /webjars/springfox-swagger-ui/swagger-ui.css.map
+[2020/12/09-22:02:53] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : checkClerk tokenKey ==> null
+[2020/12/09-22:02:53] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==>  Preparing: select * from refreshtoken where tokenKey = ?;
+[2020/12/09-22:02:53] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==> Parameters: null
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : <==      Total: 0
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : refresh token is null =====
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.StudentServiceImpl] : checkClerk tokenKey ==> null
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==>  Preparing: select * from refreshtoken where tokenKey = ?;
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : ==> Parameters: null
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.findOneByTokenKey] : <==      Total: 0
+[2020/12/09-22:02:54] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.StudentServiceImpl] : refresh token is null =====
+[2020/12/09-22:03:01] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==>  Preparing: select * from clerk where clerkAccount = ?;
+[2020/12/09-22:03:01] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : ==> Parameters: 2018110427(String)
+[2020/12/09-22:03:01] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.SectorMapper.findOneByClerkAccount] : <==      Total: 1
+[2020/12/09-22:03:02] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 0:0:0:0:0:0:0:1 ==> login success
+[2020/12/09-22:03:02] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.config.security.AjaxAuthenticationSuccessHandler] : 管理员账户名 ==> 2018110427
+[2020/12/09-22:03:02] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==>  Preparing: select * from role where id in( select role_id from user_role where user_id = ?);
+[2020/12/09-22:03:02] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : ==> Parameters: 783001698883862528(String)
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.UserRoleMapper.getRolesByUser] : <==      Total: 2
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 785175802399424512(String)
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 782240771519545344(String)
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==>  Preparing: select * from authorities where id in( select authority_id from role_authority where role_id = ?) and parent_id is null order by `index` asc;
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : ==> Parameters: 781917350797508608(String)
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.getAuthorityNoParentByRole] : <==      Total: 1
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:03:03] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781909496053104640(String)
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 4
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910062275756032(String)
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910318585479168(String)
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781910535728791552(String)
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==>  Preparing: select * from authorities where parent_id = ? order by `index` asc;
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : ==> Parameters: 781911407137390592(String)
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RoleAuthorityMapper.findChildrenByParentId] : <==      Total: 0
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==>  Preparing: delete from refreshtoken where userId = ?;
+[2020/12/09-22:03:04] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : ==> Parameters: 783001698883862528(String)
+[2020/12/09-22:03:05] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.deleteAllByUserId] : <==    Updates: 0
+[2020/12/09-22:03:05] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.SectorServiceImpl] : deleteResult of refresh token ===> 0
+[2020/12/09-22:03:06] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==>  Preparing: insert into refreshtoken(id,refreshToken,userId,tokenKey,createTime,updateTime) values(?,?,?,?,?,?);
+[2020/12/09-22:03:06] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : ==> Parameters: 786352251080802304(String), eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ODMwMDE2OTg4ODM4NjI1MjgiLCJpYXQiOjE2MDc1MjI1ODYsImV4cCI6MTYxMDExNDU4Nn0.xUJV72ScAOnxxeEXyg7geancZIBJFL1Av7Ha57GyqOQ(String), 783001698883862528(String), e77e2562922c60e6e7da10f30d8e599d(String), 2020-12-09 22:03:06.376(Timestamp), 2020-12-09 22:03:06.376(Timestamp)
+[2020/12/09-22:03:06] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.RefreshTokenMapper.insertRefreshToken] : <==    Updates: 1
+[2020/12/09-22:03:20] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-22:03:22] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-22:03:22] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-22:03:22] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-22:03:22] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-22:03:22] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-22:03:23] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-22:03:23] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-22:03:23] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-22:03:24] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-22:03:26] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-22:03:26] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-22:03:26] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-22:03:27] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-22:03:27] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-22:03:27] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-22:03:27] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-22:03:30] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff
+[2020/12/09-22:03:30] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- null -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-22:03:30] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-22:03:30] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff
+[2020/12/09-22:03:33] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 1
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` AND stuNumber=? GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : <==      Total: 1
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select b.bookNum,b.bookName,b.returnStatus from book b where b.stuID = (select stuID from student where stuNumber=?)
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:03:48] [http-nio-8888-exec-9] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-22:03:49] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-22:04:02] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/export
+[2020/12/09-22:04:02] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS all_books,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-22:04:02] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==> Parameters: 
+[2020/12/09-22:04:02] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : <==      Total: 4
+[2020/12/09-22:05:33] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/checkLibrary/2018110551/1009
+[2020/12/09-22:05:33] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==>  Preparing: update book set book.returnStatus=1 where bookID=? and stuId=(select stuId from student where stuNumber=?)
+[2020/12/09-22:05:33] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==> Parameters: 1009(String), 2018110551(String)
+[2020/12/09-22:05:33] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : <==    Updates: 1
+[2020/12/09-22:05:33] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==>  Preparing: SELECT COUNT(*) AS sumbook FROM book WHERE returnStatus=0 AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=?)
+[2020/12/09-22:05:33] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:05:34] [http-nio-8888-exec-2] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : <==      Total: 1
+[2020/12/09-22:05:42] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/checkLibrary/2018110551/1010
+[2020/12/09-22:05:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==>  Preparing: update book set book.returnStatus=1 where bookID=? and stuId=(select stuId from student where stuNumber=?)
+[2020/12/09-22:05:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : ==> Parameters: 1010(String), 2018110551(String)
+[2020/12/09-22:05:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.checkLibrary] : <==    Updates: 1
+[2020/12/09-22:05:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==>  Preparing: SELECT COUNT(*) AS sumbook FROM book WHERE returnStatus=0 AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=?)
+[2020/12/09-22:05:43] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:05:44] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.needReturn] : <==      Total: 1
+[2020/12/09-22:05:44] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==>  Preparing: select paper from lib where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-22:05:44] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:05:45] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findPaper] : <==      Total: 1
+[2020/12/09-22:05:45] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : ==>  Preparing: update lib set lib.libStatus=1 where lib.stuID=(select stuID from student where stuNumber=?)
+[2020/12/09-22:05:45] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:05:45] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.changeStatus] : <==    Updates: 1
+[2020/12/09-22:06:28] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-22:06:28] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-22:06:28] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-22:06:28] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-22:06:28] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-22:06:28] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-22:06:51] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library
+[2020/12/09-22:07:16] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/export
+[2020/12/09-22:07:16] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS all_books,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-22:07:16] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==> Parameters: 
+[2020/12/09-22:07:16] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : <==      Total: 4
+[2020/12/09-22:10:41] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findAllByPage
+[2020/12/09-22:10:41] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : ==>  Preparing: SELECT count(0) FROM (SELECT s.`stuNumber`, s.`stuName`, s.`stuDept`, s.`stuType`, COUNT(*) AS all_books, l.`libStatus` FROM student s, book b, lib l WHERE s.`stuID` = b.`stuID` AND l.`stuID` = b.`stuID` GROUP BY l.`stuID`, l.libStatus) table_count
+[2020/12/09-22:10:41] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : ==> Parameters: 
+[2020/12/09-22:10:41] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : <==      Total: 1
+[2020/12/09-22:10:41] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS all_books,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus; LIMIT ?, ?
+[2020/12/09-22:10:41] [http-nio-8888-exec-7] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==> Parameters: 2(Integer), 1(Integer)
+[2020/12/09-22:12:56] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 20072 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-22:12:56] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-22:12:56] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-22:13:00] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.091 seconds (JVM running for 6.989)
+[2020/12/09-22:13:10] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-22:13:11] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-22:13:11] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-22:13:11] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-22:13:11] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-22:13:11] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-22:13:12] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-22:13:12] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-22:13:12] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-22:13:14] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-22:13:14] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-22:13:14] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-22:13:14] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-22:13:16] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-22:13:16] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-22:13:16] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-22:13:16] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-22:13:18] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-22:13:19] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/09-22:13:26] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findAllByPage
+[2020/12/09-22:13:29] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : ==>  Preparing: SELECT count(0) FROM (SELECT s.`stuNumber`, s.`stuName`, s.`stuDept`, s.`stuType`, COUNT(*) AS allBook, l.`libStatus` FROM student s, book b, lib l WHERE s.`stuID` = b.`stuID` AND l.`stuID` = b.`stuID` GROUP BY l.`stuID`, l.libStatus) table_count
+[2020/12/09-22:13:29] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : ==> Parameters: 
+[2020/12/09-22:13:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : <==      Total: 1
+[2020/12/09-22:13:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus LIMIT ?, ?
+[2020/12/09-22:13:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==> Parameters: 2(Integer), 1(Integer)
+[2020/12/09-22:13:30] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : <==      Total: 1
+[2020/12/09-22:13:33] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/09-22:13:55] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/findAllByPage
+[2020/12/09-22:13:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : ==>  Preparing: SELECT count(0) FROM (SELECT s.`stuNumber`, s.`stuName`, s.`stuDept`, s.`stuType`, COUNT(*) AS allBook, l.`libStatus` FROM student s, book b, lib l WHERE s.`stuID` = b.`stuID` AND l.`stuID` = b.`stuID` GROUP BY l.`stuID`, l.libStatus) table_count
+[2020/12/09-22:13:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : ==> Parameters: 
+[2020/12/09-22:13:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary_COUNT] : <==      Total: 1
+[2020/12/09-22:13:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus LIMIT ?
+[2020/12/09-22:13:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==> Parameters: 4(Integer)
+[2020/12/09-22:13:56] [http-nio-8888-exec-6] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : <==      Total: 4
+[2020/12/09-22:14:21] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/export
+[2020/12/09-22:14:21] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus
+[2020/12/09-22:14:21] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : ==> Parameters: 
+[2020/12/09-22:14:21] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.listAllLibrary] : <==      Total: 4
+[2020/12/09-22:15:05] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110552
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 2018110552(String)
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 1
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` AND stuNumber=? GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==> Parameters: 2018110552(String)
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : <==      Total: 0
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select b.bookNum,b.bookName,b.returnStatus from book b where b.stuID = (select stuID from student where stuNumber=?)
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110552(String)
+[2020/12/09-22:15:06] [http-nio-8888-exec-8] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 0
+[2020/12/09-22:15:24] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/2018110551
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 1
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==>  Preparing: SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus` FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` AND stuNumber=? GROUP BY l.`stuID`,l.libStatus;
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuLibrary] : <==      Total: 1
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==>  Preparing: select b.bookNum,b.bookName,b.returnStatus from book b where b.stuID = (select stuID from student where stuNumber=?)
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : ==> Parameters: 2018110551(String)
+[2020/12/09-22:15:25] [http-nio-8888-exec-10] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.bookDetail] : <==      Total: 2
+[2020/12/09-22:15:35] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/library/getStuBookDetail/20181105589
+[2020/12/09-22:15:36] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==>  Preparing: select * from student where stuNumber=?
+[2020/12/09-22:15:36] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : ==> Parameters: 20181105589(String)
+[2020/12/09-22:15:36] [http-nio-8888-exec-1] [DEBUG] [com.digitaldeparturesystem.mapper.LibraryMapper.findStuByStuNumber] : <==      Total: 0
+[2020/12/09-22:21:03] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 1588 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/09-22:21:03] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/09-22:21:03] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/09-22:21:07] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 5.014 seconds (JVM running for 6.993)
+[2020/12/09-22:21:18] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/09-22:21:18] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/09-22:21:19] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/09-22:21:19] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/09-22:21:19] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/09-22:21:19] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/09-22:21:19] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/09-22:21:19] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
+[2020/12/09-22:21:19] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/09-22:21:19] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/09-22:21:19] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/09-22:21:20] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/09-22:21:20] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/09-22:21:21] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/09-22:21:21] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/09-22:21:21] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/09-22:21:21] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/09-22:21:21] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/09-22:23:21] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2

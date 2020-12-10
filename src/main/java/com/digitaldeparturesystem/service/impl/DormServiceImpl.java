@@ -6,6 +6,7 @@ import com.digitaldeparturesystem.mapper.DormMapper;
 import com.digitaldeparturesystem.pojo.DormInfo;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
 import com.github.pagehelper.PageHelper;
@@ -46,16 +47,23 @@ public class DormServiceImpl implements IDormService {
     }
 
     /**
-     *  获取学生退寝详情
-     * @param studentId
+     *  根据学号获取学生退寝详情
+     * @param stuNumber
      * @return
      */
     @Override
-    public ResponseResult getStudentByIdForFinance(String studentId) {
-        DormInfo studentByIdForDorm = dormMapper.getStudentByIdForDorm(studentId);
+    public ResponseResult getStudentByIdForFinance(String stuNumber) {
+        //先查询是否有该学生存在
+        Student stuByStuNumber = dormMapper.findStuByStuNumber(stuNumber);
+        if (stuByStuNumber == null) {
+            return ResponseResult.FAILED("查询失败,没有这个学生存在！");
+        }
+        //再查询是否有该学生的退寝详情
+        DormInfo studentByIdForDorm = dormMapper.getStudentByIdForDorm(stuNumber);
         if (studentByIdForDorm==null) {
             return ResponseResult.FAILED("查找失败,没有该学生的财务信息");
         }
+
         List<DormInfo> list = new ArrayList<>();
         list.add(studentByIdForDorm);
         return ResponseResult.SUCCESS("查找成功").setData(list);
@@ -63,7 +71,7 @@ public class DormServiceImpl implements IDormService {
 
 
     /**
-     * 审核后勤处信息
+     * 审核学生退寝信息
      * @param stuNumber
      * @return
      */

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口--> 
+<mapper namespace="com.digitaldeparturesystem.mapper.StudentMapper">
+
+    <!--select查询语句-->
+    <!--这里的resultType要写完整路径，不然xml文件找不到路径-->
+    <select id="getStudentList" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student;
+    </select>
+
+    <select id="getStudentById" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where id = #{id};
+    </select>
+
+    <!--对象中的属性可以换直接取出来-->
+    <insert id="insertStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
+        insert into student (stuID,stuNumber,stuName,stuPwd,stuDept,stuClass,stuPhoneNumber,stuPhoto,stuSex,stuStatus,stuInDate,stuOutDate,stuAddress,stuSpecialty,stuNation,stuFeature,stuType,stuCredit,stuContact)
+        values(#{stuId},#{stuNumber},#{stuName},#{stuPwd},#{stuDept},#{stuClass},#{stuPhoneNumber},#{stuPhoto},#{stuSex},#{stuStatus},#{stuInDate},#{stuOutDate},#{stuAddress},#{stuSpecialty},#{stuNation},#{stuFeature},#{stuType},#{stuCredit},#{stuContact});
+    </insert>
+
+    <!--对象中的属性可以换直接取出来-->
+    <insert id="updateStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
+        update student set
+        stuNumber = #{stuName},
+        stuName = #{stuName},
+        stuPwd = #{stuPwd},
+        stuDept = #{stuDept},
+        stuClass = #{stuClass},
+        stuPhoneNumber = #{stuPhoneNumber},
+        stuPicture = #{stuPicture},
+        stuSex = #{stuSex},
+        stuStatus = #{stuStatus},
+        stuInDate = #{stuInDate},
+        stuOutDate = #{stuOutDate},
+        stuAddress = #{stuAddress},
+        stuSpecialty = #{stuSpecialty},
+        stuNation = #{stuNation},
+        stuFeature = #{stuFeature},
+        stuType = #{stuType},
+        stuCredit = #{stuCredit},
+        stuContact = #{stuContact}
+        where id = #{id};
+    </insert>
+
+    <!--对象中的属性可以换直接取出来-->
+    <insert id="deleteStudent" parameterType="com.digitaldeparturesystem.pojo.Student">
+        delete from digital_departure_system.tb_student where id = #{id};
+    </insert>
+
+    <select id="findOneByStudentAccount" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuNumber = #{stuNumber};
+    </select>
+
+    <select id="findOneByEmail" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuContact = #{emailAddress};
+    </select>
+
+    <update id="updatePassword" parameterType="map">
+        update student set stuPwd = #{stuPwd} where stuID = #{stuID};
+    </update>
+
+</mapper>

@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+
 @CrossOrigin
 @Slf4j
 @RestController
@@ -18,56 +22,9 @@ public class LibraryApi {
     @Autowired
     private ILibraryService libraryService;
 
-    /**
-     * 通过学生学号查询图书馆详情
-     * @param stuNumber
-     * @return
-     */
-    @GetMapping("/stuNumber")
-    public ResponseResult getLibraryByStudentId(@PathVariable("stuNumber")String stuNumber){
-        return null;
-    }
 
     /**
-     * 审核图书管信息
-     * @param studentId
-     * @param lib
-     * @return
-     */
-    @PostMapping("/studentId")
-    public ResponseResult checkLibrary(@PathVariable("studentId")String studentId, @RequestBody Lib lib){
-        return null;
-    }
-
-    /**
-     * 获取全部图书管列表
-     * @return
-     */
-    @GetMapping
-    public ResponseResult getAllLibraries(){
-        return null;
-    }
-
-    /**
-     * 获取已审核的图书管列表
-     * @return
-     */
-    @GetMapping("/check")
-    public ResponseResult getCheckLibraries(){
-        return null;
-    }
-
-    /**
-     * 获取未审核的图书管列表
-     * @return
-     */
-    @GetMapping("/uncheck")
-    public ResponseResult getUnCheckLibraries(){
-        return null;
-    }
-
-
-    /**
+     * zy
      * 分页查询所有学生的结束信息
      * @param start
      * @param size
@@ -80,6 +37,7 @@ public class LibraryApi {
 
 
     /**
+     * zy
      * 查询某个学生借书详情
      * @param stuNumber
      * @return
@@ -95,16 +53,30 @@ public class LibraryApi {
 
 
     /**
+     *  zy
      *  审核学生某本书接口
      * @param stuNumber
      * @return
      */
-    @PutMapping("/checkLibrary/{stuNumber}/{bookId}")
+    @PutMapping("/checkLibrary/{stuNumber}/{bookID}")
     public ResponseResult checkLibrary(@PathVariable("stuNumber")String stuNumber,
-                                       @PathVariable("bookId") String bookId){
+                                       @PathVariable("bookID") String bookID){
 
-       return libraryService.checkLibrary(stuNumber,bookId);
+       return libraryService.checkLibrary(stuNumber,bookID);
 
     }
+
+
+    /**
+     * zy
+     *  导出所有财务审核信息
+     * @param response
+     */
+    @GetMapping("/export")
+    public void exportFinance(HttpServletResponse response) throws UnsupportedEncodingException {
+        libraryService.exportAllLib(response);
+    }
+
+
 
 }

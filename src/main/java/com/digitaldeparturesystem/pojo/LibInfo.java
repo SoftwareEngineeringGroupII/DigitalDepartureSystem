@@ -4,20 +4,20 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 
 public class LibInfo {
 
-    @Excel(name = "学号")
+    @Excel(name = "学号",width = 20)
     private String stuNumber;
 
     @Excel(name = "姓名")
     private String stuName;
 
-    @Excel(name = "学院")
+    @Excel(name = "学院",width = 20)
     private String  stuDept;
 
     @Excel(name = "类型")
     private String stuType;
 
     @Excel(name = "未归还书数")
-    private String AllBook;
+    private String allBook;
 
     @Excel(name = "通过状态")
     private String libStatus;
@@ -56,11 +56,11 @@ public class LibInfo {
     }
 
     public String getAllBook() {
-        return AllBook;
+        return allBook;
     }
 
     public void setAllBook(String allBook) {
-        AllBook = allBook;
+        this.allBook = allBook;
     }
 
     public String getLibStatus() {

@@ -138,16 +138,22 @@ public class CardServiceImpl implements ICardService {
 
     /**
      *  按学号查询一卡通详情
-     * @param studentId
+     * @param stuNumber
      * @return
      */
     @Override
-    public ResponseResult getStudentByIdForCard(String studentId) {
-        Map<String, Object> studentByIdForCard = cardMapper.getStudentByIdForCard(studentId);
-
+    public ResponseResult getStudentByIdForCard(String stuNumber) {
+        //先查询是否有该学生存在
+        Student stuByStuNumber = cardMapper.findStuByStuNumber(stuNumber);
+        if (stuByStuNumber == null) {
+            return ResponseResult.FAILED("查询失败,没有这个学生存在！");
+        }
+        //再查询是否有该生的一卡通信息
+        Map<String, Object> studentByIdForCard = cardMapper.getStudentByIdForCard(stuNumber);
         if (studentByIdForCard == null) {
             return  ResponseResult.FAILED("查找失败！没有该学生的一卡通详情！");
         }
+
         List<Map<String,Object>> list = new ArrayList<>();
         list.add(studentByIdForCard);
         return ResponseResult.SUCCESS("查找成功").setData(list);
@@ -161,7 +167,7 @@ public class CardServiceImpl implements ICardService {
      */
     public  ResponseResult doCheckForCard(String stuNumber){
         if (stuNumber == null) {
-            return ResponseResult.FAILED("输入学号为空,请重新输入");
+            return ResponseResult.FAILED("传入学号不可以为空");
         }
         int i = cardMapper.doCheckCard(stuNumber);
         if (i > 0){

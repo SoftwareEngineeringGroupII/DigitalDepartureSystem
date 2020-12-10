@@ -2,6 +2,9 @@ package com.digitaldeparturesystem.service;
 
 import com.digitaldeparturesystem.response.ResponseResult;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+
 public interface ILibraryService {
 
     //分页查询所有学生的图书信息
@@ -12,4 +15,7 @@ public interface ILibraryService {
 
     //审核某个学生某本书归还
     ResponseResult checkLibrary(String stuNumber,String bookId);
+
+    //导出学生图书情况表
+    void exportAllLib(HttpServletResponse response) throws UnsupportedEncodingException;
 }
