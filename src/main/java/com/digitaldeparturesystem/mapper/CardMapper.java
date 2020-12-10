@@ -1,6 +1,7 @@
 package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.CardInfo;
+import com.digitaldeparturesystem.pojo.Student;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface CardMapper {
     List<CardInfo> listAllCard();
 
    // List<CardInfo> findAllByPage;
+
+    //查询某个学生是否存在
+    Student findStuByStuNumber(String stuNumber);
 }

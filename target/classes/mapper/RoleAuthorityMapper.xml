@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口-->
+<mapper namespace="com.digitaldeparturesystem.mapper.RoleAuthorityMapper">
+
+    <insert id="addAuthorityToRole" parameterType="map">
+        insert into role_authority (`id`,`role_id`,`authority_id`)
+        values (#{id},#{roleId},#{authorityId});
+    </insert>
+
+    <select id="getAuthorityNoParentByRole" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Authorities">
+        select * from authorities where id in(
+        select authority_id from role_authority
+        where role_id = #{roleId}) and parent_id is null order by `index` asc;
+    </select>
+
+    <select id="findChildrenByParentId" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Authorities">
+        select * from authorities where parent_id = #{parentId} order by `index` asc;
+    </select>
+
+</mapper>

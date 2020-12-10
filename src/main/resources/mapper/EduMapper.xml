@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.digitaldeparturesystem.mapper.EduMapper">
+
+    <!--查询学生基本信息和离校状态：教务处列表-->
+   <!-- <select id="findAllByPage" resultType="java.util.Map">
+
+    </select>-->
+
+    <!---->
+    <select id="listAllEdu" resultType="java.util.Map">
+        select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus from edu e,student s where e.stuID=s.stuID;
+    </select>
+
+</mapper>

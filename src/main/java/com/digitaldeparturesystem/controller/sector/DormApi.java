@@ -22,6 +22,7 @@ public class DormApi {
 
 
     /**
+     * zy
      *  根据学号获取学生退寝详情
      * @param stuNumber
      * @return
@@ -34,6 +35,7 @@ public class DormApi {
 
 
     /**
+     * zy
      * 审核一卡通信息
      * @param stuNumber
      * @return
@@ -45,41 +47,9 @@ public class DormApi {
 
 
 
-    /**
-     * 获取全部一卡通列表
-     * @return
-     */
-    @GetMapping
-    public ResponseResult getAllDorms(){
-        return null;
-    }
-
-
 
     /**
-     * 获取已审核的一卡通列表
-     * @return
-     */
-    @GetMapping("/check")
-    public ResponseResult getCheckDorms(){
-        return null;
-    }
-
-
-
-    /**
-     * 获取未审核的一卡通列表
-     * @return
-     */
-    @GetMapping("/uncheck")
-    public ResponseResult getUnCheckDorms(){
-        return null;
-    }
-
-
-
-
-    /**
+     * zy
      * 按条件分页查询寝室审核情况
      * @param start
      * @param size
@@ -99,6 +69,7 @@ public class DormApi {
 
 
     /**
+     * zy
      * 导出寝室审核表
      * @param response
      * @return
@@ -114,6 +85,7 @@ public class DormApi {
     }
 
     /**
+     * zy
      *  查询所有退寝状态
      * @return
      */
@@ -124,6 +96,7 @@ public class DormApi {
 
 
     /**
+     *  zy
      *  分页查询所有的数据
      * @param start
      * @param size

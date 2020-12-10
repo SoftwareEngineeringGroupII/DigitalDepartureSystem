@@ -25,6 +25,7 @@ public class FinanceApi {
     private IFinanceService financeService;
 
     /**
+     * zy
      * 根据学生学号查询财务信息
      * @param studentId
      * @return
@@ -37,6 +38,7 @@ public class FinanceApi {
 
 
     /**
+     * zy
      * 按条件分页查询
      * @param start
      * @param size
@@ -53,7 +55,7 @@ public class FinanceApi {
     }
 
 
-    /**
+    /**zy
      * 根据学号审核财务情况
      * @param stuNum
      * @return
@@ -68,6 +70,7 @@ public class FinanceApi {
 
 
     /**
+     * zy
      *  查询未审核的财务情况
      * @return
      */
@@ -76,7 +79,9 @@ public class FinanceApi {
         return financeService.noCheck();
     }
 
+
     /**
+     * zy
      *  查询已审核的财务情况
      * @return
      */
@@ -87,6 +92,7 @@ public class FinanceApi {
 
 
     /**
+     * zy
      *  导出所有财务审核信息
      * @param response
      */
@@ -95,7 +101,9 @@ public class FinanceApi {
            financeService.exportAllFinance(response);
     }
 
+
     /**
+     * zy
      * 查询所有
      * @return
      */
@@ -106,6 +114,7 @@ public class FinanceApi {
 
 
     /**
+     * zy
      * 分页查询所有财务信息
      * @param start
      * @param size

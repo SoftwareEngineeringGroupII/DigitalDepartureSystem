@@ -1,0 +1,37 @@
+[2020/12/08-22:27:27] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Starting DDSApplication on JW8NYXIHL6RWMBC with PID 16112 (C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem\target\classes started by Administrator in C:\Users\Administrator\Desktop\lixiaosys\DigitalDepartureSystem)
+[2020/12/08-22:27:27] [main] [DEBUG] [com.digitaldeparturesystem.DDSApplication] : Running with Spring Boot v2.3.3.RELEASE, Spring v5.2.8.RELEASE
+[2020/12/08-22:27:27] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : No active profile set, falling back to default profiles: default
+[2020/12/08-22:27:31] [main] [INFO ] [com.digitaldeparturesystem.DDSApplication] : Started DDSApplication in 4.932 seconds (JVM running for 7.649)
+[2020/12/08-22:27:45] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/08-22:27:45] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/08-22:27:46] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/08-22:27:46] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/08-22:27:46] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/08-22:27:46] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/08-22:27:46] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/08-22:27:46] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/08-22:27:46] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/security
+[2020/12/08-22:27:47] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources
+[2020/12/08-22:27:47] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2
+[2020/12/08-22:27:47] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/08-22:27:47] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /
+[2020/12/08-22:27:48] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /csrf
+[2020/12/08-22:27:48] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2
+[2020/12/08-22:27:48] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2
+[2020/12/08-22:27:48] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2
+[2020/12/08-22:27:49] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-regular.woff2
+[2020/12/08-22:27:50] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /v2/api-docs
+[2020/12/08-22:27:52] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2
+[2020/12/08-22:28:35] [http-nio-8888-exec-3] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /sector/dorm/stuNumber/2018110444
+[2020/12/08-22:28:36] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.DormMapper.doCheckForDorm] : ==>  Preparing: update dorm set isLeave=1 where stuID=?
+[2020/12/08-22:28:36] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.DormMapper.doCheckForDorm] : ==> Parameters: 2018110444(String)
+[2020/12/08-22:28:36] [http-nio-8888-exec-3] [DEBUG] [com.digitaldeparturesystem.mapper.DormMapper.doCheckForDorm] : <==    Updates: 0
+[2020/12/08-22:28:36] [http-nio-8888-exec-1] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-600.woff2
+[2020/12/08-22:28:41] [http-nio-8888-exec-2] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-ui.html
+[2020/12/08-22:28:42] [http-nio-8888-exec-7] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.css
+[2020/12/08-22:28:42] [http-nio-8888-exec-8] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/springfox.js
+[2020/12/08-22:28:42] [http-nio-8888-exec-6] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js
+[2020/12/08-22:28:42] [http-nio-8888-exec-5] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui-bundle.js
+[2020/12/08-22:28:42] [http-nio-8888-exec-4] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/swagger-ui.css
+[2020/12/08-22:28:42] [http-nio-8888-exec-9] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /swagger-resources/configuration/ui
+[2020/12/08-22:28:42] [http-nio-8888-exec-10] [INFO ] [com.digitaldeparturesystem.service.impl.PermissionService] : 0:0:0:0:0:0:0:1 -- 2018110427 -- /webjars/springfox-swagger-ui/favicon-32x32.png
