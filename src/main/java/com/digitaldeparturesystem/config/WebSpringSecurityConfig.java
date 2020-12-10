@@ -89,9 +89,6 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 
-                .antMatchers("/common/**").permitAll()
-                .anyRequest().authenticated()
-
                 .anyRequest()
                 .access("@permission.hasPermission(request,authentication)") // RBAC 动态 url 认证
 
