@@ -91,9 +91,16 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                 //删除旧的refreshToken，创建新的refreshToken
                 token = sectorService.createToken(httpServletResponse, clerk);
             }
-            httpServletResponse.getWriter().
-                    write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                            setData(JSON.toJSON(clerk)).setToken(token)));
+            //解决不返回token的问题
+            if ("".equals(token)){
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(clerk)).setToken(tokenKey)));
+            }else{
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(clerk)).setToken(token)));
+            }
         }
         if(student != null){
             //获取用户的权限
@@ -106,9 +113,16 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
                 //删除旧的refreshToken，创建新的refreshToken
                 token = studentService.createToken(httpServletResponse, student);
             }
-            httpServletResponse.getWriter().
-                    write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                            setData(JSON.toJSON(student)).setToken(token)));
+            //解决不返回token的问题
+            if ("".equals(token)){
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(clerk)).setToken(tokenKey)));
+            }else{
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(clerk)).setToken(token)));
+            }
         }
 
     }
