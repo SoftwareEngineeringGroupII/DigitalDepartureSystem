@@ -8,7 +8,7 @@ public class ResponseResult implements Serializable {
     private int code;
     private String message;
     private Object data;
-    private String jwtToken;
+    private String token;
 
 
     public ResponseResult() {
@@ -113,12 +113,12 @@ public class ResponseResult implements Serializable {
         return this;
     }
 
-    public String getJwtToken() {
-        return jwtToken;
+    public String getToken() {
+        return token;
     }
 
-    public ResponseResult setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public ResponseResult setToken(String token) {
+        this.token = token;
         return this;
     }
 }

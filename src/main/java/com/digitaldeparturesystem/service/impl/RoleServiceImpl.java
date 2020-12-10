@@ -34,11 +34,17 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public ResponseResult insertRole(Role role) {
+
         //检查数据
         if (TextUtils.isEmpty(role.getCode())){
             return ResponseResult.FAILED("角色代码不能为空");
         }
-        if (TextUtils.isEmpty(role.getName())){
+        String roleName = role.getName();
+        Role roleFromDB = roleMapper.getRoleByName(roleName);
+        if (roleFromDB != null){
+            return ResponseResult.FAILED("角色名已存在");
+        }
+        if (TextUtils.isEmpty(roleName)){
             return ResponseResult.FAILED("角色名字不能为空");
         }
         if (role.getIndex() == 0){
@@ -55,6 +61,9 @@ public class RoleServiceImpl implements IRoleService {
     public ResponseResult updateRole(String roleId, Role role) {
         //数据库种获取数据
         Role roleFromDB = roleMapper.getRoleById(roleId);
+        if (checkRoleIsExist(roleId,roleMapper)){
+            return ResponseResult.FAILED("该角色不存在");
+        }
         //更新数据
         if (!TextUtils.isEmpty(role.getCode())) {
             roleFromDB.setCode(role.getCode());
@@ -86,6 +95,9 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public ResponseResult findRoleById(String roleId) {
         Role role = roleMapper.getRoleById(roleId);
+        if (checkRoleIsExist(roleId,roleMapper)){
+            return ResponseResult.FAILED("该角色不存在");
+        }
         return ResponseResult.SUCCESS("获取角色成功").setData(role);
     }
 

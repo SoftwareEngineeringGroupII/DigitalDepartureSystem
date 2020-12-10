@@ -7,11 +7,8 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IAuthorityService;
 import com.digitaldeparturesystem.utils.AuthorityTreeUtils;
 import com.digitaldeparturesystem.utils.IdWorker;
-import com.digitaldeparturesystem.utils.MybatisUtils;
 import com.digitaldeparturesystem.utils.TextUtils;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +28,8 @@ public class AuthorityServiceImpl implements IAuthorityService {
     @Override
     public ResponseResult insertAuthority(Authorities authorities) {
         //检查数据
-        if (TextUtils.isEmpty(authorities.getName())){
+        String authoritiesName = authorities.getName();
+        if (TextUtils.isEmpty(authoritiesName)){
             return ResponseResult.FAILED("权限名不能为空");
         }
         if (TextUtils.isEmpty(authorities.getUrl())){
@@ -42,6 +40,10 @@ public class AuthorityServiceImpl implements IAuthorityService {
         }
         if (authorities.getIndex() == 0){
             return ResponseResult.FAILED("权限序列不能为空");
+        }
+        Authorities authorityFromDB = authoritiesMapper.findByName(authorities.getName());
+        if (authorityFromDB != null){
+            return ResponseResult.FAILED("权限名已存在");
         }
         //补充数据
         authorities.setId(String.valueOf(idWorker.nextId()));
@@ -55,6 +57,9 @@ public class AuthorityServiceImpl implements IAuthorityService {
     public ResponseResult updateAuthority(String authorityId, Authorities authorities) {
         //从数据库获取数据
         Authorities authorityFromDB = authoritiesMapper.getAuthorityById(authorityId);
+        if (authorityFromDB == null){
+            return ResponseResult.FAILED("该权限不存在");
+        }
         //检查数据
         if (!TextUtils.isEmpty(authorities.getName())){
             authorityFromDB.setName(authorities.getName());
@@ -102,8 +107,11 @@ public class AuthorityServiceImpl implements IAuthorityService {
     public ResponseResult findAuthorityById(String authorityId) {
         //拿到数据
         Authorities authority = authoritiesMapper.getAuthorityById(authorityId);
+        if (authority == null){
+            return ResponseResult.FAILED("此权限不存在");
+        }
         //查询子数据
-        authority.setChildren(authoritiesMapper.findChildrenByParentId(authority.getId()));
+        AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
         return ResponseResult.SUCCESS("查找权限成功").setData(authority);
     }
 }

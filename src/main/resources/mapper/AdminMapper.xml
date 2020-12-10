@@ -4,19 +4,18 @@
 <mapper namespace="com.digitaldeparturesystem.mapper.AdminMapper">
 
     <!--select查询语句-->
-
-    <!--对象中的属性可以换直接取出来-->
-    <insert id="addClerk" parameterType="com.digitaldeparturesystem.pojo.Clerk">
-        insert into clerk(clerkID,clerkName,clerkPwd,department,clerkAccount,clerkPhoto,clerkStatus,clerkEmail)
-        values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkAccount},#{clerkPhoto},#{clerkStatus},#{clerkEmail});
-    </insert>
-
     <select id="findAllClerks" resultType="com.digitaldeparturesystem.pojo.Clerk">
         select * from clerk;
     </select>
 
-    <update id="deleteClerkByStatus" parameterType="java.lang.String">
+    <!--对象中的属性可以换直接取出来-->
+    <insert id="addClerk" parameterType="com.digitaldeparturesystem.pojo.Clerk">
+        insert into clerk(clerkID,clerkName,clerkPwd,department,clerkAccount,clerkPhoto,clerkStatus)
+        values(#{clerkID},#{clerkName},#{clerkPwd},#{department},#{clerkAccount},#{clerkPhoto},#{clerkStatus});
+    </insert>
+
+    <delete id="deleteClerk" parameterType="java.lang.String">
         delete from clerk where clerkID = #{clerkId};
-    </update>
+    </delete>
 
 </mapper>

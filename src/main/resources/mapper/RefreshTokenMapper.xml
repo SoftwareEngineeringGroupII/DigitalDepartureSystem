@@ -4,7 +4,7 @@
 <mapper namespace="com.digitaldeparturesystem.mapper.RefreshTokenMapper">
 
     <delete id="deleteAllByUserId" parameterType="java.lang.String">
-        delete from refreshtoken where id = #{id};
+        delete from refreshtoken where userId = #{clerkId};
     </delete>
 
     <insert id="insertRefreshToken" parameterType="com.digitaldeparturesystem.pojo.Refreshtoken">

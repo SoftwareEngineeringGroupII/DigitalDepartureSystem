@@ -18,58 +18,16 @@ public class StudentApi {
     @Autowired
     private IStudentService studentService;
 
-    /**digital_departure_system
-     * 初始化学生账号 -init-admin
-     * @return
-     */
-    @PostMapping("/student_account")
-    public ResponseResult initManagerAccount(@RequestBody Student student, HttpServletRequest request){
-        log.info("student name --> " + student.getStuName());
-        log.info("student password --> " + student.getStuPwd());
-        return studentService.findManagerAccount(student,request);
-    }
 
     /**
      * 注册
      * @param student
      * @return
      */
-    @PostMapping
+    @PostMapping("/register")
     public ResponseResult register(@RequestBody Student student){
-        return null;
+        return studentService.insertStudent(student);
     }
-
-    /**
-     *
-     * @param captcha
-     * @param student
-     * @return
-     */
-    @PostMapping("/{captcha}")
-    public ResponseResult login(@PathVariable("captcha") String captcha,@RequestBody Student student){
-        return null;
-    }
-
-    /**
-     * 获取图灵验证码
-     * @return
-     */
-    @GetMapping("/captcha")
-    public ResponseResult getCaptcha(){
-        return null;
-    }
-
-
-    /**
-     * 修改密码
-     * @param student
-     * @return
-     */
-    @PostMapping("/password")
-    public ResponseResult updatePassword(@RequestBody Student student){
-        return null;
-    }
-
 
     /**
      * 获取用户信息

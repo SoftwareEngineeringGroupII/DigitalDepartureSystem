@@ -9,7 +9,6 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.IAdminService;
 import com.digitaldeparturesystem.utils.*;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,26 +90,20 @@ public class AdminServiceImpl implements IAdminService {
     @Autowired
     private ClerkUtils clerkUtils;
 
+    private RoleAuthorityMapper roleAuthorityMapper;
+
     /**
      * 获取用户所拥有的权限对应的菜单项
      * @return
      */
     @Override
     public ResponseResult findAuditMenu() {
-        List<Authorities> menus;
-        //判断是否是后门用户
-        if(clerkUtils.hasRole("ROLE_ADMIN")){
-            //查询所有菜单，子菜单可以通过父级菜单的映射得到
-            menus = authoritiesMapper.findByParentIsNullOrderByIndex();
-            findChildrenByParentId(authoritiesMapper, menus);
-        }else{
-            //获取此用户对应的菜单权限
-            List<Authorities> tempMenu = authoritiesMapper.findByParentIsNullOrderByIndex();
-            findChildrenByParentId(authoritiesMapper, tempMenu);
-            menus = auditMenu(tempMenu);
+        List<Authorities> parentMenu = authoritiesMapper.findByParentIsNullOrderByIndex();
+        for (Authorities menu : parentMenu) {
+            AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,menu);
         }
         //根据parentId，找出children
-        return ResponseResult.SUCCESS("查找成功").setData(menus);
+        return ResponseResult.SUCCESS("查找成功").setData(parentMenu);
     }
 
     @Override
@@ -163,13 +156,13 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public ResponseResult deleteClerkByStatus(String clerkId) {
+    public ResponseResult deleteClerk(String clerkId) {
         //查找clerk是否存在
         Clerk clerk = sectorMapper.findOneById(clerkId);
         if (clerk == null){
             return ResponseResult.FAILED("用户不存在");
         }
-        adminMapper.deleteClerkByStatus(clerkId);
+        adminMapper.deleteClerk(clerkId);
         return ResponseResult.SUCCESS("用户删除成功");
     }
 
@@ -213,8 +206,12 @@ public class AdminServiceImpl implements IAdminService {
         return ResponseResult.SUCCESS("查询所有用户成功").setData(clerks);
     }
 
+    @Resource
+    private RoleMapper roleMapper;
+
     @Override
     public ResponseResult insertRoleToUser(String clerkId, List<String> roleIds) {
+        //检查数据
         Clerk clerk = sectorMapper.findOneById(clerkId);
         if (clerk == null){
             return ResponseResult.FAILED("该用户不存在");
@@ -222,10 +219,18 @@ public class AdminServiceImpl implements IAdminService {
         userRoleMapper.deleteAllRoleByUser(clerkId);
         Map<String,String> map = new HashMap<>();
         for (String roleId : roleIds) {
-            map.put("id",String.valueOf(idWorker.nextId()));
+            Role role = roleMapper.getRoleById(roleId);
+            if (role == null){
+                return ResponseResult.FAILED("插入失败，" + role.getName() + "角色不存在");
+            }
             map.put("clerkId",clerkId);
             map.put("roleId",roleId);
-            userRoleMapper.addRoleToUser(map);
+            String userRoleId = userRoleMapper.findUserRoleData(map);
+            if (userRoleId == null){
+                //补充数据
+                map.put("id",String.valueOf(idWorker.nextId()));
+                userRoleMapper.addRoleToUser(map);
+            }
         }
         return ResponseResult.SUCCESS("用户角色添加成功");
     }
@@ -240,36 +245,14 @@ public class AdminServiceImpl implements IAdminService {
         return ResponseResult.SUCCESS("查询用户所拥有的角色成功").setData(roles);
     }
 
-    /**
-     * 找到菜单下面的子菜单
-     * @param authoritiesMapper
-     * @param tempMenu
-     */
-    private void findChildrenByParentId(AuthoritiesMapper authoritiesMapper, List<Authorities> tempMenu) {
-        for (Authorities menu : tempMenu) {
-            menu.setChildren(authoritiesMapper.findChildrenByParentId(menu.getParentId()));
+    @Override
+    public ResponseResult deleteRoleToUser(String clerkId, List<String> roleIds) {
+        Map<String,String> map = new HashMap<>();
+        for (String roleId : roleIds) {
+            map.put("clerkId",clerkId);
+            map.put("roleIds",roleId);
+            sectorMapper.deleteRoleToUser(map);
         }
-    }
-
-    //根据用户的菜单权限对菜单进行过滤
-    private List<Authorities> auditMenu(List<Authorities> menus) {
-        List<Authorities> list = new ArrayList<>();
-        for(Authorities menu: menus){
-            String name = menu.getName();
-            //判断此用户是否有此菜单权限
-            if(clerkUtils.hasRole(name)){
-                list.add(menu);
-                //递归判断子菜单
-                if(menu.getChildren() != null && !menu.getChildren().isEmpty()) {
-                    menu.setChildren(auditMenu(menu.getChildren()));
-                }
-            }
-        }
-        return list;
-    }
-
-    public Authorities findByName(String name) {
-        Authorities authority = authoritiesMapper.findByName(name);
-        return authority;
+        return ResponseResult.SUCCESS("删除用户角色成功");
     }
 }

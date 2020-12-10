@@ -35,7 +35,7 @@ public class AdminApi {
         return adminService.findAuditMenu();
     }
 
-    /**s
+    /**
      * 审核公告
      * @param articleId
      * @param notice

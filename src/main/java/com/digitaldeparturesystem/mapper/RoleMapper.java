@@ -36,4 +36,18 @@ public interface RoleMapper {
      * @return
      */
     Role getRoleById(String roleId);
+
+    /**
+     * 通过roleName查找Role
+     * @param roleName
+     * @return
+     */
+    Role getRoleByName(String roleName);
+
+    /**
+     * 通过code获取role
+     * @param roleCode
+     * @return
+     */
+    Role getRoleByCode(String roleCode);
 }

@@ -44,12 +44,12 @@ public class UserApi {
     }
 
     /**
-     * 删除权限
+     * 删除用户
      * @return
      */
     @DeleteMapping("/{clerkId}")
     public ResponseResult deleteClerk(@PathVariable("clerkId")String clerkId){
-        return adminService.deleteClerkByStatus(clerkId);
+        return adminService.deleteClerk(clerkId);
     }
 
     /**
@@ -84,6 +84,11 @@ public class UserApi {
     @PutMapping("/role/{clerkId}")
     public ResponseResult updateRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<String> roleIds){
         return adminService.insertRoleToUser(clerkId,roleIds);
+    }
+
+    @DeleteMapping("/role/{clerkId}")
+    public ResponseResult deleteRoleToUser(@PathVariable("clerkId")String clerkId,@RequestBody List<String> roleIds){
+        return adminService.deleteRoleToUser(clerkId,roleIds);
     }
 
     /**

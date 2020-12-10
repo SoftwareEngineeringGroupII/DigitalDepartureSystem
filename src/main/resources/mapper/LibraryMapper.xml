@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.digitaldeparturesystem.mapper.LibraryMapper">
+    
+    <!--查询图书馆借阅情况-->
+    <select id="listAllLibrary" resultType="com.digitaldeparturesystem.pojo.LibInfo">
+      SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus`
+      FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus
+    </select>
+
+    <!--查询某个学生存在-->
+    <select id="findStuLibrary" parameterType="String" resultType="com.digitaldeparturesystem.pojo.LibInfo">
+         SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus`
+      FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` AND stuNumber=#{stuNumber} GROUP BY l.`stuID`,l.libStatus;
+    </select>
+    
+    <!--查询每个人借阅图书详情-->
+    <select id="bookDetail" resultType="java.util.Map" parameterType="String">
+        select b.bookID,b.bookNum,b.bookName,b.returnStatus
+         from book b where b.stuID = (select stuID from student where stuNumber=#{stuNumber})
+    </select>
+
+    <!--根据学号和图书Id审核归还情况-->
+    <update id="checkLibrary">
+        update book set book.returnStatus=1
+          where bookID=#{bookId} and
+            stuId=(select stuId from student where stuNumber=#{stuNumber})
+    </update>
+
+
+    <!--查询某学生借书还书数目情况-->
+    <select id="needReturn" parameterType="String" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS sumbook FROM book
+        WHERE returnStatus=0  AND book.stuID=(SELECT student.stuID FROM student WHERE stuNumber=#{stuNumber})
+    </select>
+
+    <!--查询某个学生是否存在-->
+    <select id="findStuByStuNumber" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuNumber=#{stuNumber}
+    </select>
+
+    <!--根据最终归还情况确定图书馆审核状态-->
+    <update id="changeStatus" parameterType="String" >
+        update lib set lib.libStatus=1 where lib.stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--查询是否上传论文-->
+    <select id="findPaper" parameterType="String" resultType="String" >
+           select paper from lib where lib.stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </select>
+
+
+
+</mapper>

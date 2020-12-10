@@ -22,8 +22,10 @@ public interface AdminMapper {
 
 
     /**
-     * 通过改变clerk的status，删除clerk
+     * 删除clerk
      * @param clerkId
      */
-    void deleteClerkByStatus(String clerkId);
+    void deleteClerk(String clerkId);
+
+
 }

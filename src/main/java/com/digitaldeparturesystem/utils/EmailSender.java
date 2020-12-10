@@ -28,7 +28,7 @@ public class EmailSender {
         //POP3/SMTP服务:ujhtpdbagwkkfdic
         //IMAP/SMTP服务:iosfmtwldiywfihi
 
-        EmailSender.config( EmailSender.SMTP_QQ(false), "1584677103@qq.com", "oisutjwqfhkvhdjj");
+        EmailSender.config( EmailSender.SMTP_QQ(false), "1584677103@qq.com", "czubqrpypyonhcdd");
     }
 
     public static Properties defaultConfig(Boolean debug) {
@@ -313,7 +313,7 @@ public class EmailSender {
     public static void sendRegisterVerifyCode(String code,String address) throws Exception{
          EmailSender.subject("数字离校系统注册验证码")
                 .from("数字离校系统")
-                .text("您的验证码是：" + code + "有效期为10分钟，若非本人操作，请忽略此邮件")
+                .text("您的验证码是：" + code + "\n有效期为10分钟，若非本人操作，请忽略此邮件")
                 .to(address)
                 .send();
     }

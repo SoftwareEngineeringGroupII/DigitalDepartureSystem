@@ -31,4 +31,14 @@
         select * from role where id = #{roleId};
     </select>
 
+    <select id="getRoleByName" resultType="com.digitaldeparturesystem.pojo.Role">
+        select * from role where `name` = #{roleName};
+    </select>
+
+    <select id="getRoleByCode" resultType="com.digitaldeparturesystem.pojo.Role">
+        select * from role where `code` = #{roleCode};
+    </select>
+
+
+
 </mapper>

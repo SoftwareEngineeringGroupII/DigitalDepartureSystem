@@ -22,8 +22,16 @@
         department = #{department},
         clerkAccount = #{clerkAccount},
         clerkPhoto = #{clerkPhoto},
-        clerkStatus = #{clerkStatus},
+        clerkStatus = #{clerkStatus},edu
         clerkEmail = #{clerkEmail}
         where clerkID = #{clerkID};
+    </update>
+
+    <delete id="deleteRoleToUser" parameterType="map">
+        delete from user_role where user_id = #{clerkId} and role_id = #{roleId};
+    </delete>
+
+    <update id="updatePassword" parameterType="map">
+        update clerk set clerkPwd = #{clerkPwd} where clerkID = #{clerkID};
     </update>
 </mapper>
