@@ -16,7 +16,7 @@
     
     <!--查询每个人借阅图书详情-->
     <select id="bookDetail" resultType="java.util.Map" parameterType="String">
-        select b.bookNum,b.bookName,b.returnStatus
+        select b.bookID,b.bookNum,b.bookName,b.returnStatus
          from book b where b.stuID = (select stuID from student where stuNumber=#{stuNumber})
     </select>
 

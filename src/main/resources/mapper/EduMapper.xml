@@ -7,9 +7,35 @@
 
     </select>-->
 
-    <!---->
+    <!--分页查询所有离校审核情况-->
     <select id="listAllEdu" resultType="java.util.Map">
         select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus from edu e,student s where e.stuID=s.stuID;
     </select>
+
+    <!--根据学号查询学生的离校详情-->
+    <select id="findProcess" resultType="java.util.Map">
+        select p.libStatus from process p
+    </select>
+
+    <!--设置学生的离校进度表 //一卡通 -->
+    <update id="setCardStatus" parameterType="String">
+        update process set cardStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--设置学生离校进度表 //财务处-->
+    <update id="setFinanceStatus" parameterType="String">
+         update process set financeStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--设置学生离校进度表 //后勤处-->
+    <update id="setDormStatus" parameterType="String">
+         update process set dormStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--设置学生离校进度表 //图书馆-->
+    <update id="setLibStatus" parameterType="String">
+        update process set libStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
 
 </mapper>

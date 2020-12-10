@@ -58,11 +58,11 @@ public class LibraryApi {
      * @param stuNumber
      * @return
      */
-    @PutMapping("/checkLibrary/{stuNumber}/{bookId}")
+    @PutMapping("/checkLibrary/{stuNumber}/{bookID}")
     public ResponseResult checkLibrary(@PathVariable("stuNumber")String stuNumber,
-                                       @PathVariable("bookId") String bookId){
+                                       @PathVariable("bookID") String bookID){
 
-       return libraryService.checkLibrary(stuNumber,bookId);
+       return libraryService.checkLibrary(stuNumber,bookID);
 
     }
 
