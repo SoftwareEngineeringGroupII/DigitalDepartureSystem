@@ -52,4 +52,12 @@
         select * from student where stuNumber = #{stuNumber};
     </select>
 
+    <select id="findOneByEmail" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuContact = #{emailAddress};
+    </select>
+
+    <update id="updatePassword" parameterType="map">
+        update student set stuPwd = #{stuPwd} where stuID = #{stuID};
+    </update>
+
 </mapper>
