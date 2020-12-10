@@ -33,7 +33,7 @@ public class RoleApi {
      * @param role
      * @return
      */
-    @PutMapping("/{roleId}")
+    @PostMapping("/update/{roleId}")
     public ResponseResult updateRole(@PathVariable("roleId") String roleId,@RequestBody Role role){
         return roleService.updateRole(roleId,role);
     }
@@ -42,7 +42,7 @@ public class RoleApi {
      * 删除角色
      * @return
      */
-    @DeleteMapping("/{roleId}")
+    @PostMapping("/delete/{roleId}")
     public ResponseResult deleteRole(@PathVariable String roleId){
         return roleService.deleteRole(roleId);
     }

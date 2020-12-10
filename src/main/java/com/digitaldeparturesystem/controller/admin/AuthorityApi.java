@@ -29,7 +29,7 @@ public class AuthorityApi {
     /**
      * 修改权限
      */
-    @PutMapping("/{authorityId}")
+    @PostMapping("/update/{authorityId}")
     public ResponseResult updateAuthority(@PathVariable("authorityId")String authorityId,@RequestBody Authorities authorities){
         return authorityService.updateAuthority(authorityId,authorities);
     }
@@ -37,7 +37,7 @@ public class AuthorityApi {
     /**
      * 删除权限
      */
-    @DeleteMapping("/{authorityId}")
+    @PostMapping("/delete/{authorityId}")
     public ResponseResult deleteAuthority(@PathVariable("authorityId")String authorityId){
         return authorityService.deleteAuthority(authorityId);
     }

@@ -87,13 +87,21 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
             String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
             Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
             //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
-            if (clerkFromToken == null){
+            //或者更换了用户
+            if (clerkFromToken == null||clerk.getClerkID() != clerkFromToken.getClerkID()){
                 //删除旧的refreshToken，创建新的refreshToken
                 token = sectorService.createToken(httpServletResponse, clerk);
             }
-            httpServletResponse.getWriter().
-                    write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                            setData(JSON.toJSON(clerk)).setToken(token)));
+            //解决不返回token的问题
+            if ("".equals(token)){
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(clerkFromToken)).setToken(tokenKey)));
+            }else{
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(clerk)).setToken(token)));
+            }
         }
         if(student != null){
             //获取用户的权限
@@ -102,13 +110,20 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
             String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
             Student studentFromToken = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
             //如果这里解析不出来，说明用户的token过期了，那么根据refreshToken，再给用户创建一个Token
-            if (studentFromToken == null){
+            if (studentFromToken == null||student.getStuId() != studentFromToken.getStuId()){
                 //删除旧的refreshToken，创建新的refreshToken
                 token = studentService.createToken(httpServletResponse, student);
             }
-            httpServletResponse.getWriter().
-                    write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
-                            setData(JSON.toJSON(student)).setToken(token)));
+            //解决不返回token的问题
+            if ("".equals(token)){
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(studentFromToken)).setToken(tokenKey)));
+            }else{
+                httpServletResponse.getWriter().
+                        write(JSON.toJSONString(ResponseResult.SUCCESS("登录成功").
+                                setData(JSON.toJSON(student)).setToken(token)));
+            }
         }
 
     }
