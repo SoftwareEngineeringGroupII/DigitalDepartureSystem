@@ -28,7 +28,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 String method = request.getMethod();
                 // this origin value could just as easily have come from a database
                 response.setHeader("Access-Control-Allow-Origin", "http://localhost:8085");
-                response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
+                response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS,UPDATE");
                 response.setHeader("Access-Control-Max-Age", "3600");
                 response.setHeader("Access-Control-Allow-Credentials", "true");
                 response.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token,Authorization,ybg");
