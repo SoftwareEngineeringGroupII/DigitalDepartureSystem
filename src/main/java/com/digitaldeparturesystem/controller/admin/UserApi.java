@@ -38,7 +38,7 @@ public class UserApi {
      * @param clerk
      * @return
      */
-    @PutMapping("/{clerkId}")
+    @PostMapping("/update/{clerkId}")
     public ResponseResult updateClerk(@PathVariable("clerkId")String clerkId,@RequestBody Clerk clerk){
         return adminService.updateClerk(clerkId,clerk);
     }
@@ -47,7 +47,7 @@ public class UserApi {
      * 删除用户
      * @return
      */
-    @DeleteMapping("/{clerkId}")
+    @PostMapping("/delete/{clerkId}")
     public ResponseResult deleteClerk(@PathVariable("clerkId")String clerkId){
         return adminService.deleteClerk(clerkId);
     }
@@ -71,6 +71,7 @@ public class UserApi {
         return adminService.findAllClerks();
     }
 
+
     @PostMapping("/role/{clerkId}")
     public ResponseResult addRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<String> roleIds){
         return adminService.insertRoleToUser(clerkId,roleIds);
@@ -81,12 +82,12 @@ public class UserApi {
      * @param clerkId
      * @return
      */
-    @PutMapping("/role/{clerkId}")
+    @PostMapping("/role/update/{clerkId}")
     public ResponseResult updateRoleToUser(@PathVariable("clerkId")String clerkId, @RequestBody List<String> roleIds){
         return adminService.insertRoleToUser(clerkId,roleIds);
     }
 
-    @DeleteMapping("/role/{clerkId}")
+    @PostMapping("/role/delete/{clerkId}")
     public ResponseResult deleteRoleToUser(@PathVariable("clerkId")String clerkId,@RequestBody List<String> roleIds){
         return adminService.deleteRoleToUser(clerkId,roleIds);
     }
