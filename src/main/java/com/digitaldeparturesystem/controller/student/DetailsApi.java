@@ -19,8 +19,8 @@ public class DetailsApi {
     /**
      * 显示学生个人信息
      */
-    @GetMapping("/studentId/{studentNum}")
-    public ResponseResult showDetails(@PathVariable("studentNum") String stuId) {
-        return detailsService.showStuDetailsById(stuId);
+    @GetMapping("/details")
+    public ResponseResult showDetails() {
+        return detailsService.showDetails();
     }
 }

@@ -18,9 +18,11 @@ public class CheckCommitApi {
     /**
      * 提交审核
      */
-    @PostMapping("/student_checkcommit")
+    @PostMapping("/checkcommit")
     //添加审核
-    public ResponseResult addCheckcommit(@RequestBody Checkcommit checkcommit){return null;}
+    public ResponseResult addCheckCommitByType(@RequestBody Checkcommit checkcommit){
+        return checkcommitService.addCheckCommitByType(checkcommit);
+    }
     //修改审核
     public ResponseResult updateCheckcommit(@RequestBody Checkcommit checkcommit){return null;}
 }

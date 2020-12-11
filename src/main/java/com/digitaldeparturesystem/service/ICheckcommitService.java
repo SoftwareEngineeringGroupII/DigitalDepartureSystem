@@ -4,5 +4,5 @@ import com.digitaldeparturesystem.pojo.Checkcommit;
 import com.digitaldeparturesystem.response.ResponseResult;
 
 public interface ICheckcommitService {
-    ResponseResult checkcommit(Checkcommit checkcommit);
+    ResponseResult addCheckCommitByType(Checkcommit checkcommit);
 }

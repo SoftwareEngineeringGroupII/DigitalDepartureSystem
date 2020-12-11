@@ -9,7 +9,7 @@ public class Process {
   private String cardStatus;
   private String eduStatus;
   private String financeStatus;
-  private String logisticsStatus;
+  private String dormStatus;
 
 
   public String getProcessId() {
@@ -66,12 +66,12 @@ public class Process {
   }
 
 
-  public String getLogisticsStatus() {
-    return logisticsStatus;
+  public String getDormStatus() {
+    return dormStatus;
   }
 
-  public void setLogisticsStatus(String logisticsStatus) {
-    this.logisticsStatus = logisticsStatus;
+  public void setDormStatus(String dormStatus) {
+    this.dormStatus = dormStatus;
   }
 
 }

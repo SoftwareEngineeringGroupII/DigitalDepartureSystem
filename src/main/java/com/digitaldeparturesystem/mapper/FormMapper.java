@@ -4,7 +4,8 @@ import com.digitaldeparturesystem.pojo.Form;
 
 public interface FormMapper {
     //展示离校表单信息
-    void showForm(Form form);
+    Form showFormByStudent(String stuID);
+    Form showFormByProcess(String stuID);
     //打印表单
     //void printForm();
 }

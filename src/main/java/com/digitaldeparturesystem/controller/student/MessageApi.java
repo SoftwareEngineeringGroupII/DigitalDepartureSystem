@@ -19,7 +19,7 @@ public class MessageApi {
     /**
      * 发布反馈
      */
-    @PostMapping("/student_message")
+    @PostMapping("/addmessage")
     public ResponseResult initMessage(@RequestBody Message message){
         log.info("message title -->" + message.getTitle());
         log.info("message content -->" + message.getContent());
@@ -29,5 +29,10 @@ public class MessageApi {
     /**
      * 删除反馈
      */
-    public ResponseResult deleteMessage(@RequestBody Message message){return null;}
+    @DeleteMapping("/{messageID}")
+    public ResponseResult deleteMessage(@PathVariable("messageID") String messageID){
+        return null;
+    }
+
+
 }

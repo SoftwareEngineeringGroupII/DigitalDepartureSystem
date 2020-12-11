@@ -4,9 +4,9 @@ import com.digitaldeparturesystem.pojo.Checkcommit;
 
 public interface CheckcommitMapper {
     //新增审核
-    int addCheckcommit(Checkcommit checkcommit);
+    Checkcommit addCheckCommitByType(Checkcommit checkcommit);
     //保存审核
-    void saveCheckcommit(Checkcommit checkcommit);
+    Checkcommit saveCheckcommit(Checkcommit checkcommit);
     //修改审核
-    int updateCheckcommit(Checkcommit checkcommit);
+    Checkcommit updateCheckcommit(Checkcommit checkcommit);
 }

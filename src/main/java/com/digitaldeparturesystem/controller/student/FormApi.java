@@ -19,8 +19,12 @@ public class FormApi {
     /**
      * 表单显示
      */
-    @PostMapping("/student_form")
-    public ResponseResult showForm(@RequestBody Form form){
-        return formService.showForm(form);
+    @GetMapping("/formStudent")
+    public ResponseResult showFormByStudent(){
+        return formService.showFormByStudent();
+    }
+    @GetMapping("/formProcess")
+    public ResponseResult showFormByProcess(){
+        return formService.showFormByProcess();
     }
 }

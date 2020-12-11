@@ -5,7 +5,7 @@ import com.digitaldeparturesystem.response.ResponseResult;
 
 public interface IProcessService {
     //获取进程信息
-    ResponseResult showProcess(String stuID);
+    ResponseResult showProcess();
     //添加进程
     ResponseResult addProcess(Process process);
 }

@@ -11,11 +11,11 @@
     </select>
     <!--添加新的反馈-->
     <insert id="addMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
-        insert into message(messageId,sendId,`title`,'content',messagedate) values (#{messageId},#{sendId},#{title},#{content},#{messagedate});
+        insert into message(messageID,sendID,title,content,messagedate) values (#{messageID},#{sendID},#{title},#{content},#{messagedate});
     </insert>
     <!--删除已发布的反馈-->
-    <delete id="deleteMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
-        delete from digital_departure_system.tb_message where messageId = #{messageId};
+    <delete id="deleteMessage" parameterType="String">
+        delete from message where messageID = #{messageID};
     </delete>
 
 </mapper>
