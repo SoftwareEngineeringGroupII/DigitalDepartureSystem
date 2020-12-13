@@ -1,10 +1,7 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.*;
-import com.digitaldeparturesystem.pojo.Authorities;
-import com.digitaldeparturesystem.pojo.Clerk;
-import com.digitaldeparturesystem.pojo.Role;
-import com.digitaldeparturesystem.pojo.Settings;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.response.ResponseStatus;
 import com.digitaldeparturesystem.service.IAdminService;
@@ -13,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -90,6 +89,7 @@ public class AdminServiceImpl implements IAdminService {
     @Autowired
     private ClerkUtils clerkUtils;
 
+    @Resource
     private RoleAuthorityMapper roleAuthorityMapper;
 
     /**
@@ -254,5 +254,30 @@ public class AdminServiceImpl implements IAdminService {
             sectorMapper.deleteRoleToUser(map);
         }
         return ResponseResult.SUCCESS("删除用户角色成功");
+    }
+
+    @Override
+    public ResponseResult getMenuByUser(String clerkId) {
+        //获取用户的权限
+        List<Role> roles;
+        roles = userRoleMapper.getRolesByUser(clerkId);
+        //创建List集合，用来保存用户菜单权限，GrantedAuthority对象代表赋予当前用户的权限
+        //权限
+        Set<Authorities> authorityList = new TreeSet<>(new Comparator<Authorities>() {
+            @Override
+            public int compare(Authorities o1, Authorities o2) {
+                return (int)(o1.getIndex() - o2.getIndex());
+            }
+        });
+        //查权限
+        for (Role role : roles) {
+            List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+            for (Authorities authority : authorities) {
+                AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper, authority);
+                //添加权限
+                authorityList.add(authority);
+            }
+        }
+        return ResponseResult.SUCCESS("获取菜单成功").setData(authorityList);
     }
 }

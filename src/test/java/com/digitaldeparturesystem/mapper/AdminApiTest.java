@@ -54,4 +54,9 @@ public class AdminApiTest {
         }
         System.out.println(allAuthorities);
     }
+
+    @Test
+    public void getMenuByUser(){
+        System.out.println(adminService.getMenuByUser("783001698883862528"));
+    }
 }
