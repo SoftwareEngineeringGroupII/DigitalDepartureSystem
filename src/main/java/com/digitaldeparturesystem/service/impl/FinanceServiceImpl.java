@@ -3,8 +3,10 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.FinanceMapper;
+import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IFinanceService;
 import com.digitaldeparturesystem.utils.IdWorker;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +49,7 @@ public class FinanceServiceImpl implements IFinanceService {
 
 
     /**
-     *  根据学号获取学生财务缴费情况
+     *  查询某个学生财务缴费情况
      * @param stuNumber
      * @return
      */
@@ -55,12 +58,23 @@ public class FinanceServiceImpl implements IFinanceService {
         if (stuNumber == null) {
             return ResponseResult.FAILED("输入学号为空,请重新输入");
         }
-        FinanceInfo stuInfoFromFinance = financeMapper.getStudentByIdForFinance(stuNumber);
-        if (stuInfoFromFinance==null) {
+        //先查询是否有该学生存在
+        Student stuByStuNumber = financeMapper.findStuByStuNumber(stuNumber);
+        if (stuByStuNumber == null) {
+            return ResponseResult.FAILED("查询失败,没有这个学生存在！");
+        }
+
+        //再查询是否有该学生的财务处信息
+        FinanceInfo studentByIdForFinance = financeMapper.getStudentByIdForFinance(stuNumber);
+        if (studentByIdForFinance==null) {
             return ResponseResult.FAILED("查找失败！没有该学号学生的财务信息");
         }
-        return ResponseResult.SUCCESS("查找成功！").setData(stuInfoFromFinance);
+
+        List<FinanceInfo> list = new ArrayList<>();
+        list.add(studentByIdForFinance);
+        return ResponseResult.SUCCESS("查找成功！").setData(list);
     }
+
 
 
 
@@ -120,8 +134,6 @@ public class FinanceServiceImpl implements IFinanceService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
 
     }
-
-
 
 
 
@@ -243,6 +255,7 @@ public class FinanceServiceImpl implements IFinanceService {
       int pages = financeInfoPageInfo.getPages();
       int pageSize = financeInfoPageInfo.getPageSize();
       Map<String,Object> map = new HashMap<>();
+      map.put("list",financeInfos);
       map.put("total",total);
       map.put("pageNum",pageNum);
       map.put("pages",pages);

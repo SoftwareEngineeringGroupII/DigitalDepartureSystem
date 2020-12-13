@@ -10,7 +10,24 @@ public class Message {
   private String title;
   private String content;
   private Date messagedate;
+  private String receiveId;
+  private String msgStatus;
 
+  public String getMsgStatus() {
+    return msgStatus;
+  }
+
+  public void setMsgStatus(String msgStatus) {
+    this.msgStatus = msgStatus;
+  }
+
+  public String getReceiveId() {
+    return receiveId;
+  }
+
+  public void setReceiveId(String receiveId) {
+    this.receiveId = receiveId;
+  }
 
   public String getMessageId() {
     return messageId;

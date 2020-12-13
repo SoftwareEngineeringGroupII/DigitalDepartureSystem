@@ -8,6 +8,7 @@ public class ResponseResult implements Serializable {
     private int code;
     private String message;
     private Object data;
+    private String token;
 
 
     public ResponseResult() {
@@ -109,6 +110,15 @@ public class ResponseResult implements Serializable {
 
     public  ResponseResult setData(Object data) {
         this.data = data;
+        return this;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public ResponseResult setToken(String token) {
+        this.token = token;
         return this;
     }
 }

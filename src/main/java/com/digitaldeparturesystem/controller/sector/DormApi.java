@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.PrinterGraphics;
 
 @CrossOrigin
 @Slf4j
@@ -21,11 +22,12 @@ public class DormApi {
 
 
     /**
+     * zy
      *  根据学号获取学生退寝详情
      * @param stuNumber
      * @return
      */
-    @GetMapping("/stuNumber")
+    @GetMapping("/stuNumber/{stuNumber}")
     public ResponseResult getDormByStudentId(@PathVariable("stuNumber")String stuNumber){
         return dormService.getStudentByIdForFinance(stuNumber);
     }
@@ -33,53 +35,21 @@ public class DormApi {
 
 
     /**
+     * zy
      * 审核一卡通信息
      * @param stuNumber
-     * @param dorm
      * @return
      */
-    @PostMapping("/stuNumber")
-    public ResponseResult checkDorm(@PathVariable("stuNumber")String stuNumber, @RequestBody Dorm dorm){
+    @PutMapping("/stuNumber/{stuNumber}")
+    public ResponseResult checkDorm(@PathVariable("stuNumber")String stuNumber){
         return dormService.doCheckForDorm(stuNumber);
     }
 
 
 
-    /**
-     * 获取全部一卡通列表
-     * @return
-     */
-    @GetMapping
-    public ResponseResult getAllDorms(){
-        return null;
-    }
-
-
 
     /**
-     * 获取已审核的一卡通列表
-     * @return
-     */
-    @GetMapping("/check")
-    public ResponseResult getCheckDorms(){
-        return null;
-    }
-
-
-
-    /**
-     * 获取未审核的一卡通列表
-     * @return
-     */
-    @GetMapping("/uncheck")
-    public ResponseResult getUnCheckDorms(){
-        return null;
-    }
-
-
-
-
-    /**
+     * zy
      * 按条件分页查询寝室审核情况
      * @param start
      * @param size
@@ -99,6 +69,7 @@ public class DormApi {
 
 
     /**
+     * zy
      * 导出寝室审核表
      * @param response
      * @return
@@ -114,6 +85,7 @@ public class DormApi {
     }
 
     /**
+     * zy
      *  查询所有退寝状态
      * @return
      */
@@ -121,6 +93,21 @@ public class DormApi {
     public ResponseResult selectAll(){
         return dormService.selectAll();
     }
+
+
+    /**
+     *  zy
+     *  分页查询所有的数据
+     * @param start
+     * @param size
+     * @return
+     */
+    @GetMapping("/findAllByPage")
+    public ResponseResult selectAllByPage(@RequestParam("start")Integer start,@RequestParam("size")Integer size){
+        return dormService.selectAllByPage(start,size);
+    }
+
+
 
 
 }

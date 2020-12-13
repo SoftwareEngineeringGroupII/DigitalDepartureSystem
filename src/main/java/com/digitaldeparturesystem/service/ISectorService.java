@@ -14,23 +14,6 @@ import java.util.Map;
 public interface ISectorService extends UserDetailsService {
 
     /**
-     * 创建验证码
-     * @param response
-     * @param captchaKey
-     * @throws Exception
-     */
-    void createCaptcha(HttpServletResponse response, String captchaKey) throws Exception;
-
-    /**
-     * 发送邮箱验证码
-     * @param type
-     * @param request
-     * @param emailAddress
-     * @return
-     */
-    ResponseResult sendEmail(String type, HttpServletRequest request, String emailAddress);
-
-    /**
      * 注册
      * @param clerk
      * @param emailCode

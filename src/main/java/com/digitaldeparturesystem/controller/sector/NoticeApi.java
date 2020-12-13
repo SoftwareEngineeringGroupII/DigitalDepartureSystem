@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,14 +20,14 @@ import java.io.IOException;
 @RequestMapping("/sector/notice")
 public class NoticeApi {
 
-    @Autowired
+    @Resource
     private ISectorService sectorService;
 
-    @Autowired
+    @Resource
     private ICardService cardService;
     /**
      * 上传公告
-     * 识别上传公告人权限,ID,发布类型,
+     * 识别上传公告人权限,ID,发布类型
      * @param notice
      * @param photo
      * @return

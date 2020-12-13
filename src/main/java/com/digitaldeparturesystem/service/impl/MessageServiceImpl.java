@@ -21,7 +21,7 @@ public class MessageServiceImpl implements IMessageService {
     private IdWorker idWorker;
 
     @Override
-    public ResponseResult initMessage(Message message) {
+    public ResponseResult sendMessage(Message message) {
         if (TextUtils.isEmpty(message.getTitle())) {
             return ResponseResult.FAILED("反馈标题不能为空！");
         }
@@ -34,6 +34,16 @@ public class MessageServiceImpl implements IMessageService {
 //        student.setStuId(String.valueOf(idWorker.nextId()));
         //补充数据
         message.setMessageId(String.valueOf(idWorker.nextId()));
+        return null;
+    }
+
+    @Override
+    public ResponseResult deleteMessage(String messageID) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult responseMessage(String messageID) {
         return null;
     }
 }

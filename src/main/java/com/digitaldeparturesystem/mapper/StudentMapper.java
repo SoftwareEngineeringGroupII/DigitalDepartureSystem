@@ -43,4 +43,18 @@ public interface StudentMapper {
      * @param student
      */
     void insertStudent(Student student);
+
+    /**
+     *通过邮箱查找学生
+     * @param emailAddress
+     * @return
+     */
+    Student findOneByEmail(String emailAddress);
+
+    /**
+     * 修改学生的密码
+     *
+     * @return
+     */
+    int updatePassword(Map<String,String> map);
 }

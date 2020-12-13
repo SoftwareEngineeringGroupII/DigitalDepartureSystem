@@ -40,4 +40,10 @@ public interface SectorMapper {
      * @param map
      */
     void deleteRoleToUser(Map<String, String> map);
+
+    /**
+     * 更新职员密码
+     * @param map
+     */
+    void updatePassword(Map<String, String> map);
 }

@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @Slf4j
 @RestController
 @RequestMapping("/sector/card")
@@ -33,6 +33,7 @@ public class CardApi {
     private ICardService cardService;
 
     /**
+     * zy
      * 通过学生学号查询一卡通信息
      * @param studentId 学生学号
      * @return
@@ -44,6 +45,7 @@ public class CardApi {
 
 
     /**
+     * zy
      *  条件分页查询---按学院、学生类型，审核状态
      * @return
      */
@@ -57,6 +59,7 @@ public class CardApi {
 
 
     /**
+     * zy
      * 一卡通审核
      * @return
      */
@@ -70,6 +73,7 @@ public class CardApi {
 
 
     /**
+     * zy
      * 上传公告
      * 识别上传公告人权限,ID,发布类型,
      * @param notice
@@ -85,6 +89,7 @@ public class CardApi {
 
 
     /**
+     * zy
      * 导出所有学生一卡通审核信息
      * @param response
      * @return
@@ -99,7 +104,9 @@ public class CardApi {
         return ResponseResult.SUCCESS("导出成功");
     }
 
+
     /**
+     * zy
      *  查询所有一卡通信息
      * @return
      */
@@ -109,10 +116,22 @@ public class CardApi {
     }
 
 
+    /**
+     * zy
+     * 分页查询所有一卡通信息
+     * @param start
+     * @param size
+     * @return
+     */
     @GetMapping("/findAllByPage")
     public  ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size")Integer size){
         return cardService.findAllByPage(start,size);
     }
+
+
+
+
+
 
 
 }

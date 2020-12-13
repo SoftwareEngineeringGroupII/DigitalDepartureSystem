@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace=绑定一个对应的mapper接口-->
+<mapper namespace="com.digitaldeparturesystem.mapper.DetailMapper">
+
+    <!--select查询语句-->
+
+    <!--按学号查找学生个人信息-->
+    <select id="showDetails" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuID=#{stuID};
+    </select>
+
+
+</mapper>

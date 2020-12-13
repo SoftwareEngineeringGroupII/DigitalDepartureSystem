@@ -2,6 +2,7 @@ package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
+import com.digitaldeparturesystem.pojo.Student;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,7 @@ public interface FinanceMapper {
     List<FinanceInfo> listNoCheck();
 
     List<FinanceInfo> listAllFinance();
+
+    //查询某个学生是否存在
+    Student findStuByStuNumber(String stuNumber);
 }

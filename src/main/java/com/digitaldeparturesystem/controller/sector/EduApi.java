@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class EduApi {
 
     /**
+     * zy
      * 根据学生id，获取当前学生各部门审核的信息
      * @return
      */

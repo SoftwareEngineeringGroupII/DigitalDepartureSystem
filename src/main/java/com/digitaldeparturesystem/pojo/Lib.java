@@ -1,37 +1,45 @@
 package com.digitaldeparturesystem.pojo;
 
-
 public class Lib {
 
-  private String libraryCheckId;
-  private String stuId;
-  private String libStatus;
 
+    private String libraryCheckID;
 
-  public String getLibraryCheckId() {
-    return libraryCheckId;
-  }
+    private String stuID;
 
-  public void setLibraryCheckId(String libraryCheckId) {
-    this.libraryCheckId = libraryCheckId;
-  }
+    private String libStatus;
 
+    private String paper;
 
-  public String getStuId() {
-    return stuId;
-  }
+    public String getLibraryCheckID() {
+        return libraryCheckID;
+    }
 
-  public void setStuId(String stuId) {
-    this.stuId = stuId;
-  }
+    public void setLibraryCheckID(String libraryCheckID) {
+        this.libraryCheckID = libraryCheckID;
+    }
 
+    public String getStuID() {
+        return stuID;
+    }
 
-  public String getLibStatus() {
-    return libStatus;
-  }
+    public void setStuID(String stuID) {
+        this.stuID = stuID;
+    }
 
-  public void setLibStatus(String libStatus) {
-    this.libStatus = libStatus;
-  }
+    public String getLibStatus() {
+        return libStatus;
+    }
 
+    public void setLibStatus(String libStatus) {
+        this.libStatus = libStatus;
+    }
+
+    public String getPaper() {
+        return paper;
+    }
+
+    public void setPaper(String paper) {
+        this.paper = paper;
+    }
 }

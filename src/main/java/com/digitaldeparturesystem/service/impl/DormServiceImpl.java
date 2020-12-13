@@ -4,7 +4,9 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.DormMapper;
 import com.digitaldeparturesystem.pojo.DormInfo;
+import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
 import com.github.pagehelper.PageHelper;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,26 +47,31 @@ public class DormServiceImpl implements IDormService {
     }
 
     /**
-     *  获取学生退寝详情
-     * @param studentId
+     *  根据学号获取学生退寝详情
+     * @param stuNumber
      * @return
      */
     @Override
-    public ResponseResult getStudentByIdForFinance(String studentId) {
-        Map<String, Object> studentByIdForDorm = dormMapper.getStudentByIdForDorm(studentId);
-        if (studentByIdForDorm.isEmpty()) {
+    public ResponseResult getStudentByIdForFinance(String stuNumber) {
+        //先查询是否有该学生存在
+        Student stuByStuNumber = dormMapper.findStuByStuNumber(stuNumber);
+        if (stuByStuNumber == null) {
+            return ResponseResult.FAILED("查询失败,没有这个学生存在！");
+        }
+        //再查询是否有该学生的退寝详情
+        DormInfo studentByIdForDorm = dormMapper.getStudentByIdForDorm(stuNumber);
+        if (studentByIdForDorm==null) {
             return ResponseResult.FAILED("查找失败,没有该学生的财务信息");
         }
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("detail",studentByIdForDorm);
-
-        return ResponseResult.SUCCESS("查找成功").setData(map);
+        List<DormInfo> list = new ArrayList<>();
+        list.add(studentByIdForDorm);
+        return ResponseResult.SUCCESS("查找成功").setData(list);
     }
 
 
     /**
-     * 审核后勤处信息
+     * 审核学生退寝信息
      * @param stuNumber
      * @return
      */
@@ -166,6 +174,36 @@ public class DormServiceImpl implements IDormService {
         }
         return ResponseResult.SUCCESS("查询成功").setData(dormInfos);
     }
+
+    /**
+     * 分页查询所有的退寝状态
+     * @return
+     */
+    public ResponseResult selectAllByPage(Integer start,Integer size){
+        if (size == null) {
+            size = 5;
+        }
+        PageHelper.startPage(start,size);
+        List<DormInfo> dormInfos = dormMapper.listAllDorm();
+        if (dormInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有数据");
+        }
+        PageInfo<DormInfo> dormInfoPageInfo = new PageInfo<>(dormInfos);
+        long total = dormInfoPageInfo.getTotal();
+        int pageNum = dormInfoPageInfo.getPageNum();
+        int pages = dormInfoPageInfo.getPages();
+        int pageSize = dormInfoPageInfo.getPageSize();
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",dormInfos);
+        map.put("total",total);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);
+        map.put("pageSize",pageSize);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
+    }
+
+
+
 
 
 
