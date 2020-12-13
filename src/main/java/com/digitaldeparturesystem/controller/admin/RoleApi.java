@@ -73,6 +73,11 @@ public class RoleApi {
         return roleService.insertAuthorityToRole(roleId,authorityIds);
     }
 
+    @PostMapping("/authority/{roleId}")
+    public ResponseResult addSingleAuthorityToUser(@PathVariable("roleId") String roleId, @RequestBody String authorityId){
+        return roleService.insertSingleAuthorityToUser(roleId,authorityId);
+    }
+
     /**
      * 获取用户拥有的权限
      * @param roleId

@@ -82,7 +82,10 @@ public class RoleServiceImpl implements IRoleService {
         if (checkRoleIsExist(roleId, roleMapper)) {
             return ResponseResult.FAILED("角色不存在");
         }
+        //删除角色
         roleMapper.deleteRole(roleId);
+        //删除角色拥有的权限
+        roleAuthorityMapper.deleteAllAuthorityByRole(roleId);
         return ResponseResult.SUCCESS("删除角色成功");
     }
 
@@ -106,6 +109,8 @@ public class RoleServiceImpl implements IRoleService {
         //检查数据
         if (checkRoleIsExist(roleId, roleMapper))
             return ResponseResult.FAILED("角色不存在");
+        //删除角色拥有的权限
+        roleAuthorityMapper.deleteAllAuthorityByRole(roleId);
         //添加数据
         Map<String,String> map = new HashMap<>();
         for (String  authorityId: authorityIds) {
@@ -127,6 +132,20 @@ public class RoleServiceImpl implements IRoleService {
             AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
         }
         return ResponseResult.SUCCESS("获取角色的权限成功").setData(authorities);
+    }
+
+    @Override
+    public ResponseResult insertSingleAuthorityToUser(String roleId, String authorityId) {
+        //检查数据
+        if (checkRoleIsExist(roleId, roleMapper))
+            return ResponseResult.FAILED("角色不存在");
+        //添加数据
+        Map<String,String> map = new HashMap<>();
+        map.put("id",String.valueOf(idWorker.nextId()));
+        map.put("roleId",roleId);
+        map.put("authorityId",authorityId);
+        roleAuthorityMapper.addAuthorityToRole(map);
+        return ResponseResult.SUCCESS("向角色添加权限成功");
     }
 
 

@@ -11,9 +11,9 @@
         values(#{id},#{code},#{name},#{index});
     </insert>
 
-    <insert id="deleteRole" parameterType="java.lang.String">
+    <delete id="deleteRole" parameterType="java.lang.String">
         delete from role where id = #{id};
-    </insert>
+    </delete>
 
     <update id="updateRole" parameterType="com.digitaldeparturesystem.pojo.Role">
         update role set

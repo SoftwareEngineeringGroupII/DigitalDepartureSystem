@@ -25,4 +25,10 @@ public interface RoleAuthorityMapper {
      * @return
      */
     List<Authorities> findChildrenByParentId(String parentId);
+
+    /**
+     * 删除角色所拥有的权限
+     * @param roleId
+     */
+    void deleteAllAuthorityByRole(String roleId);
 }
