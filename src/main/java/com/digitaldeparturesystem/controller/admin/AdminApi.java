@@ -46,5 +46,9 @@ public class AdminApi {
         return null;
     }
 
+    @GetMapping("/menu/{userId}")
+    public ResponseResult getMenuByUser(@PathVariable("userId") String clerkId){
+        return adminService.getMenuByUser(clerkId);
+    }
 
 }

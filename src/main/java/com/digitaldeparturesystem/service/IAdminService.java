@@ -78,4 +78,11 @@ public interface IAdminService {
      * @return
      */
     ResponseResult deleteRoleToUser(String clerkId, List<String> roleIds);
+
+    /**
+     * 获取职员的权限
+     * @param clerkId
+     * @return
+     */
+    ResponseResult getMenuByUser(String clerkId);
 }
