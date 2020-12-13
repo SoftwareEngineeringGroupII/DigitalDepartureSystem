@@ -16,7 +16,7 @@ public interface ICardService {
 
 
     //上传公告
-    ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException;
+    ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request,HttpServletResponse response) throws IOException;
 
     //获取全部学生信息
    // public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);

@@ -4,6 +4,9 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.pojo.DormInfo;
+import com.digitaldeparturesystem.pojo.StuBasicInfo;
+import com.digitaldeparturesystem.pojo.Student;
+import com.digitaldeparturesystem.pojo.Process;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IEduService;
 import com.github.pagehelper.PageHelper;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +66,6 @@ public class EduServiceImpl implements IEduService {
             size = 5;
         }
         PageHelper.startPage(start,size);
-        //List<DormInfo> dormInfos = dormMapper.listAllDorm();
         List<Map<String, Object>> maps = eduMapper.listAllEdu();
         if (maps.isEmpty()) {
             return ResponseResult.FAILED("没有数据");
@@ -81,6 +84,45 @@ public class EduServiceImpl implements IEduService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
+
+    /**
+     * 根据学号查询离校状态
+     * @param stuNumber
+     * @return
+     */
+    public ResponseResult getStudentByIdForEdu(String stuNumber){
+        //先查询是否有该学生存在
+        Student stuByStuNumber = eduMapper.findStuByStuNumber(stuNumber);
+        if (stuByStuNumber == null) {
+            return ResponseResult.FAILED("没有这个学生存在！请重新输入学号");
+        }
+        //再查看有没有该学生的离校信息
+
+
+
+        //最后成功返回信息
+        return ResponseResult.SUCCESS("查询成功");
+    }
+
+    /**
+     *  根据学号查询学生教务处详情
+     * @param stuNumber
+     * @return
+     */
+    public ResponseResult findStuDetailForEdu(String stuNumber){
+        //查询学校离校流程进度
+        Process stuProcess = eduMapper.getStuProcess(stuNumber);
+        //查询学生基本信息
+        StuBasicInfo stuBasicInfo = eduMapper.getStuBasicInfo(stuNumber);
+
+       // List<Map<String,Object>> list = new ArrayList<>();
+       Map<String,Object> map = new HashMap<>();
+       map.put("stuInfo",stuBasicInfo);
+       map.put("process",stuProcess);
+
+       return ResponseResult.SUCCESS("查询成功").setData(map);
+
+    }
 
 
 

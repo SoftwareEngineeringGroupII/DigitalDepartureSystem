@@ -2,6 +2,7 @@ package com.digitaldeparturesystem.service.impl;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.pojo.Finance;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
@@ -40,6 +41,8 @@ public class FinanceServiceImpl implements IFinanceService {
     @Resource
     private FinanceMapper financeMapper;
 
+    @Resource
+    private EduMapper eduMapper;
 
     public ResponseResult uploadNotice(Notice notice, MultipartFile photo){
 
@@ -140,13 +143,15 @@ public class FinanceServiceImpl implements IFinanceService {
 
     /**
      * 财务处审核 根据学生学号：修改审核状态
-     * @param stuNum
+     * @param stuNumber
      * @return
      */
     @Override
-    public ResponseResult doCheckForFinance(String stuNum) {
+    public ResponseResult doCheckForFinance(String stuNumber) {
         try {
-            financeMapper.doCheckForFinance(stuNum);
+            financeMapper.doCheckForFinance(stuNumber);
+            //审核成功后设置离校流程表financeStatus
+            eduMapper.setFinanceStatus(stuNumber);
             return ResponseResult.SUCCESS("审核成功");
         }catch (Exception e){
             return ResponseResult.FAILED("审核失败,请重新进行操作");

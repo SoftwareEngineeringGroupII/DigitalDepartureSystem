@@ -24,4 +24,5 @@ public interface DormMapper {
     //查询某个学生是否存在
     Student findStuByStuNumber(String stuNumber);
 
+
 }

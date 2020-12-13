@@ -18,42 +18,31 @@ public class EduApi {
     @Autowired
     private IEduService eduService;
 
+
     /**
      * zy
-     * 根据学生id，获取当前学生各部门审核的信息
-     * @return
-     */
-    @GetMapping("/studentId")
-    public ResponseResult getCurrentSectionStatus(@PathVariable("studentId")String studentId){
-        return null;
-    }
-
-    @GetMapping("/check")
-    public ResponseResult getCheckEduList(){
-        return null;
-    }
-
-    @GetMapping("/uncheck")
-    public ResponseResult getUnCheckEduList(){
-        return null;
-    }
-
-    @GetMapping()
-    public ResponseResult getAllEduList(){
-        return null;
-    }
-
-  /*  *//**
      * 分页查询所有的教务处审核离校情况
      * @param start
      * @param size
      * @return
-     *//*
+     */
     @GetMapping("/findAllByPage")
     public ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size") Integer size){
         return eduService.selectAllByPage(start,size);
+    }
 
-    }*/
+    @GetMapping("/stuInfoAndProcess/{stuNumber}")
+    public ResponseResult testEdu(@PathVariable("stuNumber")String stuNumber){
+        return  eduService.findStuDetailForEdu(stuNumber);
+    }
+
+
+
+
+
+
+
+
 
 
 }

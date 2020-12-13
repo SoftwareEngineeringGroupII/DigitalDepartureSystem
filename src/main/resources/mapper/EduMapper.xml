@@ -37,7 +37,28 @@
         update process set libStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
     </update>
 
+    <!--查询某个学生是否存在-->
+    <select id="findStuByStuNumber" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuNumber=#{stuNumber}
+    </select>
 
+    <!--根据学号查询某个学生离校(列表)-->
+    <select id="findStuEduByStuNumber" resultType="java.util.Map">
+         select s.stuNumber,s.stuName,s.stuDept,s.stuType,e.eduStatus from student s ,edu e where s.stuID=e.stuID and s.stuNumber=#{stuNumber}
+    </select>
+
+    <!--根据学号查询某个学生的离校信息详情(学生基本信息+学分要求+离校流程)-->
+    <select id="getStuBasicInfo" resultType="com.digitaldeparturesystem.pojo.StuBasicInfo">
+          select s.stuNumber,s.stuName,s.stuNation,s.stuFeature,s.stuSex,s.stuType,s.stuDept,s.stuSpecialty,
+          s.stuCredit,s.stuInDate,s.stuOutDate,s.stuStatus,s.stuAddress,s.stuPhoneNumber,s.stuContact,s.stuPhoto
+          from student s where stuNumber=#{stuNumber}
+    </select>
+
+    <!--根据学号查询某个学生的离校信息详情(离校流程)-->
+    <select id="getStuProcess" resultType="com.digitaldeparturesystem.pojo.Process">
+          select p.cardStatus,p.financeStatus,p.dormStatus,p.libStatus,p.eduStatus
+          from process p where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </select>
 
 
 

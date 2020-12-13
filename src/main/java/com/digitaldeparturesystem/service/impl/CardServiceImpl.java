@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.CardMapper;
+import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.mapper.NoticeMapper;
 import com.digitaldeparturesystem.mapper.StudentMapper;
 import com.digitaldeparturesystem.pojo.*;
@@ -44,6 +45,9 @@ public class CardServiceImpl implements ICardService {
     private StudentMapper studentMapper;
 
     @Resource
+    private EduMapper eduMapper;
+
+    @Resource
     private NoticeMapper noticeMapper;
 
     @Resource
@@ -61,7 +65,8 @@ public class CardServiceImpl implements ICardService {
      * @return
      */
     @Override
-    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException {
+    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,
+                                       HttpServletRequest request,HttpServletResponse response) throws IOException {
 
         //获取当前用户信息
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
@@ -171,6 +176,8 @@ public class CardServiceImpl implements ICardService {
         }
         int i = cardMapper.doCheckCard(stuNumber);
         if (i > 0){
+            //审核成功设置流程表cardStatus
+            eduMapper.setCardStatus(stuNumber);
             return ResponseResult.SUCCESS("审核成功！");
         }
         return ResponseResult.FAILED("审核失败！请重新操作");

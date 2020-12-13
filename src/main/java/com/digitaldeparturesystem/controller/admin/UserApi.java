@@ -106,4 +106,6 @@ public class UserApi {
         return sectorService.getAuthoritiesByUser(clerkId);
     }
 
+
+
 }
