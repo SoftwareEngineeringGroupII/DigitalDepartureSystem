@@ -163,6 +163,8 @@ public class AdminServiceImpl implements IAdminService {
             return ResponseResult.FAILED("用户不存在");
         }
         adminMapper.deleteClerk(clerkId);
+        //删除用户拥有的权限
+        userRoleMapper.deleteAllRoleByUser(clerkId);
         return ResponseResult.SUCCESS("用户删除成功");
     }
 

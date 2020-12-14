@@ -55,4 +55,12 @@ public interface IRoleService {
      * @return
      */
     ResponseResult findAuthorityByRole(String roleId);
+
+    /**
+     * 添加单个权限给role
+     * @param roleId
+     * @param authorityId
+     * @return
+     */
+    ResponseResult insertSingleAuthorityToUser(String roleId, String authorityId);
 }
