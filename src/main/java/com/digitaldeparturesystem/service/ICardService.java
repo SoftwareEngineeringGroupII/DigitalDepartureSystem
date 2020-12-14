@@ -46,6 +46,10 @@ public interface ICardService {
     //分页查询所有一卡通情况
     ResponseResult findAllByPage(Integer start,Integer size);
 
+    ResponseResult uploadImage(MultipartFile file);
+
+    void viewImage(HttpServletResponse response,String imageId) throws IOException;
+
 }
 
 

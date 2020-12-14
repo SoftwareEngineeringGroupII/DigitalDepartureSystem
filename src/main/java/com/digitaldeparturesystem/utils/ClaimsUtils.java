@@ -97,8 +97,8 @@ public class ClaimsUtils {
         student.setStuContact((String) claims.get(STUDENT_CONTACT));
         student.setStuSex((String) claims.get(STUDENT_SEX));
         student.setStuStatus((String) claims.get(STUDENT_STATUS));
-        student.setStuInDate((String) claims.get(STUDENT_IN_DATA));
-        student.setStuOutDate((String) claims.get(STUDENT_OUT_DATA));
+        student.setStuInDate((Date) claims.get(STUDENT_IN_DATA));
+        student.setStuOutDate((Date) claims.get(STUDENT_OUT_DATA));
         student.setStuAddress((String) claims.get(STUDENT_ADDRESS));
         student.setStuSpecialty((String) claims.get(STUDENT_SPECIALTY));
         student.setStuNation((String) claims.get(STUDENT_NATION));

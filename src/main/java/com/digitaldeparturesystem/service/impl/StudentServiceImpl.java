@@ -63,10 +63,10 @@ public class StudentServiceImpl implements IStudentService {
         if (TextUtils.isEmpty(student.getStuSex())){
             return ResponseResult.FAILED("该学生性别不能为空");
         }
-        if (TextUtils.isEmpty(student.getStuInDate())){
+        if (TextUtils.isEmpty(student.getStuInDate().toString())){
             return ResponseResult.FAILED("入学时间不能为空");
         }
-        if (TextUtils.isEmpty(student.getStuOutDate())){
+        if (TextUtils.isEmpty(student.getStuOutDate().toString())){
             return ResponseResult.FAILED("毕业时间不能为空");
         }
         if (TextUtils.isEmpty(student.getStuAddress())){

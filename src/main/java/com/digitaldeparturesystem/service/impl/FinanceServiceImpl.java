@@ -142,6 +142,7 @@ public class FinanceServiceImpl implements IFinanceService {
 
 
     /**
+     * zy
      * 财务处审核 根据学生学号：修改审核状态
      * @param stuNumber
      * @return
@@ -160,6 +161,7 @@ public class FinanceServiceImpl implements IFinanceService {
 
 
     /**
+     * zy
      *  初始化查询已审核数据
      * @return
      */
@@ -178,6 +180,7 @@ public class FinanceServiceImpl implements IFinanceService {
     }
 
     /**
+     * zy
      * 初始化查询未审核数据
      * @return
      */
@@ -196,6 +199,7 @@ public class FinanceServiceImpl implements IFinanceService {
     }
 
     /**
+     * zy
      *  导出所有财务信息
      * @param response
      */
@@ -227,6 +231,7 @@ public class FinanceServiceImpl implements IFinanceService {
     }*/
 
     /**
+     * zy
      * 查询所有财务情况
      * @return
      */
@@ -240,6 +245,7 @@ public class FinanceServiceImpl implements IFinanceService {
   }
 
     /**
+     * zy
      * 分页查询所有
      * @param start
      * @param size

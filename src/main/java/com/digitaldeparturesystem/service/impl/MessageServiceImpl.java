@@ -33,7 +33,7 @@ public class MessageServiceImpl implements IMessageService {
         }
 //        student.setStuId(String.valueOf(idWorker.nextId()));
         //补充数据
-        message.setMessageId(String.valueOf(idWorker.nextId()));
+        message.setMessageID(String.valueOf(idWorker.nextId()));
         return null;
     }
 }

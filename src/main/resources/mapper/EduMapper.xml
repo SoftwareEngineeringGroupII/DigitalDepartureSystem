@@ -2,14 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.digitaldeparturesystem.mapper.EduMapper">
 
-    <!--查询学生基本信息和离校状态：教务处列表-->
-   <!-- <select id="findAllByPage" resultType="java.util.Map">
-
+    <!--分页查询所有离校审核情况-->
+   <!-- <select id="listAllEdu" resultType="java.util.Map">
+        select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus,m.msgStatus from edu e,student s,message m
+        where e.stuID=s.stuID order by msgStatus;
     </select>-->
 
-    <!--分页查询所有离校审核情况-->
-    <select id="listAllEdu" resultType="java.util.Map">
-        select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus from edu e,student s where e.stuID=s.stuID;
+    <!--查询已经提交申请信息的学生-->
+    <select id="listPostEdu" resultType="java.util.Map">
+        SELECT s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus,m.msgStatus FROM edu e,student s,message m
+        WHERE e.stuID=s.stuID AND m.`sendID`=s.`stuID` AND msgStatus=0
+    </select>
+
+    <!--查询某学生 显示列表-->
+    <select id="getStudentByIdForEdu" parameterType="String" resultType="java.util.Map">
+         select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus
+         FROM edu e,student s
+         where e.stuID = s.stuID and stuNumber=#{stuNumber}
+    </select>
+
+    <!--查询没有提交申请信息的学生-->
+    <select id="listNoPostEdu" resultType="java.util.Map">
+        SELECT s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus FROM edu e,student s
+        WHERE e.stuID=s.stuID AND s.stuID NOT IN(SELECT sendID FROM message WHERE msgStatus=0);
     </select>
 
     <!--根据学号查询学生的离校详情-->
@@ -59,6 +74,64 @@
           select p.cardStatus,p.financeStatus,p.dormStatus,p.libStatus,p.eduStatus
           from process p where stuID=(select stuID from student where stuNumber=#{stuNumber})
     </select>
+
+    <!--导出所有学生基本信息-->
+    <select id="exportAllStuBasicInfo" resultType="com.digitaldeparturesystem.pojo.StuBasicInfo">
+          select s.stuNumber,s.stuName,s.stuNation,s.stuFeature,s.stuSex,s.stuType,s.stuDept,s.stuSpecialty,
+          s.stuCredit,s.stuInDate,s.stuOutDate,s.stuStatus,s.stuAddress,s.stuPhoneNumber,s.stuContact,s.stuPhoto
+          from student s
+    </select>
+
+    <!--审核学生提交的信息message-->
+    <update id="doEduMessage" parameterType="String">
+         update message set msgStatus=1 where sendID=#{stuNumber}
+    </update>
+
+    <!--设置通过离校申请>>>>edu表的状态-->
+    <update id="doCheckEdu" parameterType="String">
+        update edu set eduStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--设置process表的状态-->
+    <update id="setProcessEdu" parameterType="String">
+         update  process set eduStatus=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--查看学生提交的申请信息-->
+    <select id="viewMessage" parameterType="String" resultType="java.util.Map">
+       select s.stuName,m.title,m.content,m.messagedate
+        from message m ,student s
+        where m.sendID=s.`stuID` and m.sendID=(select stuID from student where stuNumber=#{stuNumber});
+    </select>
+
+    <!--查找这一消息记录-->
+    <select id="findMessage" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Message">
+        select title,content from message where sendID=(select stuID from student where stuNumber=#{stuNumber}) ;
+    </select>
+
+    <!--反向设置反馈信息-->
+    <update id="setMessage1">
+        update message set messagedate=#{message.messagedate},content=#{message.content},title=#{message.title},msgStatus=1
+        where sendID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--覆盖原信息-->
+    <update id="setMessage">
+        update message set content=#{content},title=#{title},msgStatus=1
+        where sendID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <!--设置学生表学生离校日期-->
+    <update id="setStuOutDate">
+        update student set stuOutDate=#{date} where stuNumber=#{stuNumber}
+    </update>
+
+    <!--查询学生的学分-->
+    <select id="findStuCredit" parameterType="String" resultType="String">
+        select stuCredit from student where stuNumber=#{stuNumber}
+    </select>
+
+
 
 
 

@@ -25,7 +25,7 @@ public class LibraryApi {
 
     /**
      * zy
-     * 分页查询所有学生的结束信息
+     * 分页查询所有学生的借书信息
      * @param start
      * @param size
      * @return

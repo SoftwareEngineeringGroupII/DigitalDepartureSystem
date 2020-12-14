@@ -134,7 +134,26 @@ public class CardApi {
     }
 
 
+    /**
+     * 图片/文件上传
+     * @param file
+     * @return
+     */
+    @PostMapping("/uploadImage")
+    public ResponseResult uploadImage(@RequestParam("file")  MultipartFile file){
 
+        return cardService.uploadImage(file);
+    }
+
+
+    @GetMapping("/viewImage")
+    public void viewImage(HttpServletResponse response,String imageId){
+        try {
+            cardService.viewImage(response,imageId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

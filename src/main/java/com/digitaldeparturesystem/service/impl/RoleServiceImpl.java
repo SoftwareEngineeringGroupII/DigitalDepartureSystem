@@ -98,7 +98,9 @@ public class RoleServiceImpl implements IRoleService {
         if (checkRoleIsExist(roleId,roleMapper)){
             return ResponseResult.FAILED("该角色不存在");
         }
-        return ResponseResult.SUCCESS("获取角色成功").setData(role);
+        List<Object> list = new ArrayList<>();
+        list.add(role);
+        return ResponseResult.SUCCESS("获取角色成功").setData(list);
     }
 
     @Override
