@@ -1,8 +1,6 @@
 package com.digitaldeparturesystem.mapper;
 
-import com.digitaldeparturesystem.pojo.Message;
-import com.digitaldeparturesystem.pojo.StuBasicInfo;
-import com.digitaldeparturesystem.pojo.Student;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.pojo.Process;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.boot.env.SpringApplicationJsonEnvironmentPostProcessor;
@@ -18,12 +16,12 @@ public interface EduMapper {
   //  List<Map<String,Object>> listAllEdu();
 
     //查询已经提交申请信息的学生
-    List<Map<String,Object>>listPostEdu();
+    List<EduInfo>listPostEdu();
 
     //查询没有提交申请信息的学生
-    List<Map<String,Object>>listNoPostEdu();
+    List<EduInfo>listNoPostEdu();
 
-    Map<String, Object> getStudentByIdForEdu(String stuNumber);
+    EduInfo getStudentByIdForEdu(String stuNumber);
 
     //设置学生的离校进度表--一卡通状态
     void setCardStatus(String stuNumber);

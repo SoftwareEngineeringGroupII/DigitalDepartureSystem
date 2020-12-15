@@ -61,15 +61,16 @@ public class EduServiceImpl implements IEduService {
         if (size == null) {
             size = 5;
         }
-        PageHelper.startPage(start,size);
-        List<Map<String, Object>> maps = eduMapper.listPostEdu();//已经提交申请的
-        List<Map<String, Object>> maps1 = eduMapper.listNoPostEdu();//未提交申请的
+        List<EduInfo> maps = eduMapper.listPostEdu();//已经提交申请的
+        List<EduInfo> maps1 = eduMapper.listNoPostEdu();//未提交申请的
         maps.addAll(maps1);
         if (maps.isEmpty()) {
             return ResponseResult.FAILED("没有数据");
         }
-        PageInfo<Map<String,Object>> mapPageInfo = new PageInfo<>(maps);
+        PageHelper.startPage(start,size);
+        PageInfo<EduInfo> mapPageInfo = new PageInfo<>(maps);
         long total = mapPageInfo.getTotal();
+      //  log.info("total的值为：---->>> "+total);
         int pageNum = mapPageInfo.getPageNum();
         int pages = mapPageInfo.getPages();
         int pageSize = mapPageInfo.getPageSize();
@@ -96,8 +97,8 @@ public class EduServiceImpl implements IEduService {
         }
         //再查看有没有该学生的离校信息
         //最后成功返回信息
-        Map<String, Object> studentByIdForEdu = eduMapper.getStudentByIdForEdu(stuNumber);
-        List<Map<String,Object>> list = new ArrayList<>();
+        EduInfo studentByIdForEdu = eduMapper.getStudentByIdForEdu(stuNumber);
+        List<EduInfo> list = new ArrayList<>();
         list.add(studentByIdForEdu);
         return ResponseResult.SUCCESS("查询成功").setData(list);
     }
@@ -113,10 +114,13 @@ public class EduServiceImpl implements IEduService {
         //查询学生基本信息
         StuBasicInfo stuBasicInfo = eduMapper.getStuBasicInfo(stuNumber);
 
-       // List<Map<String,Object>> list = new ArrayList<>();
+       List<StuBasicInfo> stuInfo = new ArrayList<>();
+       stuInfo.add(stuBasicInfo);
+       List<Process> process = new ArrayList<>();
+       process.add(stuProcess);
        Map<String,Object> map = new HashMap<>();
-       map.put("stuInfo",stuBasicInfo);
-       map.put("process",stuProcess);
+       map.put("stuInfo",stuInfo);
+       map.put("process",process);
 
        return ResponseResult.SUCCESS("查询成功").setData(map);
 
@@ -143,8 +147,8 @@ public class EduServiceImpl implements IEduService {
         //1.填写反馈信息表单
         String title = message.getTitle();//获取标题
         String content = message.getContent();//获取内容
-        log.info("title == >> "+title);
-        log.info("content == >> "+content);
+       /* log.info("title == >> "+title);
+        log.info("content == >> "+content);*/
         if (TextUtils.isEmpty(title)) {
             return ResponseResult.FAILED("反馈标题不能为空");
         }

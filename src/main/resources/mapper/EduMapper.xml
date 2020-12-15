@@ -9,20 +9,20 @@
     </select>-->
 
     <!--查询已经提交申请信息的学生-->
-    <select id="listPostEdu" resultType="java.util.Map">
+    <select id="listPostEdu" resultType="com.digitaldeparturesystem.pojo.EduInfo">
         SELECT s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus,m.msgStatus FROM edu e,student s,message m
         WHERE e.stuID=s.stuID AND m.`sendID`=s.`stuID` AND msgStatus=0
     </select>
 
     <!--查询某学生 显示列表-->
-    <select id="getStudentByIdForEdu" parameterType="String" resultType="java.util.Map">
+    <select id="getStudentByIdForEdu" parameterType="String" resultType="com.digitaldeparturesystem.pojo.EduInfo">
          select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus
          FROM edu e,student s
          where e.stuID = s.stuID and stuNumber=#{stuNumber}
     </select>
 
     <!--查询没有提交申请信息的学生-->
-    <select id="listNoPostEdu" resultType="java.util.Map">
+    <select id="listNoPostEdu" resultType="com.digitaldeparturesystem.pojo.EduInfo">
         SELECT s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus FROM edu e,student s
         WHERE e.stuID=s.stuID AND s.stuID NOT IN(SELECT sendID FROM message WHERE msgStatus=0);
     </select>

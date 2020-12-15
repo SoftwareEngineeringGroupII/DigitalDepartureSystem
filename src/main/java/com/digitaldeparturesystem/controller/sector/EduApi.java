@@ -56,7 +56,7 @@ public class EduApi {
      * @return
      */
     @GetMapping("/stuInfoAndProcess/{stuNumber}")
-    public ResponseResult testEdu(@PathVariable("stuNumber")String stuNumber){
+    public ResponseResult stuInfoAndProcess(@PathVariable("stuNumber")String stuNumber){
         return  eduService.findStuDetailForEdu(stuNumber);
     }
 
