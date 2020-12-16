@@ -114,8 +114,6 @@ public class AuthorityServiceImpl implements IAuthorityService {
         }
         //查询子数据
         AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
-        List<Object> list = new ArrayList<>();
-        list.add(authority);
-        return ResponseResult.SUCCESS("查找权限成功").setData(list);
+        return ResponseResult.SUCCESS("查找权限成功").setData(new ArrayList<Authorities>(){{add(authority);}});
     }
 }
