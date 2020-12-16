@@ -5,28 +5,31 @@ import java.util.Date;
 
 public class Message {
 
-  private String messageId;
-  private String sendId;
+
+  private String messageID;
+  private String sendID;
   private String title;
   private String content;
   private Date messagedate;
+  private String receiveID;
+  private String msgStatus;
 
 
-  public String getMessageId() {
-    return messageId;
+  public String getMessageID() {
+    return messageID;
   }
 
-  public void setMessageId(String messageId) {
-    this.messageId = messageId;
+  public void setMessageID(String messageID) {
+    this.messageID = messageID;
   }
 
 
-  public String getSendId() {
-    return sendId;
+  public String getSendID() {
+    return sendID;
   }
 
-  public void setSendId(String sendId) {
-    this.sendId = sendId;
+  public void setSendID(String sendID) {
+    this.sendID = sendID;
   }
 
 
@@ -55,4 +58,23 @@ public class Message {
   public void setMessagedate(Date messagedate) {
     this.messagedate = messagedate;
   }
+
+
+  public String getReceiveID() {
+    return receiveID;
+  }
+
+  public void setReceiveID(String receiveID) {
+    this.receiveID = receiveID;
+  }
+
+
+  public String getMsgStatus() {
+    return msgStatus;
+  }
+
+  public void setMsgStatus(String msgStatus) {
+    this.msgStatus = msgStatus;
+  }
+
 }

@@ -31,7 +31,7 @@
 
     <!--审核学生退寝情况-->
     <update id="doCheckForDorm" parameterType="String" >
-        update dorm set isLeave=1 where stuID=#{stuNum}
+        update dorm set isLeave=1 where stuID=(select stuID from student where stuNumber=#{stuNumber})
     </update>
 
    <!-- 根据学号获取学生退寝情况-->

@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.CardMapper;
+import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.mapper.NoticeMapper;
 import com.digitaldeparturesystem.mapper.StudentMapper;
 import com.digitaldeparturesystem.pojo.*;
@@ -21,13 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -42,6 +39,9 @@ public class CardServiceImpl implements ICardService {
 
     @Resource
     private StudentMapper studentMapper;
+
+    @Resource
+    private EduMapper eduMapper;
 
     @Resource
     private NoticeMapper noticeMapper;
@@ -61,7 +61,8 @@ public class CardServiceImpl implements ICardService {
      * @return
      */
     @Override
-    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException {
+    public ResponseResult uploadNotice(Notice notice, MultipartFile photo,
+                                       HttpServletRequest request,HttpServletResponse response) throws IOException {
 
         //获取当前用户信息
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
@@ -91,7 +92,7 @@ public class CardServiceImpl implements ICardService {
             newNotice.setRemark(notice.getRemark());//设置备注
             newNotice.setPublisherId(clerk.getClerkID());//获取当前发布者ID
             newNotice.setNoticeType(clerk.getDepartment()); //获取当前发布者部门
-            newNotice.setCheckStatus("0");//默认未审核
+            newNotice.setCheckStatus("0"); //默认未审核
             newNotice.setIsTop(notice.getIsTop()); //默认非置顶:这里前端有个选择置不置顶,但是好像是超级管理员的事情
             newNotice.setPublishTime(new Date());//发布时间
 
@@ -171,6 +172,8 @@ public class CardServiceImpl implements ICardService {
         }
         int i = cardMapper.doCheckCard(stuNumber);
         if (i > 0){
+            //审核成功设置流程表cardStatus
+            eduMapper.setCardStatus(stuNumber);
             return ResponseResult.SUCCESS("审核成功！");
         }
         return ResponseResult.FAILED("审核失败！请重新操作");
@@ -237,9 +240,9 @@ public class CardServiceImpl implements ICardService {
 
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(),CardInfo.class,cardInfos);
 
+        response.setCharacterEncoding("UTF-8");
         response.setHeader("content-Type","application/vnd.ms-excel");
         response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode("一卡通审核表","UTF-8")+".xls");
-        response.setCharacterEncoding("UTF-8");
 
         try{
             workbook.write(response.getOutputStream());
@@ -316,6 +319,87 @@ public class CardServiceImpl implements ICardService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
+
+
+
+
+
+    public static final String imagePath="C://Users//Administrator//Desktop//lixiaosys//DigitalDepartureSystem//src//main//resources//static//photos";
+
+    /**
+     *  上传文件/图片
+     * @param file
+     * @return
+     */
+    public ResponseResult uploadImage(MultipartFile file)  {
+        //判断文件类型
+        if (file == null) {
+            return ResponseResult.FAILED("文件不可以为空！");
+        }
+        //只支持文件上传,比如png,jpg,gif
+        String contentType = file.getContentType();
+        if (TextUtils.isEmpty(contentType)) {
+            return ResponseResult.FAILED("图片格式错误");
+        }
+        log.info("该文件类型是===>>> "+contentType);
+        if (!"image/png".equals(contentType)&&
+              !"image/gif".equals(contentType)&&
+                !"image/jpg".equals(contentType)&&
+                !"image/jpeg".equals(contentType)) {
+            return ResponseResult.FAILED("不支持此图片类型");
+        }
+        //获取相关数据,如文件类型,文件名称
+        String originalFilename = file.getOriginalFilename();
+        log.info("originalFilename == > "+originalFilename);
+        //根据定义的规则进行命名
+        File targetFile = new File(imagePath + File.separator + originalFilename);
+        log.info("target == >> "+targetFile);
+        //保存文件
+        try {
+            file.transferTo(targetFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseResult.FAILED("图片上传失败,请稍后重试");
+        }
+
+        //记录文件
+        //返回结果
+        return ResponseResult.SUCCESS("图片上传成功");
+    }
+
+    /**
+     * 显示图片
+     * @param response
+     * @param imageId
+     * @return
+     */
+    public void viewImage(HttpServletResponse response,String imageId) throws IOException {
+        File file = new File(imagePath + File.separator + "144.png");
+
+        OutputStream writer = null;
+        FileInputStream fos = null;
+        try {
+            writer = response.getOutputStream();
+            //读取
+            fos = new FileInputStream(file);
+            byte[] buff = new byte[1024];
+            int len = 0;
+            while((len = fos.read(buff))!= -1){
+                writer.write(buff,0,len);
+            }
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (writer != null) {
+                writer.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+        }
+
+    }
 
 
 }

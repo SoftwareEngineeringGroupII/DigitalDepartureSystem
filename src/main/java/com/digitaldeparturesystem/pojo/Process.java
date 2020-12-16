@@ -1,32 +1,40 @@
 package com.digitaldeparturesystem.pojo;
 
 
-public class Process {
+import java.io.Serializable;
 
-  private String processId;
-  private String stuId;
+public class Process implements Serializable {
+
+  private String processID;
+
+  private String stuID;
+
   private String libStatus;
+
   private String cardStatus;
+
   private String eduStatus;
+
   private String financeStatus;
-  private String logisticsStatus;
+
+  private String dormStatus;
 
 
-  public String getProcessId() {
-    return processId;
+  public String getProcessID() {
+    return processID;
   }
 
-  public void setProcessId(String processId) {
-    this.processId = processId;
+  public void setProcessID(String processID) {
+    this.processID = processID;
   }
 
 
-  public String getStuId() {
-    return stuId;
+  public String getStuID() {
+    return stuID;
   }
 
-  public void setStuId(String stuId) {
-    this.stuId = stuId;
+  public void setStuID(String stuID) {
+    this.stuID = stuID;
   }
 
 
@@ -66,12 +74,12 @@ public class Process {
   }
 
 
-  public String getLogisticsStatus() {
-    return logisticsStatus;
+  public String getDormStatus() {
+    return dormStatus;
   }
 
-  public void setLogisticsStatus(String logisticsStatus) {
-    this.logisticsStatus = logisticsStatus;
+  public void setDormStatus(String dormStatus) {
+    this.dormStatus = dormStatus;
   }
 
 }

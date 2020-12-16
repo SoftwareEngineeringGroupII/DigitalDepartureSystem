@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class Student implements UserDetails {
@@ -20,8 +21,8 @@ public class Student implements UserDetails {
   private String stuContact;
   private String stuSex;
   private String stuStatus;
-  private String stuInDate;
-  private String stuOutDate;
+  private Date stuInDate;
+  private Date stuOutDate;
   private String stuAddress;
   private String stuSpecialty;
   private String stuNation;
@@ -137,19 +138,19 @@ public class Student implements UserDetails {
     this.stuStatus = stuStatus;
   }
 
-  public String getStuInDate() {
+  public Date getStuInDate() {
     return stuInDate;
   }
 
-  public void setStuInDate(String stuInDate) {
+  public void setStuInDate(Date stuInDate) {
     this.stuInDate = stuInDate;
   }
 
-  public String getStuOutDate() {
+  public Date getStuOutDate() {
     return stuOutDate;
   }
 
-  public void setStuOutDate(String stuOutDate) {
+  public void setStuOutDate(Date stuOutDate) {
     this.stuOutDate = stuOutDate;
   }
 

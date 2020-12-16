@@ -16,7 +16,7 @@ public interface ICardService {
 
 
     //上传公告
-    ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException;
+    ResponseResult uploadNotice(Notice notice, MultipartFile photo,HttpServletRequest request,HttpServletResponse response) throws IOException;
 
     //获取全部学生信息
    // public ResponseResult listStuAll(int page, int size, HttpServletRequest request, HttpServletResponse response);
@@ -45,6 +45,10 @@ public interface ICardService {
 
     //分页查询所有一卡通情况
     ResponseResult findAllByPage(Integer start,Integer size);
+
+    ResponseResult uploadImage(MultipartFile file);
+
+    void viewImage(HttpServletResponse response,String imageId) throws IOException;
 
 }
 

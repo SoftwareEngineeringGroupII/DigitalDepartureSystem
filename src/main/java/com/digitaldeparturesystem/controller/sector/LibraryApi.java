@@ -25,7 +25,7 @@ public class LibraryApi {
 
     /**
      * zy
-     * 分页查询所有学生的结束信息
+     * 分页查询所有学生的借书信息
      * @param start
      * @param size
      * @return
@@ -58,7 +58,7 @@ public class LibraryApi {
      * @param stuNumber
      * @return
      */
-    @PutMapping("/checkLibrary/{stuNumber}/{bookID}")
+    @PostMapping("/checkLibrary/{stuNumber}/{bookID}")
     public ResponseResult checkLibrary(@PathVariable("stuNumber")String stuNumber,
                                        @PathVariable("bookID") String bookID){
 

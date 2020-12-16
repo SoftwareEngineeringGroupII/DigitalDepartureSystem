@@ -40,7 +40,7 @@ public class DormApi {
      * @param stuNumber
      * @return
      */
-    @PutMapping("/stuNumber/{stuNumber}")
+    @PostMapping("/stuNumber/{stuNumber}")
     public ResponseResult checkDorm(@PathVariable("stuNumber")String stuNumber){
         return dormService.doCheckForDorm(stuNumber);
     }

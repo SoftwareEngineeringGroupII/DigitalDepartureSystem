@@ -60,7 +60,7 @@ public class FinanceApi {
      * @param stuNum
      * @return
      */
-    @PutMapping("/{stuNum}")
+    @PostMapping("/{stuNum}")
     public ResponseResult doCheckForFinance(@PathVariable("stuNum")String stuNum){
         return financeService.doCheckForFinance(stuNum);
     }

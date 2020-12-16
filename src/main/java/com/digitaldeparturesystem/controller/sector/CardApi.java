@@ -64,11 +64,13 @@ public class CardApi {
      * @return
      */
 
-    @PutMapping("/checkCard/{stuNumber}")
+    @PostMapping("/checkCard/{stuNumber}")
     public ResponseResult  getCheck(@PathVariable("stuNumber") String stuNumber){
 
         return cardService.doCheckForCard(stuNumber);
     }
+
+
 
 
 
@@ -84,8 +86,9 @@ public class CardApi {
     public  ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,
                                         HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-        return cardService.uploadNotice(notice,photo,request);
+        return cardService.uploadNotice(notice,photo,request,response);
     }
+
 
 
     /**
@@ -105,15 +108,17 @@ public class CardApi {
     }
 
 
+
     /**
      * zy
-     *  查询所有一卡通信息
+     * 查询所有一卡通信息
      * @return
      */
     @GetMapping("/selectAll")
     public ResponseResult selectAll(){
         return cardService.selectAll();
     }
+
 
 
     /**
@@ -129,7 +134,26 @@ public class CardApi {
     }
 
 
+    /**
+     * 图片/文件上传
+     * @param file
+     * @return
+     */
+    @PostMapping("/uploadImage")
+    public ResponseResult uploadImage(@RequestParam("file")  MultipartFile file){
 
+        return cardService.uploadImage(file);
+    }
+
+
+    @GetMapping("/viewImage")
+    public void viewImage(HttpServletResponse response,String imageId){
+        try {
+            cardService.viewImage(response,imageId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

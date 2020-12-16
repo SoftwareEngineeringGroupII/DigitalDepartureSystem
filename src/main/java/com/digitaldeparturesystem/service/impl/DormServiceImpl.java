@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.DormMapper;
+import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.pojo.DormInfo;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.Notice;
@@ -34,6 +35,10 @@ public class DormServiceImpl implements IDormService {
 
     @Resource
     private DormMapper dormMapper;
+
+    @Resource
+    private EduMapper eduMapper;
+
 
     /**
      *  上传公告
@@ -82,6 +87,8 @@ public class DormServiceImpl implements IDormService {
         }
         try{
             dormMapper.doCheckForDorm(stuNumber);
+            //审核成功后设置流程表的dormStatus
+            eduMapper.setDormStatus(stuNumber);
             return ResponseResult.SUCCESS("审核成功");
         }catch (Exception e){
             return ResponseResult.FAILED("审核失败,请重新进行操作");
@@ -201,6 +208,7 @@ public class DormServiceImpl implements IDormService {
         map.put("pageSize",pageSize);
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
+
 
 
 

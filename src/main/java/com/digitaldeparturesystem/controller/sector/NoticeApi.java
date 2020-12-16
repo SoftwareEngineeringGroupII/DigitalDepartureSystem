@@ -4,6 +4,7 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
 import com.digitaldeparturesystem.service.ISectorService;
+import com.google.gson.internal.$Gson$Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,9 @@ public class NoticeApi {
      * @return
      */
     @PostMapping("/notice")
-    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,HttpServletRequest request) throws IOException {
+    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-        return cardService.uploadNotice(notice,photo,request);
+        return cardService.uploadNotice(notice,photo,request,response);
     }
 
     /**
@@ -71,7 +72,7 @@ public class NoticeApi {
      * @param articleId
      * @return
      */
-    @PutMapping("/top/{noticeId}")
+    @PostMapping("/top/{noticeId}")
     public ResponseResult topNotice(@PathVariable("noticeId")String articleId){
         return null;
     }

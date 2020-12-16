@@ -2,6 +2,7 @@ package com.digitaldeparturesystem.service.impl;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.mapper.LibraryMapper;
 import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.LibInfo;
@@ -32,6 +33,9 @@ public class LibraryServiceImpl implements ILibraryService {
 
      @Resource
      private LibraryMapper libraryMapper;
+
+    @Resource
+    private EduMapper eduMapper;
 
     /**
      * 分页查询所有
@@ -105,6 +109,8 @@ public class LibraryServiceImpl implements ILibraryService {
                 //这里加条件,并且已经上传自己的毕业论文
                 if ("1".equals(libraryMapper.findPaper(stuNumber))) {
                     libraryMapper.changeStatus(stuNumber);
+                    //审核成功后设置离校流程表libStatus
+                     eduMapper.setLibStatus(stuNumber);
                 }
             }
             //返回审核成功
@@ -112,6 +118,7 @@ public class LibraryServiceImpl implements ILibraryService {
         }
         return ResponseResult.FAILED("审核失败！请重新操作");
     }
+
 
 
     /**
