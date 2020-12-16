@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Notice {
 
-  private String noticeId; //公告ID
+  private String noticeID; //公告ID
   private String content; //公告内容
   private String title; //公告标题
   private String publisherId; //发布者ID
@@ -17,14 +17,13 @@ public class Notice {
   private String path;//图片路径
 
 
-  public String getNoticeId() {
-    return noticeId;
+  public String getNoticeID() {
+    return noticeID;
   }
 
-  public void setNoticeId(String noticeId) {
-    this.noticeId = noticeId;
+  public void setNoticeID(String noticeID) {
+    this.noticeID = noticeID;
   }
-
 
   public String getContent() {
     return content;

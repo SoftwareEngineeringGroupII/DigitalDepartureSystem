@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.mapper;
 import com.digitaldeparturesystem.pojo.DormInfo;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
 public interface DormMapper {
 
     //按条件分页查询退寝状态
-    List<Map<String,Object>> listStudentDormInfos(Map<String,String> params);
+    List<Map<String,Object>> listStudentDormInfos(@Param("params") Map<String,String> params);
 
     //审核学生退寝情况
     void doCheckForDorm(String stuNumber);

@@ -86,7 +86,7 @@ public class CardServiceImpl implements ICardService {
             //设置数据
             Notice newNotice = new Notice();
             newNotice.setPath(newFileName);//图片路径
-            newNotice.setNoticeId(idWorker.nextId()+"");//公告ID
+            newNotice.setNoticeID(idWorker.nextId()+"");//公告ID
             newNotice.setTitle(notice.getTitle());//标题
             newNotice.setContent(notice.getContent());//内容
             newNotice.setRemark(notice.getRemark());//设置备注

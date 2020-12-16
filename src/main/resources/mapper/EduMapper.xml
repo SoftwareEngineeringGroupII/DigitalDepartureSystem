@@ -117,7 +117,7 @@
 
     <!--覆盖原信息-->
     <update id="setMessage">
-        update message set content=#{content},title=#{title},msgStatus=1
+        update message set content=#{content},title=#{title},messagedate=#{time}, msgStatus=1
         where sendID=(select stuID from student where stuNumber=#{stuNumber})
     </update>
 

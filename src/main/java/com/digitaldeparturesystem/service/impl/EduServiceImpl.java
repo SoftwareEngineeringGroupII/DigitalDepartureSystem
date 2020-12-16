@@ -166,7 +166,8 @@ public class EduServiceImpl implements IEduService {
         eduMapper.setMessage(stuNumber,message1);
         */
         //写法二：覆盖内容,并且设置审核信息状态1
-        eduMapper.setMessage(stuNumber,content,title);
+        Date time = new Date();
+        eduMapper.setMessage(stuNumber,content,title,time);
         return ResponseResult.SUCCESS("拒绝成功");
     }
 
@@ -198,7 +199,8 @@ public class EduServiceImpl implements IEduService {
             return ResponseResult.FAILED("学分不达要求,不能通过审核");
         }
         //设置message状态
-        eduMapper.setMessage(stuNumber,"已通过离校申请","教务处");
+        Date time = new Date();
+        eduMapper.setMessage(stuNumber,"已通过离校申请","教务处",time);
         //设置edu状态
         eduMapper.setProcessEdu(stuNumber);
         //设置process的edu状态
