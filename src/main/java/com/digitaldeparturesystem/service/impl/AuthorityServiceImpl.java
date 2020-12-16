@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -112,6 +113,6 @@ public class AuthorityServiceImpl implements IAuthorityService {
         }
         //查询子数据
         AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
-        return ResponseResult.SUCCESS("查找权限成功").setData(authority);
+        return ResponseResult.SUCCESS("查找权限成功").setData(new ArrayList<Authorities>(){{add(authority);}});
     }
 }

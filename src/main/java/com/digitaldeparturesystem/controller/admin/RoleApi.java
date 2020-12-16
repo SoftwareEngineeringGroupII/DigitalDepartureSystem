@@ -73,7 +73,7 @@ public class RoleApi {
         return roleService.insertAuthorityToRole(roleId,authorityIds);
     }
 
-    @PostMapping("/authority/{roleId}")
+    @PostMapping("/singleAuthority/{roleId}")
     public ResponseResult addSingleAuthorityToUser(@PathVariable("roleId") String roleId, @RequestBody String authorityId){
         return roleService.insertSingleAuthorityToUser(roleId,authorityId);
     }
