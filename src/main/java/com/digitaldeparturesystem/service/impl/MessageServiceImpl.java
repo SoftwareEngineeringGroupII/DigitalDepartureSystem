@@ -1,6 +1,7 @@
 package com.digitaldeparturesystem.service.impl;
 
 import com.digitaldeparturesystem.mapper.MessageMapper;
+import com.digitaldeparturesystem.mapper.RoleMapper;
 import com.digitaldeparturesystem.pojo.Message;
 import com.digitaldeparturesystem.pojo.Process;
 import com.digitaldeparturesystem.pojo.Role;
@@ -33,6 +34,8 @@ public class MessageServiceImpl implements IMessageService {
      */
     @Autowired
     private IdWorker idWorker;
+    @Resource
+    private RoleMapper roleMapper;
 
     /**
      * 提交申请
@@ -57,6 +60,7 @@ public class MessageServiceImpl implements IMessageService {
         message.setMsgStatus("0");
         message.setMessageID(idWorker.nextId()+"");
         message.setSendID(student.getStuId());
+        message.setReceiveID("781917504145457152");
 
         //保存数据
         messageMapper.sendMessage(message);
@@ -108,6 +112,59 @@ public class MessageServiceImpl implements IMessageService {
             return ResponseResult.FAILED("暂无消息显示");
         }
         return ResponseResult.SUCCESS("显示成功！").setData(messages);
+    }
+
+    @Override
+    public ResponseResult reSendMessage(Message message) {
+        String title = message.getTitle();//获取标题
+        String content = message.getContent();//获取内容
+        HttpServletRequest request = getRequest();
+        //用户cookies里面获取token
+        String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
+        //解析*
+        Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
+
+
+        //根据学生id查sendid
+        Message messageFromDB = null;
+        messageFromDB = messageMapper.findMessageBySendId(student.getStuId());
+        if (messageFromDB == null){
+            //sendid没查到，查revId
+            messageFromDB = messageMapper.findMessageByRecvId(student.getStuId());
+            if (messageFromDB == null){
+                //无消息，可插入
+                if (TextUtils.isEmpty(message.getContent())){
+                return ResponseResult.FAILED("申请内容不能为空！");
+                }
+                message.setMessagedate(new Date());
+                message.setMsgStatus("0");
+                message.setMessageID(idWorker.nextId()+"");
+                message.setSendID(student.getStuId());
+                message.setReceiveID("781917504145457152");
+            //保存数据
+            messageMapper.sendMessage(message);
+            return ResponseResult.SUCCESS("提交申请成功");
+            }else{
+                //有消息，可覆盖
+                if (TextUtils.isEmpty(title)) {
+                    return ResponseResult.FAILED("反馈标题不能为空");
+                }
+                if (TextUtils.isEmpty(content)) {
+                    return ResponseResult.FAILED("反馈内容不能为空");
+                }
+                messageMapper.setMessage(messageFromDB.getMessageID(),title,content);
+            }
+        }else{
+            //有消息，可覆盖
+            if (TextUtils.isEmpty(title)) {
+                return ResponseResult.FAILED("反馈标题不能为空");
+            }
+            if (TextUtils.isEmpty(content)) {
+                return ResponseResult.FAILED("反馈内容不能为空");
+            }
+            messageMapper.setMessage(messageFromDB.getMessageID(),title,content);
+        }
+        return ResponseResult.SUCCESS("重新提交成功");
     }
 
     private HttpServletRequest getRequest(){

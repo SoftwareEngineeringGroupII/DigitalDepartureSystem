@@ -7,7 +7,6 @@ import com.digitaldeparturesystem.pojo.Clerk;
 import com.digitaldeparturesystem.pojo.Process;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
-import com.digitaldeparturesystem.service.IMessageService;
 import com.digitaldeparturesystem.service.IProcessService;
 import com.digitaldeparturesystem.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,7 @@ package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.Message;
 import com.digitaldeparturesystem.response.ResponseResult;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -41,4 +42,13 @@ public interface MessageMapper {
      * @param
      */
     String getIdByName(String name);
+
+    /**
+     * 回复消息
+     */
+    void setMessage(String messageId, @Param("title") String  title,@Param("content") String content);
+
+    Message findMessageBySendId(String stuId);
+
+    Message findMessageByRecvId(String stuId);
 }

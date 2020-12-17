@@ -28,4 +28,8 @@ public interface IMessageService {
      * 显示未读信息
      */
     ResponseResult showMessageUnRead();
+    /**\
+     * 重新提交
+     */
+    ResponseResult reSendMessage(Message message);
 }

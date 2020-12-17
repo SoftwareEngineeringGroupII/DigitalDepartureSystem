@@ -14,6 +14,10 @@
         insert into message(messageID,sendID,title,content,messagedate,receiveID,msgStatus)
         values(#{messageID},#{sendID},#{title},#{content},#{messagedate},#{receiveID},#{msgStatus})
     </insert>
+    <update id="setMessage">
+        update message set content=#{content},title=#{title},msgStatus=0
+        where messageID= #{messageId};
+    </update>
     <!--删除已发布的反馈-->
     <delete id="deleteMessage" parameterType="String">
         delete from message where messageID = #{messageID};
@@ -33,6 +37,12 @@
     </select>
     <select id="getIdByName" resultType="java.lang.String">
         select id from role where name = #{name};
+    </select>
+    <select id="findMessageBySendId" resultType="com.digitaldeparturesystem.pojo.Message">
+        select * from message where sendID = #{stuId};
+    </select>
+    <select id="findMessageByRecvId" resultType="com.digitaldeparturesystem.pojo.Message">
+        select * from message where receivedID = #{stuId};
     </select>
 
     <!--  <insert id="saveMessage" parameterType="com.digitaldeparturesystem.pojo.Message">

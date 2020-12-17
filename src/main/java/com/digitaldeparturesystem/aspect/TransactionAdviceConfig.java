@@ -43,6 +43,7 @@ public class TransactionAdviceConfig {
         source.addTransactionalMethod("create*", txAttr_REQUIRED);
         source.addTransactionalMethod("check*", txAttr_REQUIRED);
         source.addTransactionalMethod("add*", txAttr_REQUIRED);
+        source.addTransactionalMethod("reSend*", txAttr_REQUIRED);
         source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);

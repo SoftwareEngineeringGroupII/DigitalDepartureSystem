@@ -36,7 +36,13 @@ public class MessageApi {
         return messageService.deleteMessage(messageID);
     }
 
-
+    /**
+     * 重新发送审核
+     */
+    @PostMapping("/ReSendMessage")
+    public ResponseResult ResendMessage(@RequestBody Message message){
+        return messageService.reSendMessage(message);
+    }
     /**
      * 获取已读信息数据
      * @return
@@ -46,7 +52,6 @@ public class MessageApi {
         return messageService.showMessageRead();
     }
     /**
-     *
      * 获取未读信息数据
      */
     @GetMapping("/showmessageUnread")
