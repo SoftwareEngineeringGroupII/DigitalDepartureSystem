@@ -25,6 +25,7 @@ public interface IEduService {
     ResponseResult findAllByPageAndType(Integer start, Integer size,
                                         String stuDept, String stuType, String isLeave);
 
+    ResponseResult listAll();
    // ResponseResult testSelectAll();
 
 

@@ -140,6 +140,15 @@ public class EduApi {
     }
 */
 
+    /**
+     * 查询所有
+     * @return
+     */
+    @GetMapping("/listAll")
+   public ResponseResult  listAll(){
+       return eduService.listAll();
+   }
+
 
 
 

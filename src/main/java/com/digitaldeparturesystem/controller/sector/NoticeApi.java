@@ -101,4 +101,30 @@ public class NoticeApi {
     }
 
 
+    @GetMapping("/searchNoticeByTitle/{start}/{size}")
+    public ResponseResult searchNoticeByTitle(HttpServletRequest request,
+                                              @RequestParam String title,@PathVariable("start") Integer start,
+                                              @PathVariable("size") Integer size){
+        return noticeService.searchNoticeByTitle(request,title,start,size);
+    }
+
+
+    @PostMapping("/uploadFile")
+    public ResponseResult uploadFile(@RequestParam("file") MultipartFile file){
+        return noticeService.handleFileUpload(file);
+    }
+
+    @GetMapping("/download")
+    public void download(@RequestParam("fileName") String filename) throws IOException {
+        noticeService.download(filename);
+    }
+
+    @GetMapping("/newUpload")
+    public ResponseResult uploadNewFile(HttpServletRequest request,@RequestBody Notice notice){
+        return noticeService.uploadNotice(request,notice);
+    }
+
+
+
+
 }
