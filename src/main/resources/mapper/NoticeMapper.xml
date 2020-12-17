@@ -18,6 +18,27 @@
         select * from notice where publisherID=#{ClerkId};
     </select>
 
+
+    <!--查看自己的公告 == 展示被审核的0-->
+    <select id="findSelfNotice0" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where publisherID=#{ClerkId} and checkStatus=0;
+    </select>
+
+    <!--查看自己的公告 == 展示被拒绝的2-->
+    <select id="findSelfNotice2" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where publisherID=#{ClerkId} and checkStatus=2;
+    </select>
+
+    <!--查看自己的公告 == 展示草稿箱的3-->
+    <select id="findSelfNotice3" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where publisherID=#{ClerkId} and checkStatus=3;
+    </select>
+
+    <!--查看自己的公告 == 展示通过的1-->
+    <select id="findSelfNotice1" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where publisherID=#{ClerkId} and checkStatus=1;
+    </select>
+
     <!--设置公告的状态 通过pass-->
     <update id="setNoticePass" parameterType="String">
         update notice set checkStatus=1 where noticeID=#{noticeID}
@@ -31,6 +52,16 @@
     <!--首页显示所有审核通过的公告-->
     <select id="viewAllByPeople"  resultType="com.digitaldeparturesystem.pojo.Notice">
          select noticeID,noticeType,title,publishTime from notice where checkStatus=1 order by substring(0,publishTime,10)) desc
+    </select>
+
+    <!--查询置顶的公告-->
+    <select id="viewTopNotice" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select  noticeID,noticeType,title,publishTime,isTop from notice where checkStatus=1 and isTop=1
+    </select>
+
+    <!--查询未置顶的公告-->
+    <select id="viewUnTopNotice" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select  noticeID,noticeType,title,publishTime,isTop from notice where checkStatus=1 and isTop=0
     </select>
 
     <!--公告查看公告详情-->
@@ -58,6 +89,35 @@
          select * from notice where checkStatus=3
     </select>
 
+    <!--设置公告置顶-->
+    <update id="setTop" parameterType="String">
+        update notice set isTop=1 where noticeID=#{noticeID}
+    </update>
+
+    <!--取消公告置顶-->
+    <update id="setUnTop" parameterType="String">
+        update notice set isTop=0 where noticeID=#{noticeID}
+    </update>
+
+    <!--搜索公告==全部乱序显示-->
+    <select id="searchNotice" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+         SELECT * FROM notice WHERE noticeType=#{department} AND checkStatus IN(1,2,0)
+    </select>
+
+    <!--搜索公告==未审核优先==status0-->
+    <select id="searchNotice0" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        SELECT * FROM notice WHERE noticeType=#{department} AND checkStatus = 0
+    </select>
+
+    <!--搜索公告== 拒绝第二==status2-->
+    <select id="searchNotice2" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        SELECT * FROM notice WHERE noticeType=#{department} AND checkStatus = 2
+    </select>
+
+    <!--搜索公告== 已经通过==status1-->
+    <select id="searchNotice1" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        SELECT * FROM notice WHERE noticeType=#{department} AND checkStatus = 1
+    </select>
 
 
 </mapper>

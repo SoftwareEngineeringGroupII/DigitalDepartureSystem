@@ -18,4 +18,7 @@ public interface ILibraryService {
 
     //导出学生图书情况表
     void exportAllLib(HttpServletResponse response) throws UnsupportedEncodingException;
+
+    ResponseResult findAllByPageAndType(Integer start,Integer size,
+                                        String stuDept,String stuType,String libStatus);
 }

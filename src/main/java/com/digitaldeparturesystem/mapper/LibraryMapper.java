@@ -1,5 +1,6 @@
 package com.digitaldeparturesystem.mapper;
 
+import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.pojo.LibInfo;
 import com.digitaldeparturesystem.pojo.Student;
 import org.apache.ibatis.annotations.Param;
@@ -12,6 +13,8 @@ public interface LibraryMapper {
 
     //查询所有图书借书信息
     List<LibInfo> listAllLibrary();
+
+    List<LibInfo> listStudentLibInfos(@Param("params")Map<String,String> params);
 
     LibInfo findStuLibrary(String stuNumber);
 

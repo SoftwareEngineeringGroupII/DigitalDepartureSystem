@@ -35,6 +35,23 @@ public class EduApi {
         return eduService.selectAllByPage(start,size);
     }
 
+    /**
+     * 按条件分页查询
+     * @param stuDept
+     * @param stuType
+     * @param checkStatus
+     * @param start
+     * @param size
+     * @return
+     */
+    @GetMapping("/findAllByPageAndType/{start}/{size}")
+    public ResponseResult findAllByPageAndType(@RequestParam String stuDept,
+                                               @RequestParam String stuType,
+                                               @RequestParam String checkStatus,
+                                               @PathVariable("start") Integer start,
+                                               @PathVariable("size") Integer size){
+           return eduService.findAllByPageAndType(start,size,stuDept,stuType,checkStatus);
+    }
 
     /**
      * zy

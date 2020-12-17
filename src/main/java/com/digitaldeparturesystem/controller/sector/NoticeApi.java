@@ -24,14 +24,15 @@ public class NoticeApi {
     @Autowired
     private INoticeService noticeService;
 
-    /**
+  /*  *//**
      * 公共页面显示
      * @return
-     */
+     *//*
     @GetMapping("/viewByAllPeople")
-    public ResponseResult viewAllByPeople(){
+    public ResponseResult viewAllByPeople() throws Exception{
         return noticeService.viewByAllPeople();
     }
+*/
 
     /**
      *  查看公告详情
@@ -45,7 +46,7 @@ public class NoticeApi {
 
 
     /**
-     * 测试上传notice
+     * 上传notice
      * @param notice
      * @return
      */
@@ -55,7 +56,7 @@ public class NoticeApi {
     }
 
     /**
-     * 测试分页查询自己的公告
+     * 分页查询自己的公告
      * @param request
      * @param start
      * @param size
@@ -68,18 +69,36 @@ public class NoticeApi {
         return noticeService.findSelfNotice(request,start,size);
     }
 
-
-    //==超管查看所有状态的公告==//
-    @GetMapping("/findAllNotice/{start}/{size}")
-    public ResponseResult findAllNotice(@PathVariable("start")Integer start,@PathVariable("size")Integer size){
-        return noticeService.findAllNotice(start,size);
+    /**
+     * 保存至草稿箱
+     * @param request
+     * @param notice
+     * @return
+     */
+    @PostMapping("/draftNotice")
+    public ResponseResult draftNotice(HttpServletRequest request,Notice notice){
+        return noticeService.draftNotice(request,notice);
     }
 
-
-    //审核公告(拒绝和通过)
-    @PostMapping("/checkNotice/{noticeID}/{result}")
-    public ResponseResult checkNotice(@PathVariable("noticeID") String noticeID,@PathVariable("result") String result){
-        return noticeService.checkNotice(noticeID,result);
+    /**
+     * 继续编辑公告
+     * @param noticeID
+     * @return
+     */
+    @GetMapping("/continueNotice")
+    public ResponseResult continueNotice(String noticeID){
+        return noticeService.continueNotice(noticeID);
     }
+
+    /**
+     * 删除公告
+     * @param noticeID
+     * @return
+     */
+    @GetMapping("/deleteNotice/{noticeID}")
+    public ResponseResult deleteNotice(@PathVariable("noticeID") String noticeID){
+        return  noticeService.deleteNotice(noticeID);
+    }
+
 
 }

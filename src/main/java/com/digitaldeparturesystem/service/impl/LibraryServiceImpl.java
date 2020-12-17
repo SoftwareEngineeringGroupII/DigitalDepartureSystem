@@ -143,6 +143,59 @@ public class LibraryServiceImpl implements ILibraryService {
         }
     }
 
+    /**
+     * 按条件分页查询
+     * @param start
+     * @param size
+     * @param stuDept
+     * @param stuType
+     * @param libStatus
+     * @return
+     */
+    public ResponseResult findAllByPageAndType(Integer start,Integer size,
+                                               String stuDept,String stuType,String libStatus){
+
+        //判断类型,如果是所有类型的状态将其置空
+        stuDept = (stuDept.equals("所有学院") ?"":stuDept);
+        stuType =(stuType.equals("所有学生")?"":stuType);
+        libStatus = (libStatus.equals("所有状态")?"":libStatus);
+
+        Map<String,String> params = new HashMap<>();
+        params.put("stuDept",stuDept);
+        params.put("stuType",stuType);
+        params.put("libStatus",libStatus);
+        log.info("params --- >> "+params);
+
+        if(size==0){
+            //如果未设置显示条数，默认为5
+            size=5;
+        }
+
+        //pageHelper使用
+        //分页处理,显示第start页的size条数据
+        PageHelper.startPage(start,size);
+        //List<FinanceInfo> students = financeMapper.listStudentFinanceInfos(params);
+        List<LibInfo> libInfos = libraryMapper.listAllLibrary();
+        if (libInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有数据");
+        }
+        PageInfo<LibInfo> libInfoPageInfo = new PageInfo<>(libInfos);
+        int pageNum = libInfoPageInfo.getPageNum();
+        int pages =libInfoPageInfo.getPages();
+        long total = libInfoPageInfo.getTotal();//获取记录总数
+
+      /*  for (Map<String, Object> student : students) {
+            System.out.println(student);
+        } */
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",libInfos);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);
+        map.put("total",total);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
+
+    }
 
 
 
