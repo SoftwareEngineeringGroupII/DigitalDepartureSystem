@@ -106,12 +106,23 @@ public class MessageServiceImpl implements IMessageService {
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
         //解析*
         Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
-        assert student != null;
-        List<Message> messages = messageMapper.showMessageUnRead();
-        if (messages.isEmpty()){
-            return ResponseResult.FAILED("暂无消息显示");
+
+        //根据学生id查sendid
+        Message messageFromDB ;
+        messageFromDB = messageMapper.findMessageBySendId(student.getStuId());
+        if (messageFromDB == null){
+            //sendid没查到，查revId
+            messageFromDB = messageMapper.findMessageByRecvId(student.getStuId());
+            if (messageFromDB == null){
+                return ResponseResult.SUCCESS("暂无数据");
+            }else{
+                //有消息，返回
+                return ResponseResult.SUCCESS("查询成功").setData(messageFromDB);
+            }
+        }else{
+            //有消息，返回
+            return ResponseResult.SUCCESS("查询成功").setData(messageFromDB);
         }
-        return ResponseResult.SUCCESS("显示成功！").setData(messages);
     }
 
     @Override

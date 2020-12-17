@@ -42,7 +42,7 @@
         select * from message where sendID = #{stuId};
     </select>
     <select id="findMessageByRecvId" resultType="com.digitaldeparturesystem.pojo.Message">
-        select * from message where receivedID = #{stuId};
+        select * from message where receiveID = #{stuId};
     </select>
 
     <!--  <insert id="saveMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
