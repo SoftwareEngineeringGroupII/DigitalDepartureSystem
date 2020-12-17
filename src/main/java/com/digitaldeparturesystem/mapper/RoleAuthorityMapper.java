@@ -21,6 +21,13 @@ public interface RoleAuthorityMapper {
     List<Authorities> getAuthorityNoParentByRole(String roleId);
 
     /**
+     * 通过roleid，获取authorities
+     * @param roleId
+     * @return
+     */
+    List<String> getRoleAuthorityData(String roleId);
+
+    /**
      * 找到子菜单
      * @return
      */

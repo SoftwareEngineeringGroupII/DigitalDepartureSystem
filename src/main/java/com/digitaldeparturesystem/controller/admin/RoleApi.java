@@ -1,5 +1,6 @@
 package com.digitaldeparturesystem.controller.admin;
 
+import com.digitaldeparturesystem.pojo.Authorities;
 import com.digitaldeparturesystem.pojo.Role;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IRoleService;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -64,6 +66,11 @@ public class RoleApi {
         return roleService.findRoleById(roleId);
     }
 
+    @GetMapping("/name/{roleName}")
+    public ResponseResult getRoleByName(@PathVariable("roleName") String roleName){
+        return roleService.findRoleByName(roleName);
+    }
+
     /**
      * 添加权限到角色
      * @return
@@ -76,6 +83,11 @@ public class RoleApi {
     @PostMapping("/singleAuthority/{roleId}")
     public ResponseResult addSingleAuthorityToUser(@PathVariable("roleId") String roleId, @RequestBody String authorityId){
         return roleService.insertSingleAuthorityToUser(roleId,authorityId);
+    }
+
+    @PostMapping("/modify/{roleId}")
+    public ResponseResult updateAuthorityToUser(@PathVariable("roleId") String roleId, @RequestBody Authorities authorities){
+        return roleService.updateAuthorityToUser(roleId,authorities);
     }
 
     /**

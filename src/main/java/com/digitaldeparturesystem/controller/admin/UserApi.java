@@ -62,6 +62,11 @@ public class UserApi {
         return adminService.findClerkById(clerkId);
     }
 
+    @GetMapping("/account/{clerkAccount}")
+    public ResponseResult getClerkByAccount(@PathVariable("clerkAccount")String clerkAccount){
+        return adminService.getClerkByAccount(clerkAccount);
+    }
+
     /**
      * 获取全部用户
      * @return

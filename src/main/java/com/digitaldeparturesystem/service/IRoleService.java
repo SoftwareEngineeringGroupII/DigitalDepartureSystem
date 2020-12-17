@@ -63,4 +63,19 @@ public interface IRoleService {
      * @return
      */
     ResponseResult insertSingleAuthorityToUser(String roleId, String authorityId);
+
+    /**
+     * 查找角色，通过名字
+     * @param roleName
+     * @return
+     */
+    ResponseResult findRoleByName(String roleName);
+
+    /**
+     * 更新角色权限
+     * @param roleId
+     * @param authorities
+     * @return
+     */
+    ResponseResult updateAuthorityToUser(String roleId, Authorities authorities);
 }

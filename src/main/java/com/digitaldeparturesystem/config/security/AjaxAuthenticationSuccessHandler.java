@@ -137,8 +137,9 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         //查权限
         for (Role role : roles) {
             List<Authorities> authorities = roleAuthorityMapper.getAuthorityNoParentByRole(role.getId());
+            List<String> authorityIds = roleAuthorityMapper.getRoleAuthorityData(role.getId());
             for (Authorities authority : authorities) {
-                AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper, authority);
+                AuthorityTreeUtils.getSpecialChildrenToMenu(roleAuthorityMapper, authority,authorityIds);
                 //添加权限
                 authorityList.add(authority);
             }

@@ -59,4 +59,9 @@ public class AuthorityApi {
     public ResponseResult getAuthorityById(@PathVariable("authorityId")String authorityId){
         return authorityService.findAuthorityById(authorityId);
     }
+
+    @GetMapping("/name/{authorityName}")
+    public ResponseResult getAuthorityByName(@PathVariable("authorityName")String authorityName){
+        return authorityService.findAuthorityByName(authorityName);
+    }
 }

@@ -18,6 +18,10 @@
         select * from authorities where parent_id = #{parentId} order by `index` asc;
     </select>
 
+    <select id="getRoleAuthorityData" parameterType="java.lang.String" resultType="java.lang.String">
+        select authority_id from role_authority where role_id = #{roleId};
+    </select>
+
     <delete id="deleteAllAuthorityByRole" parameterType="java.lang.String">
         delete from role_authority where role_id = #{roleId};
     </delete>

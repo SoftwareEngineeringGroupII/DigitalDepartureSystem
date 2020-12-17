@@ -282,4 +282,16 @@ public class AdminServiceImpl implements IAdminService {
         }
         return ResponseResult.SUCCESS("获取菜单成功").setData(authorityList);
     }
+
+    @Override
+    public ResponseResult getClerkByAccount(String clerkAccount) {
+        if (TextUtils.isEmpty(clerkAccount)) {
+            return ResponseResult.FAILED("职工账号不能为空");
+        }
+        Clerk clerkFromDb = sectorMapper.findOneByClerkAccount(clerkAccount);
+        if (clerkFromDb == null){
+            return ResponseResult.FAILED("不存在该用户");
+        }
+        return ResponseResult.SUCCESS("查找用户成功").setData(new ArrayList<Clerk>(){{add(clerkFromDb);}});
+    }
 }

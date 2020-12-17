@@ -91,6 +91,11 @@ public class CommonApi {
         return commonService.updateUserPassword(captcha, captchaKey,passwordBean);
     }
 
+    @PutMapping("/updatePwd")
+    public ResponseResult updateUserPassword(@RequestBody PasswordBean passwordBean) {
+        return commonService.updateUserPassword(passwordBean);
+    }
+
     /**
      * 获取图灵验证码
      * 10分钟有效期
