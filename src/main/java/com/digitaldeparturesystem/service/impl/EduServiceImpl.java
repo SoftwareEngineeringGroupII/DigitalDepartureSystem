@@ -61,21 +61,16 @@ public class EduServiceImpl implements IEduService {
         if (size == null) {
             size = 5;
         }
-        List<EduInfo> maps = eduMapper.listPostEdu();//已经提交申请的
-        List<EduInfo> maps1 = eduMapper.listNoPostEdu();//未提交申请的
-        maps.addAll(maps1);
-        if (maps.isEmpty()) {
-            return ResponseResult.FAILED("没有数据");
-        }
         PageHelper.startPage(start,size);
-        PageInfo<EduInfo> mapPageInfo = new PageInfo<>(maps);
+        List<EduInfo> eduInfos = eduMapper.listAllEdu();
+        PageInfo<EduInfo> mapPageInfo = new PageInfo<>(eduInfos);
         long total = mapPageInfo.getTotal();
       //  log.info("total的值为：---->>> "+total);
         int pageNum = mapPageInfo.getPageNum();
         int pages = mapPageInfo.getPages();
         int pageSize = mapPageInfo.getPageSize();
         Map<String,Object> map = new HashMap<>();
-        map.put("list",maps);
+        map.put("list",eduInfos);
         map.put("total",total);
         map.put("pageNum",pageNum);
         map.put("pages",pages);
@@ -225,38 +220,35 @@ public class EduServiceImpl implements IEduService {
      * @param size
      * @param stuDept
      * @param stuType
-     * @param isLeave
+     * @param eduStatus
      * @return
      */
     public ResponseResult findAllByPageAndType(Integer start, Integer size,
-                                               String stuDept, String stuType, String isLeave) {
+                                               String stuDept, String stuType, String eduStatus) {
 
         //判断类型,如果为所有类型都置空
         stuDept = (stuDept.equals("所有学院")?"":stuDept);
         stuType = (stuType.equals("所有学生")?"":stuType);
-        isLeave = (isLeave.equals("所有状态")?"":isLeave);
+        eduStatus = (eduStatus.equals("所有状态")?"":eduStatus);
 
         //将请求参数放入param中
         Map<String,String> params = new HashMap<>();
         params.put("stuDept",stuDept);
         params.put("stuType",stuType);
-        params.put("isLeave",isLeave);
+        params.put("eduStatus",eduStatus);
         log.info("param ---->>> "+params);
-
-        //如果未设置显示条数，默认为5
+      /*  //如果未设置显示条数，默认为5
         if (size == 0) {
             size = 5;
         }
         List<EduInfo> eduInfos = eduMapper.listPostEdu();
         List<EduInfo> eduInfos1 = eduMapper.listNoPostEdu();
-        eduInfos.addAll(eduInfos1);
-        if (eduInfos.isEmpty()) {
-            return ResponseResult.FAILED("没有相关教务数据");
-        }
+        eduInfos.addAll(eduInfos1);*/
         //PageHelper处理分页
         //显示第start也的size条数据
         PageHelper.startPage(start,size);
        // List<Map<String, Object>> students = dormMapper.listStudentDormInfos(params);
+        List<EduInfo> eduInfos = eduMapper.listStudentEduInfos(params);
         PageInfo<EduInfo> eduInfoPageInfo = new PageInfo<>(eduInfos);
         int pageNum = eduInfoPageInfo.getPageNum();
         int pages = eduInfoPageInfo.getPages();
@@ -272,6 +264,19 @@ public class EduServiceImpl implements IEduService {
     }
 
 
+    /**
+     * 显示所有
+     * @return
+     */
+    public ResponseResult listAll(){
+        List<EduInfo> eduInfos = eduMapper.listPostEdu();
+        List<EduInfo> eduInfos1 = eduMapper.listNoPostEdu();
+
+        eduInfos.addAll(eduInfos1);
+        return ResponseResult.SUCCESS("查询成功").setData(eduInfos);
+
+
+    }
 
 
 

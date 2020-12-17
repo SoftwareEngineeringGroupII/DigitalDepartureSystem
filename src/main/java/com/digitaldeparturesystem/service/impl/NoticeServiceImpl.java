@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -84,27 +85,19 @@ public class NoticeServiceImpl implements INoticeService {
         //获取当前用户信息
         String cookie = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
         Clerk clerk = TokenUtils.parseClerkByTokenKey(redisUtils, cookie);
-        String clerkID = clerk.getClerkID();//当前用户id
+        //String clerkID = clerk.getClerkID();//当前用户id
+        String department = clerk.getDepartment();
 
-      //  List<Notice> selfNotice = noticeMapper.findSelfNotice(clerkID);
-        List<Notice> selfNotice0 = noticeMapper.findSelfNotice0(clerkID);
-        List<Notice> selfNotice2 = noticeMapper.findSelfNotice2(clerkID);
-        List<Notice> selfNotice1 = noticeMapper.findSelfNotice1(clerkID);
-        List<Notice> selfNotice3 = noticeMapper.findSelfNotice3(clerkID);
-        selfNotice0.addAll(selfNotice2);
-        selfNotice0.addAll(selfNotice1);
-        selfNotice0.addAll(selfNotice3);
-        if (selfNotice0.isEmpty()) {
-            return ResponseResult.FAILED("没有你的公告呢");
-        }
+
         PageHelper.startPage(start,size);
-        PageInfo<Notice> noticePageInfo = new PageInfo<>(selfNotice0);
+        List<Notice> notices = noticeMapper.listSelfNotice(department);
+        PageInfo<Notice> noticePageInfo = new PageInfo<>(notices);
         long total = noticePageInfo.getTotal();
         int pageNum = noticePageInfo.getPageNum();
         int pages = noticePageInfo.getPages();
         int pageSize = noticePageInfo.getPageSize();
         Map<String,Object> map = new HashMap<>();
-        map.put("list",selfNotice0);
+        map.put("list",notices);
         map.put("total",total);
         map.put("pageNum",pageNum);
         map.put("pages",pages);
@@ -158,6 +151,37 @@ public class NoticeServiceImpl implements INoticeService {
         List<Notice> list = new ArrayList<>();
         list.add(notice);
         return ResponseResult.SUCCESS().setData(list);
+
+    }
+
+    /**
+     * 标题搜索公告
+     * @param title
+     * @return
+     */
+    public ResponseResult searchNotice(HttpServletRequest request,String title,Integer start,Integer size){
+        //获取当前用户信息
+        String cookie = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
+        Clerk clerk = TokenUtils.parseClerkByTokenKey(redisUtils, cookie);
+      //  log.info("当前用户信息 === > > "+clerk.getUserRoles()+clerk.getClerkName());
+      //  String clerkID = clerk.getClerkID();
+        String department = clerk.getDepartment();
+
+        PageHelper.startPage(start,size);
+        List<Notice> notices = noticeMapper.searchNoticeByTitle(department, title);
+        PageInfo<Notice> objectPageInfo = new PageInfo<>(notices);
+        long total = objectPageInfo.getTotal();
+        int pageNum = objectPageInfo.getPageNum();
+        int pages = objectPageInfo.getPages();
+        int pageSize = objectPageInfo.getPageSize();
+        Map<String,Object> map = new HashMap<>();
+        map.put("list", notices);
+        map.put("total",total);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);
+        map.put("pageSize",pageSize);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
+
 
     }
 
@@ -277,8 +301,9 @@ public class NoticeServiceImpl implements INoticeService {
         List<Notice> notices2 = noticeMapper.RefuseNotice();
         notices.addAll(notices2);
         notices.addAll(notices1);*/
+
         PageHelper.startPage(start,size);
-        List<Notice> notices = allNotice();
+        List<Notice> notices = noticeMapper.listAllNotice();
         PageInfo<Notice> noticePageInfo = new PageInfo<>(notices);
 
         long total = noticePageInfo.getTotal();
@@ -365,16 +390,7 @@ public class NoticeServiceImpl implements INoticeService {
             size = 5;
         }
         PageHelper.startPage(start,size);
-      //  List<Notice> notices = noticeMapper.searchNotice(department);
-        List<Notice> notices = noticeMapper.searchNotice0(department);
-        List<Notice> notices2 = noticeMapper.searchNotice2(department);//拒绝
-        List<Notice> notices1 = noticeMapper.searchNotice1(department);
-        notices.addAll(notices2);
-        notices.addAll(notices1);
-
-        if (notices.isEmpty()) {
-            return ResponseResult.FAILED("没有数据");
-        }
+        List<Notice> notices = noticeMapper.listByDepartment(department);
         PageInfo<Notice> noticePageInfo = new PageInfo<>(notices);
         int pageNum = noticePageInfo.getPageNum();
         int pages = noticePageInfo.getPages();
@@ -388,6 +404,7 @@ public class NoticeServiceImpl implements INoticeService {
 
         return ResponseResult.SUCCESS("查询公告成功").setData(map);
     }
+
 
 
 

@@ -74,6 +74,11 @@
          select * from notice where checkStatus=0
     </select>
 
+    <!--排序所有的 未审核优先0,通过为1,拒绝2-->
+    <select id="listAllNotice" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where checkStatus in(0,1,2) order by checkStatus asc
+    </select>
+
     <!--已通过的公告 状态：1-->
     <select id="haveCheckNotice" resultType="com.digitaldeparturesystem.pojo.Notice">
          select * from notice where checkStatus=1
@@ -117,6 +122,21 @@
     <!--搜索公告== 已经通过==status1-->
     <select id="searchNotice1" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
         SELECT * FROM notice WHERE noticeType=#{department} AND checkStatus = 1
+    </select>
+
+    <!--排序公告==按部门分页-->
+    <select id="listByDepartment" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where noticeType=#{apartment} AND checkStatus in(0,1,2)
+    </select>
+
+    <!--按标题搜索-->
+    <select id="searchNoticeByTitle" resultType="com.digitaldeparturesystem.pojo.Notice">
+        select * from notice where noticeType=#{department} and title=#{title} and]= checkStatus in(0,1,2,3) order by checkStatus asc
+    </select>
+
+    <!--查看自己的公告-->
+    <select id="listSelfNotice" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Notice">
+         select * from notice where noticeType=#{apartment} and checkStatus in(0,1,2,3) order by checkStatus asc
     </select>
 
 

@@ -18,6 +18,8 @@ public interface EduMapper {
     //查询已经提交申请信息的学生
     List<EduInfo>listPostEdu();
 
+    List<EduInfo> listAllEdu();
+
     //查询没有提交申请信息的学生
     List<EduInfo>listNoPostEdu();
 
@@ -69,5 +71,6 @@ public interface EduMapper {
 
     String findStuCredit(String stuNumber);
 
+    List<EduInfo> listStudentEduInfos(@Param("params") Map<String,String> map);
 
 }

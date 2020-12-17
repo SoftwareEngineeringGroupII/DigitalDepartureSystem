@@ -15,9 +15,11 @@
     </select>
 
     <!--查询所有==按状态排序-->
-   <!-- <select id="listAllEdu" >
+    <select id="listAllEdu" resultType="com.digitaldeparturesystem.pojo.EduInfo">
+        SELECT s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus,m.msgStatus FROM edu e,student s,message m
+        WHERE e.stuID=s.stuID AND m.`sendID`=s.`stuID` order by msgStatus asc
+    </select>
 
-    </select>-->
     <!--查询某学生 显示列表-->
     <select id="getStudentByIdForEdu" parameterType="String" resultType="com.digitaldeparturesystem.pojo.EduInfo">
          select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus
@@ -28,8 +30,10 @@
     <!--查询没有提交申请信息的学生-->
     <select id="listNoPostEdu" resultType="com.digitaldeparturesystem.pojo.EduInfo">
         SELECT s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus FROM edu e,student s
-        WHERE e.stuID=s.stuID AND s.stuID NOT IN(SELECT sendID FROM message WHERE msgStatus=0);
+        WHERE e.stuID=s.stuID AND s.stuID NOT IN(SELECT sendID FROM message WHERE msgStatus=0)
     </select>
+
+    <!--排序教务处-->
 
     <!--根据学号查询学生的离校详情-->
     <select id="findProcess" resultType="java.util.Map">
@@ -135,6 +139,32 @@
         select stuCredit from student where stuNumber=#{stuNumber}
     </select>
 
+    <!--排序按条件分页-->
+    <select id="listStudentEduInfos" parameterType="map" resultType="com.digitaldeparturesystem.pojo.EduInfo">
+        SELECT
+        s.stuNumber,
+        s.stuName,
+        s.stuDept,
+        s.stuType,
+        e.eduStatus,
+        m.msgStatus
+        FROM
+        student s,message m
+        LEFT JOIN  edu e
+        ON s.stuID = e.stuID and m.sendID=s.stuID
+        <where>
+            <if test="params.stuDept!=null and params.stuDept!=''">
+                AND s.stuDept = #{params.stuDept}
+            </if>
+            <if test="params.stuType!=null and params.stuType!=''">
+                AND s.stuType = #{params.stuType}
+            </if>
+            <if test="params.eduStatus!=null and params.eduStatus!=''">
+                AND e.eduStatus = #{params.eduStatus}
+            </if>
+        </where>
+        order by msgStatus asc
+    </select>
 
 
 

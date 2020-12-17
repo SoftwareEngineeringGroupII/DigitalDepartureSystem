@@ -31,6 +31,8 @@ public interface NoticeMapper {
 
     List<Notice> NoCheckNotice();
 
+    List<Notice> listAllNotice();
+
     List<Notice> haveCheckNotice();
 
     List<Notice> RefuseNotice();
@@ -52,6 +54,12 @@ public interface NoticeMapper {
     List<Notice> searchNotice2(String apartment);
 
     List<Notice> searchNotice1(String apartment);
+
+    List<Notice> listByDepartment(String apartment);
+
+    List<Notice> searchNoticeByTitle(@Param("department") String department,@Param("title") String title);
+
+    List<Notice> listSelfNotice(String apartment);
 
 
 
