@@ -5,9 +5,18 @@
 
     <!--select查询语句-->
 
-    <!--提取进度信息-->
+    <!--根据进度ID展示进度-->
     <select id="showProcess" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Process">
-        select * from Process where processId=#{processId};
+        select
+        *
+        from process
+        where stuID=#{stuID};
     </select>
+    <!--添加进度-->
+    <insert id="addProcess" parameterType="com.digitaldeparturesystem.pojo.Process">
+        insert into process(processID,stuID,libStatus,cardStatus,eduStatus,financeStatus,logisticsStatus)
+        values (#{processID},#{stuID},#{libStatus},#{cardStatus},#{eduStatus},#{financeStatus},#{logisticsStatus});
+    </insert>
+
 
 </mapper>

@@ -1,12 +1,28 @@
 package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.Checkcommit;
+import com.digitaldeparturesystem.pojo.Message;
+
+import java.util.List;
 
 public interface CheckcommitMapper {
-    //新增审核
-    int addCheckcommit(Checkcommit checkcommit);
-    //保存审核
-    void saveCheckcommit(Checkcommit checkcommit);
-    //修改审核
-    int updateCheckcommit(Checkcommit checkcommit);
+    /**
+     * 提交审核
+     * @param checkcommit
+     * @return
+     */
+    void addCheckCommit(Checkcommit checkcommit);
+
+    /**
+     * 显示已提交审核
+     * @return
+     */
+    List<Checkcommit> showCheckCommit();
+
+    /**
+     * 修改审核
+     * @param checkcommit
+     * @return
+     */
+    void updateCheckcommit(Checkcommit checkcommit);
 }

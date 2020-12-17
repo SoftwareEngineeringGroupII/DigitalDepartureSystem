@@ -3,7 +3,10 @@ import com.digitaldeparturesystem.pojo.Process;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IProcessService;
+import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.service.IStudentService;
+import com.digitaldeparturesystem.service.impl.CommonServiceImpl;
+import com.digitaldeparturesystem.service.impl.ProcessServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 public class ProcessApi {
     @Autowired
     private IProcessService processService;
+
+
     /**
      * 进程审核状态
+     * @param
+     * @return
      */
-    @PostMapping("/student_process")
-    public ResponseResult showProcess(@RequestBody Process process){
-        return null;
+    @GetMapping("/process")
+    public ResponseResult showProcess(){
+        return processService.showProcess();
     }
+
+
 }

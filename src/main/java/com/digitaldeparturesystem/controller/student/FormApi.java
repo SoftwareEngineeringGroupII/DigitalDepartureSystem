@@ -8,19 +8,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
 @RequestMapping("/student")
 public class FormApi {
-    @Autowired
+    @Resource
     private IFormService formService;
     /**
      * 表单显示
      */
-    @PostMapping("/student_form")
-    public ResponseResult showForm(@RequestBody Form form){
-        return formService.showForm(form);
+    @GetMapping("/formStudent")
+    public ResponseResult showFormByStudent(){
+        return formService.showFormByStudent();
+    }
+    @GetMapping("/formProcess")
+    public ResponseResult showFormByProcess(){
+        return formService.showFormByProcess();
     }
 }
