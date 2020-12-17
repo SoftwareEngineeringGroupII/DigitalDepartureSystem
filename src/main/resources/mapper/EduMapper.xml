@@ -14,6 +14,10 @@
         WHERE e.stuID=s.stuID AND m.`sendID`=s.`stuID` AND msgStatus=0
     </select>
 
+    <!--查询所有==按状态排序-->
+   <!-- <select id="listAllEdu" >
+
+    </select>-->
     <!--查询某学生 显示列表-->
     <select id="getStudentByIdForEdu" parameterType="String" resultType="com.digitaldeparturesystem.pojo.EduInfo">
          select s.stuNumber,s.stuName,s.stuType,s.stuDept,e.eduStatus

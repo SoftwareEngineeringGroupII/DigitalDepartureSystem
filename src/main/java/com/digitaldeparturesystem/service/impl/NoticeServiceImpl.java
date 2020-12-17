@@ -277,12 +277,10 @@ public class NoticeServiceImpl implements INoticeService {
         List<Notice> notices2 = noticeMapper.RefuseNotice();
         notices.addAll(notices2);
         notices.addAll(notices1);*/
-        List<Notice> notices = allNotice();
-        if (notices.isEmpty()) {
-            return ResponseResult.FAILED("没有数据");
-        }
         PageHelper.startPage(start,size);
+        List<Notice> notices = allNotice();
         PageInfo<Notice> noticePageInfo = new PageInfo<>(notices);
+
         long total = noticePageInfo.getTotal();
         int pages = noticePageInfo.getPages();
         int pageNum = noticePageInfo.getPageNum();
@@ -375,7 +373,7 @@ public class NoticeServiceImpl implements INoticeService {
         notices.addAll(notices1);
 
         if (notices.isEmpty()) {
-            return ResponseResult.FAILED("没有相关寝室数据");
+            return ResponseResult.FAILED("没有数据");
         }
         PageInfo<Notice> noticePageInfo = new PageInfo<>(notices);
         int pageNum = noticePageInfo.getPageNum();
