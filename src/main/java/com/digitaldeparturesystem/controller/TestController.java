@@ -9,6 +9,7 @@ import com.digitaldeparturesystem.pojo.FinanceInfo;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.utils.Constants;
+import com.digitaldeparturesystem.utils.FileUtil;
 import com.digitaldeparturesystem.utils.RedisUtils;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
@@ -16,12 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -116,6 +121,59 @@ public class TestController {
             e.printStackTrace();
         }
 
+    }
+
+    @RequestMapping(value = "/batch/upload", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult handleFileUpload(@RequestParam("file") MultipartFile file) {
+        File checkFile = new File("files/");
+        if (!checkFile.exists()){
+            checkFile.mkdirs();
+        }
+        if (!file.isEmpty()) {
+            BufferedOutputStream out = null;
+            try {
+                out = new BufferedOutputStream(
+                        new FileOutputStream(new File(
+                                "files"+File.separator+file.getOriginalFilename())));
+                System.out.println(file.getName());
+                out.write(file.getBytes());
+                out.flush();
+            } catch (FileNotFoundException e) {
+                return ResponseResult.FAILED("上传失败");
+            } catch (IOException e) {
+                return ResponseResult.FAILED("上传失败");
+            }finally {
+                if (out!=null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return ResponseResult.SUCCESS("上传文件成功");
+        } else {
+            return ResponseResult.FAILED("文件为空");
+        }
+    }
+
+
+    @RequestMapping(value = "download")
+    public void download(
+            @RequestParam("fileName") String filename
+    ) throws IOException {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletResponse response = requestAttributes.getResponse();
+        // 设置信息给客户端不解析
+        String type = new MimetypesFileTypeMap().getContentType(filename);
+        // 设置contenttype，即告诉客户端所发送的数据属于什么类型
+        response.setHeader("Content-type",type);
+        // 设置编码
+        String hehe = new String(filename.getBytes("utf-8"), "iso-8859-1");
+        // 设置扩展头，当Content-Type 的类型为要下载的类型时 , 这个信息头会告诉浏览器这个文件的名字和类型。
+        response.setHeader("Content-Disposition", "attachment;filename=" + hehe);
+        FileUtil.download(filename, response);
     }
 
 

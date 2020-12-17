@@ -122,7 +122,7 @@ public class AuthorityServiceImpl implements IAuthorityService {
         if (TextUtils.isEmpty(authorityName)){
             return ResponseResult.FAILED("权限名不能为空");
         }
-        authoritiesMapper.getAuthorityByName(authorityName);
-        return null;
+        Authorities authorityByName = authoritiesMapper.getAuthorityByName(authorityName);
+        return ResponseResult.SUCCESS("查询权限成功").setData(new ArrayList<Authorities>(){{add(authorityByName);}});
     }
 }
