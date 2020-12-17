@@ -53,4 +53,6 @@ public interface ICommonService {
      * @return
      */
     ResponseResult updateUserPassword(String captcha, String captchaKey, PasswordBean passwordBean);
+
+    ResponseResult updateUserPassword(PasswordBean passwordBean);
 }

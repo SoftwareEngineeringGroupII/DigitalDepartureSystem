@@ -27,13 +27,6 @@ public interface AuthoritiesMapper {
     List<Authorities> findChildrenByParentId(String parentId);
 
     /**
-     * 查找权限，通过权限的名字
-     * @param name
-     * @return
-     */
-    Authorities findByName(String name);
-
-    /**
      * 插入权限
      * @param authorities
      */
@@ -63,4 +56,11 @@ public interface AuthoritiesMapper {
      * @param authorityId
      */
     void deleteAuthorities(String authorityId);
+
+    /**
+     * 通过姓名查找权限
+     * @param authorityName
+     * @return
+     */
+    Authorities getAuthorityByName(String authorityName);
 }

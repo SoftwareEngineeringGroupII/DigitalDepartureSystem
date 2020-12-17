@@ -45,6 +45,9 @@
         where id = #{id};
     </update>
 
+    <select id="getAuthorityByName" parameterType="java.lang.String" resultType="com.digitaldeparturesystem.pojo.Authorities">
+        select * from authorities where `name` = #{authorityName};
+    </select>
 
 
 </mapper>

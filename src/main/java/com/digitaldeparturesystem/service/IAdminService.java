@@ -85,4 +85,10 @@ public interface IAdminService {
      * @return
      */
     ResponseResult getMenuByUser(String clerkId);
+
+    /**
+     * 通过职员的name查找职员
+     * @return
+     */
+    ResponseResult getClerkByAccount(String clerkAccount);
 }

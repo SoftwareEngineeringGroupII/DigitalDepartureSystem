@@ -148,6 +148,39 @@ public class RoleServiceImpl implements IRoleService {
         return ResponseResult.SUCCESS("向角色添加权限成功");
     }
 
+    @Override
+    public ResponseResult findRoleByName(String roleName) {
+        if (TextUtils.isEmpty(roleName)){
+            return ResponseResult.FAILED("角色名不能为空");
+        }
+        Role roleFromDb = roleMapper.getRoleByName(roleName);
+        if (roleFromDb == null){
+            return ResponseResult.FAILED("没有这个角色");
+        }
+        return ResponseResult.SUCCESS("查询角色成功").setData(new ArrayList<Role>(){{add(roleFromDb);}});
+    }
+
+    @Override
+    public ResponseResult updateAuthorityToUser(String roleId, Authorities authorities) {
+        //检查数据
+        if (checkRoleIsExist(roleId, roleMapper))
+            return ResponseResult.FAILED("角色不存在");
+        //删除角色拥有的权限
+        roleAuthorityMapper.deleteAllAuthorityByRole(roleId);
+        //添加数据
+        Map<String,String> map = new HashMap<>();
+        map.put("id",String.valueOf(idWorker.nextId()));
+        map.put("roleId",roleId);
+        map.put("authorityId",authorities.getId());
+        roleAuthorityMapper.addAuthorityToRole(map);
+        for (Authorities child : authorities.getChildren()) {
+            map.put("id",String.valueOf(idWorker.nextId()));
+            map.put("roleId",roleId);
+            map.put("authorityId",child.getId());
+            roleAuthorityMapper.addAuthorityToRole(map);
+        }
+        return ResponseResult.SUCCESS("更改权限成功");
+    }
 
     private boolean checkRoleIsExist(String roleId, RoleMapper roleMapper) {
         //先从数据库中获取数据

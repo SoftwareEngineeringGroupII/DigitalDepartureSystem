@@ -43,7 +43,7 @@ public class AuthorityServiceImpl implements IAuthorityService {
         if (authorities.getIndex() == 0){
             return ResponseResult.FAILED("权限序列不能为空");
         }
-        Authorities authorityFromDB = authoritiesMapper.findByName(authorities.getName());
+        Authorities authorityFromDB = authoritiesMapper.getAuthorityByName(authorities.getName());
         if (authorityFromDB != null){
             return ResponseResult.FAILED("权限名已存在");
         }
@@ -115,5 +115,14 @@ public class AuthorityServiceImpl implements IAuthorityService {
         //查询子数据
         AuthorityTreeUtils.getChildrenToMenu(roleAuthorityMapper,authority);
         return ResponseResult.SUCCESS("查找权限成功").setData(new ArrayList<Authorities>(){{add(authority);}});
+    }
+
+    @Override
+    public ResponseResult findAuthorityByName(String authorityName) {
+        if (TextUtils.isEmpty(authorityName)){
+            return ResponseResult.FAILED("权限名不能为空");
+        }
+        authoritiesMapper.getAuthorityByName(authorityName);
+        return null;
     }
 }

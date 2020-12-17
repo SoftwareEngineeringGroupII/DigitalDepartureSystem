@@ -58,7 +58,19 @@ public class PermissionService {
             //记录
             log.info(IpUtil.getIpAddr(request) + " -- " + student.getStuNumber() + " -- " + request.getRequestURI());
             AntPathMatcher antPathMatcher = new AntPathMatcher();
-            return antPathMatcher.match("/**", request.getRequestURI());
+            Set<String> urls = new HashSet();
+            //查url
+            urls.add("/student/**");
+            urls.add("/common/**");
+            urls.add("/login/**");
+            urls.add("/logout/**");
+            for (String url : urls) {
+                if (antPathMatcher.match(url, requestURI)) {
+                    hasPermission = true;
+                    break;
+                }
+            }
+            return hasPermission;
         }else{
             //记录
             log.info(IpUtil.getIpAddr(request) + " -- " + clerkFromToken.getClerkAccount() + " -- " + request.getRequestURI());
@@ -68,11 +80,14 @@ public class PermissionService {
             Set<String> urls = new HashSet();
             //查url
             for (Authorities authorities : authorityList) {
-                urls.add(authorities.getUrl());
+                urls.add(authorities.getUrl()+"/**");
             }
+            urls.add("/common/**");
+            urls.add("/login/**");
+            urls.add("/logout/**");
             //不需要权限，都可以访问
-            //TODO:
-            urls.add("/**");
+//            //TODO:
+//            urls.add("/**");
             //匹配url，看是否可以访问此url
             for (String url : urls) {
                 if (antPathMatcher.match(url, requestURI)) {

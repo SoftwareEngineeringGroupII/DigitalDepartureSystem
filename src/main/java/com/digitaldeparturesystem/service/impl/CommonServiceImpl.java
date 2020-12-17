@@ -150,7 +150,6 @@ public class CommonServiceImpl implements ICommonService {
      * 找回密码(forget)：如果没有注册过，提示该邮箱没有注册
      * 修改邮箱（update）：如果已经注册了，提示该邮箱已经注册
      *
-     * @param type
      * @param request
      * @param emailAddress
      * @return
@@ -295,15 +294,38 @@ public class CommonServiceImpl implements ICommonService {
         return ResponseResult.SUCCESS("修改密码成功");
     }
 
-    private void updateUserPwd(String password, String userId, Map<String, String> map,String tokenKey) {
-//        //删除用户refreshToken
-//        tokenMapper.deleteAllByUserId(userId);
-//        //删除用户权限
-//        redisUtils.del(Constants.Clerk.KEY_AUTHORITY_CONTENT + userId);
-//        //删除redis中的token
-//        redisUtils.del(Constants.Clerk.KEY_TOKEN + tokenKey);
-//        //删除本地cookie
-//        CookieUtils.deleteCookie(getResponse(),Constants.Clerk.COOKIE_TOKEN_KEY);
+    public ResponseResult updateUserPassword(PasswordBean passwordBean) {
+        //当前用户
+        String tokenKey = CookieUtils.getCookie(getRequest(), Constants.Clerk.COOKIE_TOKEN_KEY);
+        Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
+        Student student;
+        Map<String,String> map = new HashMap<>();
+        //旧密码
+        String oldPwd = passwordBean.getOldPwd();
+        //新密码
+        String newPwd = passwordBean.getNewPwd();
+        if (clerkFromToken == null||clerkFromToken.getClerkID() == null){
+            student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
+            //检测旧密码
+            Student stuFromDB = studentMapper.getStudentById(student.getStuId());
+            if (!bCryptPasswordEncoder.matches(oldPwd,stuFromDB.getStuPwd())) {
+                //不一样
+                return ResponseResult.FAILED("旧密码错误");
+            }
+            map.put("stuPwd",bCryptPasswordEncoder.encode(newPwd));
+            map.put("stuID",student.getStuId());
+            studentMapper.updatePassword(map);
+        }else{
+            Clerk clerkFromDB = sectorMapper.findOneById(clerkFromToken.getClerkID());
+            if (!bCryptPasswordEncoder.matches(oldPwd,clerkFromDB.getClerkPwd())) {
+                //不一样
+                return ResponseResult.FAILED("旧密码错误");
+            }
+            map.put("clerkPwd",bCryptPasswordEncoder.encode(newPwd));
+            map.put("clerkID",clerkFromToken.getClerkID());
+            sectorMapper.updatePassword(map);
+        }
+        return ResponseResult.SUCCESS("修改密码成功");
     }
 
     private boolean checkVerifyCode(String verifyCode,String email) {

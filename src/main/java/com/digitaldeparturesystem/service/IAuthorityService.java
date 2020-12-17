@@ -39,4 +39,11 @@ public interface IAuthorityService {
      * @return
      */
     ResponseResult findAuthorityById(String authorityId);
+
+    /**
+     * 通过name查找权限
+     * @param authorityName
+     * @return
+     */
+    ResponseResult findAuthorityByName(String authorityName);
 }
