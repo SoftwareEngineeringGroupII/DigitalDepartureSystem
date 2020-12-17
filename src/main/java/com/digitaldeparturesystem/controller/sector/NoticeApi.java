@@ -24,7 +24,7 @@ public class NoticeApi {
     @Autowired
     private INoticeService noticeService;
 
-  /*  *//**
+    /**
      * 公共页面显示
      * @return
      *//*

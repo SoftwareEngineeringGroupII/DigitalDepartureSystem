@@ -7,20 +7,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
 @RequestMapping("/student")
 public class DetailsApi {
-    @Autowired
+    @Resource
     private IDetailsService detailsService;
 
     /**
      * 显示学生个人信息
      */
-    @PostMapping("/student_details")
-    public ResponseResult showDetails(@RequestBody Student student) {
-        return detailsService.showStuDetails(student);
+    @GetMapping("/details")
+    public ResponseResult showDetails() {
+        return detailsService.showDetails();
     }
 }

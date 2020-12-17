@@ -6,9 +6,9 @@
     <!--select查询语句-->
 
     <!--对象中的属性可以换直接取出来-->
-    <insert id="addClerk" parameterType="java.lang.String">
-        insert into checkcommit (stuId,reason,type)
-        values(#{stuId},#{reason},#{type});
+    <insert id="addCheckCommit" parameterType="com.digitaldeparturesystem.pojo.Checkcommit">
+        insert into checkcommit (checkID,stuID,reason,commitdate,type)
+        values(#{checkID},#{stuID},#{reason},#{commitdate},#{type});
     </insert>
     <update id="updateCheckcommit" parameterType="java.lang.String">
         update checkcommit set
@@ -17,5 +17,8 @@
         `type` = #{type}
         where checkId = #{checkId};
     </update>
+    <select id="showCheckCommit" resultType="com.digitaldeparturesystem.pojo.Checkcommit">
+        select * from checkcommit;
+    </select>
 
 </mapper>

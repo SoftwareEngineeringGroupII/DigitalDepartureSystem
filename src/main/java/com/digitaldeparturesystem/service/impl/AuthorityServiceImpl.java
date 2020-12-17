@@ -43,10 +43,6 @@ public class AuthorityServiceImpl implements IAuthorityService {
         if (authorities.getIndex() == 0){
             return ResponseResult.FAILED("权限序列不能为空");
         }
-        Authorities authorityFromDB = authoritiesMapper.getAuthorityByName(authorities.getName());
-        if (authorityFromDB != null){
-            return ResponseResult.FAILED("权限名已存在");
-        }
         //补充数据
         authorities.setId(String.valueOf(idWorker.nextId()));
         authorities.setAvailable(1);

@@ -6,5 +6,9 @@ import com.digitaldeparturesystem.response.ResponseResult;
 import java.util.ResourceBundle;
 
 public interface IDetailsService {
-    ResponseResult showStuDetails(Student student);
+    /**
+     * 获取学生个人信息
+     * @return
+     */
+    ResponseResult showDetails();
 }

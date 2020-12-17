@@ -22,7 +22,7 @@
         department = #{department},
         clerkAccount = #{clerkAccount},
         clerkPhoto = #{clerkPhoto},
-        clerkStatus = #{clerkStatus},edu
+        clerkStatus = #{clerkStatus},
         clerkEmail = #{clerkEmail}
         where clerkID = #{clerkID};
     </update>

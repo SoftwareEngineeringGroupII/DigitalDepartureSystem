@@ -1,33 +1,61 @@
 package com.digitaldeparturesystem.controller.student;
+import com.digitaldeparturesystem.mapper.MessageMapper;
 import com.digitaldeparturesystem.pojo.Message;
-import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IMessageService;
-import com.digitaldeparturesystem.service.IStudentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
 
 @Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/student")
 public class MessageApi {
-    @Autowired
+    @Resource
     private IMessageService messageService;
+    @Resource
+    private MessageMapper messageMapper;
     /**
-     * 发布反馈
+     * 发布信息
      */
-    @PostMapping("/student_message")
-    public ResponseResult initMessage(@RequestBody Message message){
+    @PostMapping("/sendMessage")
+    public ResponseResult sendMessage(@RequestBody Message message){
         log.info("message title -->" + message.getTitle());
         log.info("message content -->" + message.getContent());
         log.info("message date -->" + message.getMessagedate());
-        return messageService.initMessage(message);
+        return messageService.sendMessage(message);
     }
     /**
-     * 删除反馈
+     * 删除信息
+     * @return
      */
-    public ResponseResult deleteMessage(@RequestBody Message message){return null;}
+    @PostMapping("/deletemessage")
+    public ResponseResult deleteMessage(String messageID){
+        return messageService.deleteMessage(messageID);
+    }
+
+    /**
+     * 重新发送审核
+     */
+    @PostMapping("/ReSendMessage")
+    public ResponseResult ResendMessage(@RequestBody Message message){
+        return messageService.reSendMessage(message);
+    }
+    /**
+     * 获取已读信息数据
+     * @return
+     */
+    @GetMapping("/showmessageRead")
+    public ResponseResult showMessageRead(){
+        return messageService.showMessageRead();
+    }
+    /**
+     * 获取未读信息数据
+     */
+    @GetMapping("/showmessageUnread")
+    public ResponseResult showMessageUnRead(){
+        return messageService.showMessageUnRead();
+    }
 }

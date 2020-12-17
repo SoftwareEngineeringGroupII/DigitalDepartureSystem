@@ -5,7 +5,7 @@ import com.digitaldeparturesystem.pojo.Student;
 public interface DetailMapper {
     /**
      * 展示学生信息
-     * @param student
+     * @param
      */
-    void showDetails(Student student);
+    Student showDetails(String stuID);
 }

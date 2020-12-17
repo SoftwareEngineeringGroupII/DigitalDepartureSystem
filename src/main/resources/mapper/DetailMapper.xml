@@ -5,9 +5,10 @@
 
     <!--select查询语句-->
 
-    <!--对象中的属性可以换直接取出来-->
-    <select id="showDetails" resultType="com.digitaldeparturesystem.pojo.Student">
-        select * from student;
+    <!--按学号查找学生个人信息-->
+    <select id="showDetails" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Student">
+        select * from student where stuID=#{stuID};
     </select>
+
 
 </mapper>
