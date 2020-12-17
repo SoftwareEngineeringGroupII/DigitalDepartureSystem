@@ -2,8 +2,11 @@ package com.digitaldeparturesystem.service;
 
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.ParseException;
 
 public interface INoticeService {
@@ -29,7 +32,13 @@ public interface INoticeService {
 
     ResponseResult continueNotice(String noticeID);
 
+    ResponseResult  searchNoticeByTitle(HttpServletRequest request,String title,Integer start,Integer size);
+
     ResponseResult draftNotice(HttpServletRequest request,Notice notice);
 
     ResponseResult searchNotice(String department,Integer start,Integer size);
+
+    ResponseResult handleFileUpload(@RequestParam("file") MultipartFile file);
+
+    void download(String filename) throws IOException;
 }

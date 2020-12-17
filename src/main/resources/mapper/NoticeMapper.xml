@@ -4,8 +4,8 @@
 
     <!--添加公告-->
     <insert id="save" parameterType="com.digitaldeparturesystem.pojo.Notice">
-        insert into notice(noticeID,content,title,publisherId,publishTime,checkStatus,remark,noticeType,isTop)
-        values(#{noticeID},#{content},#{title},#{publisherId},#{publishTime},#{checkStatus},#{remark},#{noticeType},#{isTop});
+        insert into notice(noticeID,content,title,publisherId,publishTime,checkStatus,remark,noticeType,isTop,path)
+        values(#{noticeID},#{content},#{title},#{publisherId},#{publishTime},#{checkStatus},#{remark},#{noticeType},#{isTop},#{path});
     </insert>
 
     <!--删除公告-->
@@ -131,7 +131,7 @@
 
     <!--按标题搜索-->
     <select id="searchNoticeByTitle" resultType="com.digitaldeparturesystem.pojo.Notice">
-        select * from notice where noticeType=#{department} and title=#{title} and]= checkStatus in(0,1,2,3) order by checkStatus asc
+        select * from notice where noticeType=#{department} and title=#{title} and checkStatus in(0,1,2,3) order by checkStatus asc
     </select>
 
     <!--查看自己的公告-->
