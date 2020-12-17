@@ -8,6 +8,32 @@
       FROM student s,book b ,lib l WHERE s.`stuID`=b.`stuID` AND l.`stuID`=b.`stuID` GROUP BY l.`stuID`,l.libStatus
     </select>
 
+    <!--按条件分页查询-->
+    <select id="listStudentLibInfos" parameterType="java.util.Map" resultType="com.digitaldeparturesystem.pojo.LibInfo">
+        SELECT
+        s.stuNumber,
+        s.stuName,
+        s.stuDept,
+        s.stuType,
+        count(*) AS allbook,
+        l.libStatus,
+        FROM
+        student s
+        LEFT JOIN lib l,book b
+        ON s.stuID = b.stuID and l.stuID=b.stuID
+        <where>
+            <if test="params.stuDept!=null and params.stuDept!=''">
+                AND s.stuDept = #{params.stuDept}
+            </if>
+            <if test="params.stuType!=null and params.stuType!=''">
+                AND s.stuType = #{params.stuType}
+            </if>
+            <if test="params.financeStatus!=null and params.financeStatus!=''">
+                AND f.financeStatus = #{params.financeStatus }
+            </if>
+        </where>
+    </select>
+
     <!--查询某个学生存在-->
     <select id="findStuLibrary" parameterType="String" resultType="com.digitaldeparturesystem.pojo.LibInfo">
          SELECT s.`stuNumber`,s.`stuName`,s.`stuDept`,s.`stuType`,COUNT(*) AS allBook,l.`libStatus`

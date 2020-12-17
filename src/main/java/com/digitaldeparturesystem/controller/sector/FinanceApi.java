@@ -2,6 +2,7 @@ package com.digitaldeparturesystem.controller.sector;
 
 import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.pojo.Finance;
+import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IFinanceService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -47,7 +49,7 @@ public class FinanceApi {
      * @param financeStatus
      * @return
      */
-    @GetMapping("/selectAllByPageAndType2/{start}/{size}")
+    @GetMapping("/selectAllByPageAndType/{start}/{size}")
     public  ResponseResult selectAllByPageAndType2(@PathVariable("start")Integer start, @PathVariable("size")Integer size,
                                                   @RequestParam String stuDept,@RequestParam String stuType,
                                                   @RequestParam String financeStatus){
@@ -124,7 +126,6 @@ public class FinanceApi {
     public ResponseResult findAllByPage(@RequestParam("start")Integer start,@RequestParam("size") Integer size){
         return financeService.findAllByPage(start,size);
     }
-
 
 
 

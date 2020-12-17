@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.controller.sector;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
+import com.digitaldeparturesystem.service.INoticeService;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.google.gson.internal.$Gson$Preconditions;
 import lombok.extern.slf4j.Slf4j;
@@ -21,59 +22,83 @@ import java.io.IOException;
 public class NoticeApi {
 
     @Autowired
-    private ISectorService sectorService;
+    private INoticeService noticeService;
 
-    @Autowired
-    private ICardService cardService;
+  /*  *//**
+     * 公共页面显示
+     * @return
+     *//*
+    @GetMapping("/viewByAllPeople")
+    public ResponseResult viewAllByPeople() throws Exception{
+        return noticeService.viewByAllPeople();
+    }
+*/
+
     /**
-     * 上传公告
-     * 识别上传公告人权限,ID,发布类型,
-     * @param notice
-     * @param photo
+     *  查看公告详情
+     * @param noticeID
      * @return
      */
-    @PostMapping("/notice")
-    public ResponseResult uploadNotice(@RequestBody Notice notice, MultipartFile photo,HttpServletRequest request,HttpServletResponse response) throws IOException {
+    @GetMapping("/viewNoticeDetails/{noticeID}")
+    public ResponseResult viewNoticeDetails(@PathVariable("noticeID") String noticeID){
+        return noticeService.viewNoticeDetail(noticeID);
+    }
 
-        return cardService.uploadNotice(notice,photo,request,response);
+
+    /**
+     * 上传notice
+     * @param notice
+     * @return
+     */
+    @PostMapping("/upload")
+    public ResponseResult uploadNotice(HttpServletRequest request, @RequestBody Notice notice){
+        return noticeService.uploadNotice(request,notice);
+    }
+
+    /**
+     * 分页查询自己的公告
+     * @param request
+     * @param start
+     * @param size
+     * @return
+     */
+    @GetMapping("/findSelfNotice/{start}/{size}")
+    public ResponseResult findSelfNotice(HttpServletRequest request,
+                                             @PathVariable("start")Integer start,
+                                             @PathVariable("size")Integer size){
+        return noticeService.findSelfNotice(request,start,size);
+    }
+
+    /**
+     * 保存至草稿箱
+     * @param request
+     * @param notice
+     * @return
+     */
+    @PostMapping("/draftNotice")
+    public ResponseResult draftNotice(HttpServletRequest request,Notice notice){
+        return noticeService.draftNotice(request,notice);
+    }
+
+    /**
+     * 继续编辑公告
+     * @param noticeID
+     * @return
+     */
+    @GetMapping("/continueNotice")
+    public ResponseResult continueNotice(String noticeID){
+        return noticeService.continueNotice(noticeID);
     }
 
     /**
      * 删除公告
-     * @param noticeId
+     * @param noticeID
      * @return
      */
-    @DeleteMapping("/{noticeId}")
-    public ResponseResult deleteNotice(@PathVariable("noticeId")String noticeId){
-        return null;
+    @GetMapping("/deleteNotice/{noticeID}")
+    public ResponseResult deleteNotice(@PathVariable("noticeID") String noticeID){
+        return  noticeService.deleteNotice(noticeID);
     }
 
-    /**
-     * 得到某一个公告
-     * @param noticeId
-     * @return
-     */
-    @GetMapping("/{noticeId}")
-    public ResponseResult getNoticeById(@PathVariable("noticeId")String noticeId){
-        return null;
-    }
 
-    /**
-     * 得到全部公告
-     * @return
-     */
-    @GetMapping()
-    public ResponseResult getAllNotices(){
-        return null;
-    }
-
-    /**
-     * 置顶公告
-     * @param articleId
-     * @return
-     */
-    @PostMapping("/top/{noticeId}")
-    public ResponseResult topNotice(@PathVariable("noticeId")String articleId){
-        return null;
-    }
 }

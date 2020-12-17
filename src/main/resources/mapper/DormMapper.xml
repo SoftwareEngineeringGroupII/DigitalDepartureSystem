@@ -9,7 +9,7 @@
           s.stuNumber,
           s.stuName,
           s.stuType,
-          s.apartmentNum,
+          s.stuDept,
           d.dormName,
           d.dormNumber
           FROM

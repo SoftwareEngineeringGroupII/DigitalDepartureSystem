@@ -22,6 +22,9 @@ public interface IEduService {
 
     ResponseResult doCheckForEduPass(String stuNumber);
 
+    ResponseResult findAllByPageAndType(Integer start, Integer size,
+                                        String stuDept, String stuType, String isLeave);
+
    // ResponseResult testSelectAll();
 
 

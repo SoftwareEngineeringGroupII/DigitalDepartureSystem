@@ -166,7 +166,8 @@ public class EduServiceImpl implements IEduService {
         eduMapper.setMessage(stuNumber,message1);
         */
         //写法二：覆盖内容,并且设置审核信息状态1
-        eduMapper.setMessage(stuNumber,content,title);
+        Date time = new Date();
+        eduMapper.setMessage(stuNumber,content,title,time);
         return ResponseResult.SUCCESS("拒绝成功");
     }
 
@@ -198,7 +199,8 @@ public class EduServiceImpl implements IEduService {
             return ResponseResult.FAILED("学分不达要求,不能通过审核");
         }
         //设置message状态
-        eduMapper.setMessage(stuNumber,"已通过离校申请","教务处");
+        Date time = new Date();
+        eduMapper.setMessage(stuNumber,"已通过离校申请","教务处",time);
         //设置edu状态
         eduMapper.setProcessEdu(stuNumber);
         //设置process的edu状态
@@ -216,6 +218,59 @@ public class EduServiceImpl implements IEduService {
         maps.addAll(maps1);
         return ResponseResult.SUCCESS().setData(maps);
     }*/
+
+    /**
+     * 按条件分页查询教务处 ==
+     * @param start
+     * @param size
+     * @param stuDept
+     * @param stuType
+     * @param isLeave
+     * @return
+     */
+    public ResponseResult findAllByPageAndType(Integer start, Integer size,
+                                               String stuDept, String stuType, String isLeave) {
+
+        //判断类型,如果为所有类型都置空
+        stuDept = (stuDept.equals("所有学院")?"":stuDept);
+        stuType = (stuType.equals("所有学生")?"":stuType);
+        isLeave = (isLeave.equals("所有状态")?"":isLeave);
+
+        //将请求参数放入param中
+        Map<String,String> params = new HashMap<>();
+        params.put("stuDept",stuDept);
+        params.put("stuType",stuType);
+        params.put("isLeave",isLeave);
+        log.info("param ---->>> "+params);
+
+        //如果未设置显示条数，默认为5
+        if (size == 0) {
+            size = 5;
+        }
+        List<EduInfo> eduInfos = eduMapper.listPostEdu();
+        List<EduInfo> eduInfos1 = eduMapper.listNoPostEdu();
+        eduInfos.addAll(eduInfos1);
+        if (eduInfos.isEmpty()) {
+            return ResponseResult.FAILED("没有相关教务数据");
+        }
+        //PageHelper处理分页
+        //显示第start也的size条数据
+        PageHelper.startPage(start,size);
+       // List<Map<String, Object>> students = dormMapper.listStudentDormInfos(params);
+        PageInfo<EduInfo> eduInfoPageInfo = new PageInfo<>(eduInfos);
+        int pageNum = eduInfoPageInfo.getPageNum();
+        int pages = eduInfoPageInfo.getPages();
+        long total = eduInfoPageInfo.getTotal();//获取记录总数
+
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("list",eduInfos);
+        map.put("pageNum",pageNum);
+        map.put("pages",pages);
+        map.put("total",total);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
+
+    }
+
 
 
 

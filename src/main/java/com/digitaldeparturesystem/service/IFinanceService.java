@@ -5,6 +5,7 @@ import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Map;
 public interface IFinanceService {
 
     //上传公告
-    ResponseResult uploadNotice(Notice notice, MultipartFile photo);
+   // ResponseResult uploadNotice(Notice notice, MultipartFile photo);
 
     //根据学号查询学生财务信息
     ResponseResult getStudentByIdForFinance(String studentId);
@@ -41,6 +42,13 @@ public interface IFinanceService {
 
     //分页查询所有
     ResponseResult findAllByPage(Integer start,Integer size);
+
+   /* ResponseResult uploadNotice(HttpServletRequest request, Notice notice);
+
+    ResponseResult findSelfNotice(HttpServletRequest request,Integer start,Integer size);
+
+    ResponseResult viewByAllPeople();*/
+
 
 
 

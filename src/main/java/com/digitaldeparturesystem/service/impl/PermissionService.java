@@ -64,7 +64,7 @@ public class PermissionService {
             urls.add("/common/**");
             urls.add("/login/**");
             urls.add("/logout/**");
-//            urls.add("/**");
+            urls.add("/**");
             for (String url : urls) {
                 if (antPathMatcher.match(url, requestURI)) {
                     hasPermission = true;
@@ -86,7 +86,7 @@ public class PermissionService {
             urls.add("/common/**");
             urls.add("/login/**");
             urls.add("/logout/**");
-//            urls.add("/**");
+            urls.add("/**");
             //不需要权限，都可以访问
 //            //TODO:
 //            urls.add("/**");

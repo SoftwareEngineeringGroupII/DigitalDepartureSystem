@@ -63,7 +63,7 @@ public interface EduMapper {
 
     void setMessage1(@Param("stuNumber") String stuNumber,@Param("message") Message message);
 
-    void setMessage(@Param("stuNumber") String stuNumber,@Param("content") String content,@Param("title") String title);
+    void setMessage(@Param("stuNumber") String stuNumber,@Param("content") String content,@Param("title") String title,@Param("time")Date time);
 
     void setStuOutDate(@Param("stuNumber") String stuNumber,@Param("date") Date date);
 
