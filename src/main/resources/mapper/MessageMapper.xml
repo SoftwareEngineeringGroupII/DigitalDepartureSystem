@@ -39,10 +39,10 @@
         select id from role where name = #{name};
     </select>
     <select id="findMessageBySendId" resultType="com.digitaldeparturesystem.pojo.Message">
-        select * from message where sendID = #{stuId};
+        select * from message where sendID = #{stuNumber};
     </select>
     <select id="findMessageByRecvId" resultType="com.digitaldeparturesystem.pojo.Message">
-        select * from message where receiveID = #{stuId};
+        select * from message where receiveID = #{stuNumber};
     </select>
 
     <!--  <insert id="saveMessage" parameterType="com.digitaldeparturesystem.pojo.Message">

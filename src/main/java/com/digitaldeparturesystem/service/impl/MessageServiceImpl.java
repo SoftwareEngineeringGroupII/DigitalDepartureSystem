@@ -127,10 +127,10 @@ public class MessageServiceImpl implements IMessageService {
 
         //根据学生id查sendid
         Message messageFromDB = null;
-        messageFromDB = messageMapper.findMessageBySendId(student.getStuId());
+        messageFromDB = messageMapper.findMessageBySendId(student.getStuNumber());
         if (messageFromDB == null){
             //sendid没查到，查revId
-            messageFromDB = messageMapper.findMessageByRecvId(student.getStuId());
+            messageFromDB = messageMapper.findMessageByRecvId(student.getStuName());
             if (messageFromDB == null){
                 //无消息，可插入
                 if (TextUtils.isEmpty(message.getContent())){

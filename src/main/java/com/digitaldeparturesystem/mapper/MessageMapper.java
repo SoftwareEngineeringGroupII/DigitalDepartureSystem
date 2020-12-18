@@ -48,7 +48,7 @@ public interface MessageMapper {
      */
     void setMessage(String messageId, @Param("title") String  title,@Param("content") String content);
 
-    Message findMessageBySendId(String stuId);
+    Message findMessageBySendId(String stuNumber);
 
-    Message findMessageByRecvId(String stuId);
+    Message findMessageByRecvId(String stuNumber);
 }
