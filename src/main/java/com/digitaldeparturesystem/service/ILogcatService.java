@@ -1,9 +1,15 @@
 package com.digitaldeparturesystem.service;
 
+import com.digitaldeparturesystem.pojo.LogSearchCondition;
 import com.digitaldeparturesystem.response.ResponseResult;
 
 public interface ILogcatService {
 
-    ResponseResult getLogs();
-
+    /**
+     * 获取用户的日志
+     * @param account
+     * @param condition
+     * @return
+     */
+    ResponseResult getLogs(String account, LogSearchCondition condition);
 }

@@ -1,6 +1,9 @@
 package com.digitaldeparturesystem.mapper;
 
+import com.digitaldeparturesystem.pojo.LogSearchCondition;
+import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICommonService;
+import com.digitaldeparturesystem.service.ILogcatService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +21,9 @@ public class CommonApi {
     @Resource
     private ICommonService commonService;
 
+    @Resource
+    private ILogcatService logcatService;
+
     @Test
     public void sendVerify(){
 //        System.out.println(commonService.sendEmail("forget", getRequest(), "1584677103@qq.com").getData());
@@ -32,6 +38,14 @@ public class CommonApi {
     private HttpServletRequest getRequest(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return requestAttributes.getRequest();
+    }
+
+    @Test
+    public void getLogs(){
+        LogSearchCondition condition = new LogSearchCondition();
+        condition.setKeyWord("debug");
+        ResponseResult logs = logcatService.getLogs("2018110427", condition);
+        System.out.println(logs.getData());
     }
 
 }
