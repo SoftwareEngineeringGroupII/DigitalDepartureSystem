@@ -11,7 +11,7 @@ public class CookieUtils {
 
     //TODO:修改服务器的ip
     private static final String domain = "localhost";
-//    private static final String domain = "192.168.172.131";
+//    private static final String domain = "139.9.205.50";
 
 
     /**

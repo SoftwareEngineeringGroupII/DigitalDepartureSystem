@@ -1,11 +1,18 @@
 package com.digitaldeparturesystem.controller.common;
 
+import com.digitaldeparturesystem.pojo.Clerk;
+import com.digitaldeparturesystem.pojo.LogSearchCondition;
 import com.digitaldeparturesystem.pojo.PasswordBean;
+import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICommonService;
+import com.digitaldeparturesystem.service.ILogcatService;
 import com.digitaldeparturesystem.service.ISectorService;
 import com.digitaldeparturesystem.service.IStudentService;
+import com.digitaldeparturesystem.utils.Constants;
+import com.digitaldeparturesystem.utils.CookieUtils;
 import com.digitaldeparturesystem.utils.RedisUtils;
+import com.digitaldeparturesystem.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +38,9 @@ public class CommonApi {
 
     @Resource
     private RedisUtils redisUtils;
+
+    @Resource
+    private ILogcatService logcatService;
 
     @GetMapping("/menu")
     public ResponseResult getMenu(){
@@ -121,6 +131,23 @@ public class CommonApi {
                                          @RequestParam("email") String emailAddress) {
         log.info("email ==> " + emailAddress);
         return commonService.sendEmail(request,emailAddress);
+    }
+
+    @GetMapping("/logs")
+    public ResponseResult getLogs(HttpServletRequest request, @RequestBody LogSearchCondition condition){
+        String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
+        Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
+        if (clerkFromToken == null||clerkFromToken.getClerkID() == null){
+            //不为职员
+            Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
+            if (student == null){//不是学生
+                return ResponseResult.FAILED("没有改用户的日志信息");
+            }
+            return logcatService.getLogs(student.getStuNumber(),condition);
+        }else{
+            //是职员
+            return logcatService.getLogs(clerkFromToken.getClerkAccount(),condition);
+        }
     }
 
 }

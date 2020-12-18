@@ -11,7 +11,6 @@ public class ElasticSearchClientConfig {
 
     @Bean
     public RestHighLevelClient restHighLevelClient(){
-        //连接服务器的ES
         RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(
                         new HttpHost("139.9.205.50",9200,"http")
