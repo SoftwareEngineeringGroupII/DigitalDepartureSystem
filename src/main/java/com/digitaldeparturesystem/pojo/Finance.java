@@ -1,46 +1,46 @@
 package com.digitaldeparturesystem.pojo;
 
 
-//import cn.afterturn.easypoi.excel.annotation.Excel;
-
 public class Finance {
 
- // @Excel(name = "财务主键")
-  private String financeId;
+  private String financeID;
 
-  //@Excel(name = "学生ID")
-  private String stuId;
+  private String stuID;
 
-  //@Excel(name = "应缴费")
-  private long expense;
+  private double expense;
 
-  //@Excel(name = "缴费情况")
   private String financeStatus;
 
+  private double dorm;
 
-  public String getFinanceId() {
-    return financeId;
+  private double card;
+
+  private double lib;
+
+
+  public String getFinanceID() {
+    return financeID;
   }
 
-  public void setFinanceId(String financeId) {
-    this.financeId = financeId;
-  }
-
-
-  public String getStuId() {
-    return stuId;
-  }
-
-  public void setStuId(String stuId) {
-    this.stuId = stuId;
+  public void setFinanceID(String financeID) {
+    this.financeID = financeID;
   }
 
 
-  public long getExpense() {
+  public String getStuID() {
+    return stuID;
+  }
+
+  public void setStuID(String stuID) {
+    this.stuID = stuID;
+  }
+
+
+  public double getExpense() {
     return expense;
   }
 
-  public void setExpense(long expense) {
+  public void setExpense(double expense) {
     this.expense = expense;
   }
 
@@ -51,6 +51,33 @@ public class Finance {
 
   public void setFinanceStatus(String financeStatus) {
     this.financeStatus = financeStatus;
+  }
+
+
+  public double getDorm() {
+    return dorm;
+  }
+
+  public void setDorm(double dorm) {
+    this.dorm = dorm;
+  }
+
+
+  public double getCard() {
+    return card;
+  }
+
+  public void setCard(double card) {
+    this.card = card;
+  }
+
+
+  public double getLib() {
+    return lib;
+  }
+
+  public void setLib(double lib) {
+    this.lib = lib;
   }
 
 }

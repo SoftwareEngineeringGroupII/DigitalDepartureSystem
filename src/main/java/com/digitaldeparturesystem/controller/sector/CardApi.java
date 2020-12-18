@@ -66,8 +66,8 @@ public class CardApi {
 
     @PostMapping("/checkCard/{stuNumber}")
     public ResponseResult  getCheck(@PathVariable("stuNumber") String stuNumber){
+        return cardService.checkCard(stuNumber);
 
-        return cardService.doCheckForCard(stuNumber);
     }
 
 

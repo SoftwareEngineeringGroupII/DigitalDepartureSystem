@@ -4,15 +4,17 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.EduMapper;
 import com.digitaldeparturesystem.mapper.LibraryMapper;
-import com.digitaldeparturesystem.pojo.FinanceInfo;
-import com.digitaldeparturesystem.pojo.LibInfo;
-import com.digitaldeparturesystem.pojo.Student;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ILibraryService;
+import com.digitaldeparturesystem.utils.IdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.internal.$Gson$Preconditions;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.StringValue;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service  //图书馆
@@ -36,6 +35,9 @@ public class LibraryServiceImpl implements ILibraryService {
 
     @Resource
     private EduMapper eduMapper;
+
+    @Autowired
+    private IdWorker idWorker;
 
     /**
      * 分页查询所有
@@ -100,21 +102,22 @@ public class LibraryServiceImpl implements ILibraryService {
      */
     public ResponseResult checkLibrary(String stuNumber,String bookId){
         //根据学号和图书id审核某一本书
-        int i = libraryMapper.checkLibrary(stuNumber, bookId);
+        libraryMapper.checkLibrary(stuNumber, bookId);
         //如果确认归还成功
-        if (i > 0){
-            //此本书审核成功后
-            //如果查询该学生需要还书的数量为0,那么将此学生的图书馆状态设置为1
-            if (libraryMapper.needReturn(stuNumber)==0) {
+        //此本书审核成功后
+        //如果查询该学生需要还书的数量为0,将此学生的图书馆状态设置为1
+        if (libraryMapper.needReturn(stuNumber)==0) {
                 //这里加条件,并且已经上传自己的毕业论文
-                if ("1".equals(libraryMapper.findPaper(stuNumber))) {
-                    libraryMapper.changeStatus(stuNumber);
+            if ("1".equals(libraryMapper.findPaper(stuNumber))) {
+                    //修改图书馆的总审核状态
+                libraryMapper.changeStatus(stuNumber);
                     //审核成功后设置离校流程表libStatus
-                     eduMapper.setLibStatus(stuNumber);
-                }
+                eduMapper.setLibStatus(stuNumber);
+                    //向学生端发送审核最新信息
+                sendMessageForLib(stuNumber);
             }
-            //返回审核成功
-            return ResponseResult.SUCCESS("审核成功！");
+              //返回审核成功
+             return ResponseResult.SUCCESS("审核成功！");
         }
         return ResponseResult.FAILED("审核失败！请重新操作");
     }
@@ -198,6 +201,123 @@ public class LibraryServiceImpl implements ILibraryService {
     }
 
 
+    /**
+     * 检书,设置其需要缴费
+     * @param degree 损坏程度
+     * @param bookId
+     * @return
+     */
+    public void updateBookPay(String degree,String bookId){
+        double zhe;
+        if ("未损坏".equals(degree)) {
+            zhe=0;
+            libraryMapper.updateBookPay(zhe,bookId);
+        }
+        if ("一般损坏".equals(degree)){
+            zhe=0.2;
+            libraryMapper.updateBookPay(zhe,bookId);
+        }
+        if ("严重损坏".equals(degree)) {
+            zhe=0.7;
+            libraryMapper.updateBookPay(zhe,bookId);
+        }
+        if ("图书丢失".equals(degree)){
+            zhe=1;
+            libraryMapper.updateBookPay(zhe,bookId);
+        }
+        //return ResponseResult.SUCCESS("设置成功");
+    }
+
+
+
+    /**
+     * 汇总总计罚款图书以及需缴费
+     * @return
+     */
+    public ResponseResult sumPayForLib(String stuNumber){
+        List<Book> books = libraryMapper.sumPayBook(stuNumber);//所有书
+        Double sumPay = libraryMapper.sumPayForLib(stuNumber);//总计多少钱
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",books);
+        map.put("total",sumPay);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
+    }
+
+    /**
+     * 图书馆审核完后向学生发送消息 == 图书馆审核详情欠费详情
+     * @param stuNumber
+     * @return
+     */
+    public void sendMessageForLib(String stuNumber){
+        Message message = new Message();
+        List<Book> books = libraryMapper.sumPayBook(stuNumber);
+        StringBuilder details = new StringBuilder();
+        for (Book book : books) {
+            String bookName = book.getBookName();
+            double pay = book.getPay();
+            details.append(" 书名：").append(bookName).append(" 应缴费：").append(pay).append("\n");
+        }
+        Double sumPayForLib = libraryMapper.sumPayForLib(stuNumber);
+        //如果没有要缴费的书
+        if (books.isEmpty()){
+            //向学生端发送一个审核通过信息
+            message.setContent("图书馆审核已通过..");
+        }else {
+            message.setContent(details.toString()+'\n'+"总计："+sumPayForLib+'\n'+"请到财务处进行缴费"+'\n');
+        }
+        message.setTitle("图书管审核通知");
+        message.setMessageID(idWorker.nextId()+"");
+        message.setMsgStatus("1");//默认为1,学生端查看
+        message.setSendID(libraryMapper.findStuIDByNumber(stuNumber));
+        message.setReceiveID("图书馆");
+        message.setMessagedate(new Date());
+        //保存到数据库
+        libraryMapper.sendMessageByLib(message);
+    }
+
+
+    /**
+     * 图书馆审核书 == 新
+     * @param stuNumber
+     * @param bookId
+     * @param degree
+     * @return
+     */
+    public ResponseResult checkLibStatus(String stuNumber,String bookId,String degree){
+          //审核者一本书损坏程度,该如何计算罚款==
+          updateBookPay(degree,bookId);
+          libraryMapper.checkLibrary(stuNumber,bookId);//修改该本书状态==1
+          //这本书审核完后查询该学生还书数量为0,换清书
+        if (libraryMapper.needReturn(stuNumber)==0) {
+            //并且已经上传自己的论文
+            if ("1".equals(libraryMapper.findPaper(stuNumber))) {
+                //修改图书馆的总审核状态
+                libraryMapper.changeStatus(stuNumber);
+                //审核成功后设置离校流程表libStatus
+                eduMapper.setLibStatus(stuNumber);
+                //将应缴费设置到财务处
+                libraryMapper.updateFinanceBook(stuNumber);
+                //向学生端发送审核最新信息
+                sendMessageForLib(stuNumber);
+                return ResponseResult.SUCCESS("图书馆审核通过");
+            }else {
+                return ResponseResult.FAILED("还未上传论文,不可以通过");
+            }
+        }
+        return ResponseResult.SUCCESS("该本书通过检查审核");
+    }
+
+
+    /**
+     * 弹出某本书详情框
+     * @return
+     */
+    public ResponseResult detailForBook(String bookID){
+        Book book = libraryMapper.detailBook(bookID);
+        List<Book> details = new ArrayList<>();
+        details.add(book);
+        return ResponseResult.SUCCESS("查看这本详情").setData(details);
+    }
 
 
 

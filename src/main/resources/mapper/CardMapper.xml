@@ -91,6 +91,26 @@
         select * from student where stuNumber=#{stuNumber}
     </select>
 
+    <!--注销一卡通后将余额打到财务处账户-->
+    <update id="cardForFinance" parameterType="String">
+        UPDATE finance
+        SET finance.`cardBalance`=(SELECT card.`cardBalance` FROM card WHERE card.`stuID`=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber}))
+        WHERE finance.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber});
+    </update>
+
+    <!--查询一卡通余额-->
+    <select id="cardBalance" parameterType="String" resultType="double">
+        select cardBalance from card where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </select>
+
+    <!--向学生回复一卡通审核详情-->
+    <insert id="sendMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
+        insert into message(messageID, sendID, title, content, messagedate, receiveID, msgStatus)
+        values(#{messageID}, #{sendID}, #{title}, #{content}, #{messagedate}, #{receiveID}, #{msgStatus})
+    </insert>
+
+
+
 
 
 </mapper>

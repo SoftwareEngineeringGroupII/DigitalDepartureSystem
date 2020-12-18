@@ -50,6 +50,8 @@ public interface ICardService {
 
     void viewImage(HttpServletResponse response,String imageId) throws IOException;
 
+    ResponseResult checkCard(String stuNumber);
+
 }
 
 

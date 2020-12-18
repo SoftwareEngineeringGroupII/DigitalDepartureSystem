@@ -82,17 +82,11 @@ public class DormServiceImpl implements IDormService {
      */
     @Override
     public ResponseResult doCheckForDorm(String stuNumber) {
-        if (stuNumber == null) {
-            return ResponseResult.FAILED("输入学号为空,请重新输入");
-        }
-        try{
+            //设置后勤表
             dormMapper.doCheckForDorm(stuNumber);
             //审核成功后设置流程表的dormStatus
             eduMapper.setDormStatus(stuNumber);
             return ResponseResult.SUCCESS("审核成功");
-        }catch (Exception e){
-            return ResponseResult.FAILED("审核失败,请重新进行操作");
-        }
     }
 
     ///-------///
@@ -209,7 +203,15 @@ public class DormServiceImpl implements IDormService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
+    /**
+     * 审核后勤处,除了归还钥匙,还有看有没有破坏啥东西赔钱
+     * @param stuNumber
+     * @return
+     */
+    public ResponseResult checkDormStatus(String stuNumber){
 
+          return null;
+    }
 
 
 

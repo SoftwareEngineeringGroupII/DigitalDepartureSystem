@@ -1,7 +1,9 @@
 package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.CardInfo;
+import com.digitaldeparturesystem.pojo.Message;
 import com.digitaldeparturesystem.pojo.Student;
+import com.digitaldeparturesystem.service.impl.MessageServiceImpl;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public interface CardMapper {
     Map<String,Object> getStudentByIdForCard(String stuNum);
 
     //根据学号审核学生一卡通
-    int doCheckCard(String stuNumber);
+    void doCheckCard(String stuNumber);
 
     List<CardInfo> listAllCard();
 
@@ -25,6 +27,12 @@ public interface CardMapper {
 
     //查询某个学生是否存在
     Student findStuByStuNumber(String stuNumber);
+
+    void cardForFinance(String stuNumber);
+
+    Double cardBalance(String stuNumber);
+
+    void sendMessage(Message message);
 
 
 

@@ -60,12 +60,22 @@ public class LibraryApi {
      */
     @PostMapping("/checkLibrary/{stuNumber}/{bookID}")
     public ResponseResult checkLibrary(@PathVariable("stuNumber")String stuNumber,
-                                       @PathVariable("bookID") String bookID){
+                                       @PathVariable("bookID") String bookID,
+                                       @RequestParam("degree") String degree){
 
-       return libraryService.checkLibrary(stuNumber,bookID);
+       return libraryService.checkLibStatus(stuNumber,bookID,degree);
 
     }
 
+    /**
+     * 查询某本书的详情
+     * @param bookId
+     * @return
+     */
+    @GetMapping("/detailBook")
+    public ResponseResult detailBook(@RequestParam String bookId){
+        return libraryService.detailForBook(bookId);
+    }
 
     /**
      * zy

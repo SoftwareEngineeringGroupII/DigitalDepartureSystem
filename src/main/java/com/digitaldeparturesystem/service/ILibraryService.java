@@ -21,4 +21,12 @@ public interface ILibraryService {
 
     ResponseResult findAllByPageAndType(Integer start,Integer size,
                                         String stuDept,String stuType,String libStatus);
+
+    void updateBookPay(String degree,String bookId);
+
+    ResponseResult sumPayForLib(String stuNumber);
+
+    ResponseResult checkLibStatus(String stuNumber,String bookId,String degree);
+
+    ResponseResult detailForBook(String bookID);
 }

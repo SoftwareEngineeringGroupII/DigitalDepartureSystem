@@ -75,6 +75,44 @@
            select paper from lib where lib.stuID=(select stuID from student where stuNumber=#{stuNumber})
     </select>
 
+    <!--设置图书归还款 === 按照损坏程度(轻度损坏、一般损坏、严重损坏、丢失)-->
+    <update id="updateBookPay">
+         update book set pay=price*#{zhe} where bookId=#{bookId}
+    </update>
 
+    <!--计算通过审核后的汇总到财务处的缴费情况-->
+    <update id="updateFinanceBook" parameterType="String">
+        UPDATE finance SET lib=(SELECT SUM(pay) FROM book WHERE book.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber}))
+        WHERE finance.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber})
+    </update>
+
+    <!--计算这个人图书馆所有费用-->
+    <select id="sumPayForLib" parameterType="String" resultType="double">
+      SELECT SUM(pay) FROM book WHERE book.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber})
+    </select>
+
+    <!--查询欠款书-->
+   <select id="sumPayBook" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Book">
+       SELECT bookNum,bookName,pay FROM book
+       WHERE book.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber}) AND pay!=0
+   </select>
+
+    <!--向学生端回复图书馆审核详情-->
+    <insert id="sendMessageByLib" parameterType="com.digitaldeparturesystem.pojo.Message">
+         insert into message(messageID, sendID, title, content, messagedate, receiveID, msgStatus)
+         values(#{messageID},#{sendID},#{title},#{content},#{messagedate},#{receiveID},#{msgStatus})
+    </insert>
+
+    <!--根据学号查询学生主键-->
+    <select id="findStuIDByNumber" parameterType="String" resultType="string">
+        select stuID from student where stuNumber=#{stuNumber}
+    </select>
+
+    <!--某本书的详情书名等+价格+在借状态-->
+    <select id="detailBook" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Book">
+        select bookNum, bookName,returnStatus,price from book where bookID=#{bookID}
+    </select>
+
+    <!---->
 
 </mapper>

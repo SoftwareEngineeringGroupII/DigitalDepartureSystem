@@ -2,10 +2,7 @@ package com.digitaldeparturesystem.service.impl;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
-import com.digitaldeparturesystem.mapper.CardMapper;
-import com.digitaldeparturesystem.mapper.EduMapper;
-import com.digitaldeparturesystem.mapper.NoticeMapper;
-import com.digitaldeparturesystem.mapper.StudentMapper;
+import com.digitaldeparturesystem.mapper.*;
 import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.ICardService;
@@ -162,22 +159,68 @@ public class CardServiceImpl implements ICardService {
 
 
     /**
-     *  审核一卡通
+     *  审核一卡通 == 旧
      * @param stuNumber
      * @return
      */
     public  ResponseResult doCheckForCard(String stuNumber){
-        if (stuNumber == null) {
-            return ResponseResult.FAILED("传入学号不可以为空");
-        }
-        int i = cardMapper.doCheckCard(stuNumber);
-        if (i > 0){
-            //审核成功设置流程表cardStatus
-            eduMapper.setCardStatus(stuNumber);
-            return ResponseResult.SUCCESS("审核成功！");
-        }
-        return ResponseResult.FAILED("审核失败！请重新操作");
+        //修改card表的状态
+        cardMapper.doCheckCard(stuNumber);
+        //审核成功设置process表cardStatus
+        eduMapper.setCardStatus(stuNumber);
+        return ResponseResult.SUCCESS("审核成功！");
     }
+
+    @Resource
+    private LibraryMapper libraryMapper;
+
+    /**
+     * 一卡通审核完后向学生发送消息
+     * @param stuNumber
+     */
+    public void sendMessageForLib(String stuNumber){
+        Double cardBalance = cardMapper.cardBalance(stuNumber);
+        Message message = new Message();
+        message.setTitle("一卡通审核通知");
+        if (cardBalance>0){
+            message.setContent("一卡通注销成功,余额"+cardBalance+"元,请到财务处结清账款");
+        }else {
+            message.setContent("一卡通注销成功");
+        }
+        message.setMessageID(idWorker.nextId()+"");
+        message.setSendID(libraryMapper.findStuIDByNumber(stuNumber));
+        message.setReceiveID("一卡通");
+        message.setMsgStatus("1");//学生端查看
+        //保存消息到数据库
+        cardMapper.sendMessage(message);
+    }
+
+
+
+
+    /**
+     * 审核一卡通 == 新
+     * @param stuNumber
+     * @return
+     */
+    public ResponseResult checkCard(String stuNumber){
+        //修改财务处的一卡通余额
+        cardMapper.cardForFinance(stuNumber);
+        //向学生端发送信息
+        sendMessageForLib(stuNumber);
+        //修改card表审核状态
+        cardMapper.doCheckCard(stuNumber);
+        //修改process表状态
+        eduMapper.setCardStatus(stuNumber);
+        return ResponseResult.SUCCESS("一卡通注销成功");
+    }
+
+
+
+
+
+
+
 
 
     /**
@@ -398,8 +441,14 @@ public class CardServiceImpl implements ICardService {
                 fos.close();
             }
         }
-
     }
+
+
+
+
+
+
+
 
 
 }
