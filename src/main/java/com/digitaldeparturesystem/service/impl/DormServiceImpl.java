@@ -4,10 +4,8 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.DormMapper;
 import com.digitaldeparturesystem.mapper.EduMapper;
-import com.digitaldeparturesystem.pojo.DormInfo;
-import com.digitaldeparturesystem.pojo.FinanceInfo;
-import com.digitaldeparturesystem.pojo.Notice;
-import com.digitaldeparturesystem.pojo.Student;
+import com.digitaldeparturesystem.mapper.LibraryMapper;
+import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
 import com.github.pagehelper.PageHelper;
@@ -203,16 +201,31 @@ public class DormServiceImpl implements IDormService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
+    @Resource
+    private LibraryMapper libraryMapper;
+
     /**
      * 审核后勤处,除了归还钥匙,还有看有没有破坏啥东西赔钱
-     * @param stuNumber
      * @return
      */
-    public ResponseResult checkDormStatus(String stuNumber){
+    public ResponseResult checkDormStatus(String stuNumber,List<DormPay> dormPays){
 
-          return null;
+        //循环插入数据 == 赔偿明细
+        for (DormPay dormPay : dormPays) {
+            dormPay.setStuID(libraryMapper.findStuIDByNumber(stuNumber));
+            dormMapper.insertDormPay(dormPay);
+        }
+        return null;
     }
 
+
+    /**
+     *
+     * @return
+     */
+    public ResponseResult detailDorm(){
+        return null;
+    }
 
 
 

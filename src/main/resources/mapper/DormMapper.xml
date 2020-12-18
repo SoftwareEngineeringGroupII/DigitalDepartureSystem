@@ -76,6 +76,10 @@
         select * from student where stuNumber=#{stuNumber}
     </select>
 
+    <!--dormPayList-->
+    <insert id="insertDormPay" parameterType="string">
+        insert into dormpay(dormpayID,stuID,detail,pay) values(#{dormpayID},#{stuID},#{detail},#{pay})
+    </insert>
 
 
 </mapper>

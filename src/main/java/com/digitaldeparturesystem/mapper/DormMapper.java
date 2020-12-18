@@ -1,6 +1,7 @@
 package com.digitaldeparturesystem.mapper;
 
 import com.digitaldeparturesystem.pojo.DormInfo;
+import com.digitaldeparturesystem.pojo.DormPay;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.apache.ibatis.annotations.Param;
@@ -24,6 +25,8 @@ public interface DormMapper {
 
     //查询某个学生是否存在
     Student findStuByStuNumber(String stuNumber);
+
+    void insertDormPay(DormPay dormPay);
 
 
 }

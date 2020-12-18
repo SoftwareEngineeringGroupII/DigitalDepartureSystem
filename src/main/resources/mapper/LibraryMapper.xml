@@ -82,7 +82,7 @@
 
     <!--计算通过审核后的汇总到财务处的缴费情况-->
     <update id="updateFinanceBook" parameterType="String">
-        UPDATE finance SET lib=(SELECT SUM(pay) FROM book WHERE book.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber}))
+        UPDATE finance SET libFine=(SELECT SUM(pay) FROM book WHERE book.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber}))
         WHERE finance.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber})
     </update>
 
@@ -110,7 +110,8 @@
 
     <!--某本书的详情书名等+价格+在借状态-->
     <select id="detailBook" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Book">
-        select bookNum, bookName,returnStatus,price from book where bookID=#{bookID}
+        select bookID,bookNum,bookName,returnStatus,price,pay,s.stuNumber
+        from book,student s where bookID=#{bookID} and book.stuID=s.stuID;
     </select>
 
     <!---->
