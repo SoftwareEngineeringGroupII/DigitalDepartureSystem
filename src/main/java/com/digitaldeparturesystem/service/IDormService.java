@@ -1,11 +1,13 @@
 package com.digitaldeparturesystem.service;
 
+import com.digitaldeparturesystem.pojo.DormPay;
 import com.digitaldeparturesystem.pojo.Notice;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 public interface IDormService {
 
@@ -33,4 +35,8 @@ public interface IDormService {
 
     //分页查询所有
     ResponseResult selectAllByPage(Integer start,Integer size);
+
+    ResponseResult checkDormStatus(String stuNumber, DormPay dormPays);
+
+    ResponseResult detailDorm(String stuNumber);
 }

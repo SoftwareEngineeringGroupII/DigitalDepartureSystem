@@ -3,6 +3,7 @@ package com.digitaldeparturesystem.service.impl;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.EduMapper;
+import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.mapper.LibraryMapper;
 import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
@@ -243,6 +244,8 @@ public class LibraryServiceImpl implements ILibraryService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
+
+
     /**
      * 图书馆审核完后向学生发送消息 == 图书馆审核详情欠费详情
      * @param stuNumber
@@ -297,6 +300,8 @@ public class LibraryServiceImpl implements ILibraryService {
                 eduMapper.setLibStatus(stuNumber);
                 //将应缴费设置到财务处
                 libraryMapper.updateFinanceBook(stuNumber);
+                //更新finance中的expense
+                sumExpense(stuNumber);
                 //向学生端发送审核最新信息
                 sendMessageForLib(stuNumber);
                 return ResponseResult.SUCCESS("图书馆审核通过");
@@ -308,14 +313,26 @@ public class LibraryServiceImpl implements ILibraryService {
     }
 
 
+    @Resource
+    private FinanceMapper financeMapper;
+    /**
+     * 计算总金额设置到finance表中
+     * @param stuNumber
+     */
+    public void sumExpense(String stuNumber){
+        financeMapper.sumExpense(stuNumber);
+    }
+
+
+
     /**
      * 弹出某本书详情框
      * @return
      */
     public ResponseResult detailForBook(String bookID){
-        Book book = libraryMapper.detailBook(bookID);
-        List<Book> details = new ArrayList<>();
-        details.add(book);
+        Map<String, Object> map = libraryMapper.detailBook(bookID);
+        List<Map<String,Object>> details = new ArrayList<>();
+        details.add(map);
         return ResponseResult.SUCCESS("查看这本详情").setData(details);
     }
 

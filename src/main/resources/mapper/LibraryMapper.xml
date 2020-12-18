@@ -109,7 +109,7 @@
     </select>
 
     <!--某本书的详情书名等+价格+在借状态-->
-    <select id="detailBook" parameterType="String" resultType="com.digitaldeparturesystem.pojo.Book">
+    <select id="detailBook" parameterType="String" resultType="java.util.Map">
         select bookID,bookNum,bookName,returnStatus,price,pay,s.stuNumber
         from book,student s where bookID=#{bookID} and book.stuID=s.stuID;
     </select>

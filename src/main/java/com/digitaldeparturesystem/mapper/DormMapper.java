@@ -5,6 +5,7 @@ import com.digitaldeparturesystem.pojo.DormPay;
 import com.digitaldeparturesystem.pojo.Student;
 import com.digitaldeparturesystem.response.ResponseResult;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,10 @@ public interface DormMapper {
     Student findStuByStuNumber(String stuNumber);
 
     void insertDormPay(DormPay dormPay);
+
+    Map<String,Object> detailDorm(String stuNumber);
+
+    void updateFinanceDorm(@Param("stuNumber") String stuNumber,@Param("total") Double total);
 
 
 }

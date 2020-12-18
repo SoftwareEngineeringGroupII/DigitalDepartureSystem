@@ -171,6 +171,9 @@ public class CardServiceImpl implements ICardService {
         return ResponseResult.SUCCESS("审核成功！");
     }
 
+
+
+
     @Resource
     private LibraryMapper libraryMapper;
 
@@ -212,9 +215,21 @@ public class CardServiceImpl implements ICardService {
         cardMapper.doCheckCard(stuNumber);
         //修改process表状态
         eduMapper.setCardStatus(stuNumber);
+        //修改finance里面的expense
+        sumExpense(stuNumber);
+
         return ResponseResult.SUCCESS("一卡通注销成功");
     }
 
+    @Resource
+    private FinanceMapper financeMapper;
+    /**
+     * 计算总金额设置到finance表中
+     * @param stuNumber
+     */
+    public void sumExpense(String stuNumber){
+        financeMapper.sumExpense(stuNumber);
+    }
 
 
 

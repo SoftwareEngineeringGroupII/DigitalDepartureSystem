@@ -77,9 +77,24 @@
     </select>
 
     <!--dormPayList-->
-    <insert id="insertDormPay" parameterType="string">
+    <insert id="insertDormPay" parameterType="com.digitaldeparturesystem.pojo.DormPay">
         insert into dormpay(dormpayID,stuID,detail,pay) values(#{dormpayID},#{stuID},#{detail},#{pay})
     </insert>
+
+    <!--某学生后勤处详情-->
+    <select id="detailDorm" parameterType="String" resultType="java.util.Map">
+       SELECT dormID, isLeave, dormName, dormNumber,s.stuNumber
+         FROM dorm,student s WHERE dorm.stuID=(SELECT stuID FROM student WHERE stuNumber=#{stuNumber}) 
+         AND dorm.stuID=s.`stuID`;
+    </select>
+    
+    <!--往财务处打钱== 后勤处-->
+    <update id="updateFinanceDorm">
+         update finance set dormFine=#{total}
+         where finance.stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    
 
 
 </mapper>

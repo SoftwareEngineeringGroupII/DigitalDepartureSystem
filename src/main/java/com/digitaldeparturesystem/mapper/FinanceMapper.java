@@ -32,4 +32,15 @@ public interface FinanceMapper {
 
     //查询某个学生是否存在
     Student findStuByStuNumber(String stuNumber);
+
+    int findCardStatus(String stuNumber);
+
+    int findDormStatus(String stuNumber);
+
+    int findLibStatus(String stuNumber);
+
+    void sumExpense(String stuNumber);
+
+
+
 }

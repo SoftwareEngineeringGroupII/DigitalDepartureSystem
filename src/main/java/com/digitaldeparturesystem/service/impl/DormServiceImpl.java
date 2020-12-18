@@ -4,16 +4,20 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.digitaldeparturesystem.mapper.DormMapper;
 import com.digitaldeparturesystem.mapper.EduMapper;
+import com.digitaldeparturesystem.mapper.FinanceMapper;
 import com.digitaldeparturesystem.mapper.LibraryMapper;
 import com.digitaldeparturesystem.pojo.*;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
+import com.digitaldeparturesystem.utils.IdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -204,28 +208,68 @@ public class DormServiceImpl implements IDormService {
     @Resource
     private LibraryMapper libraryMapper;
 
+    @Autowired
+    private IdWorker idWorker;
+
     /**
      * 审核后勤处,除了归还钥匙,还有看有没有破坏啥东西赔钱
      * @return
      */
-    public ResponseResult checkDormStatus(String stuNumber,List<DormPay> dormPays){
-
+    public ResponseResult checkDormStatus(String stuNumber, DormPay dormPay){
+        double total = 0;
         //循环插入数据 == 赔偿明细
-        for (DormPay dormPay : dormPays) {
-            dormPay.setStuID(libraryMapper.findStuIDByNumber(stuNumber));
-            dormMapper.insertDormPay(dormPay);
-        }
+        dormPay.setDormpayID(idWorker.nextId()+"");
+        dormPay.setStuID(libraryMapper.findStuIDByNumber(stuNumber));
+        total=dormPay.getPay();//总计后勤处需要换的钱
+        dormMapper.insertDormPay(dormPay);
+        //往财务处打钱
+        dormMapper.updateFinanceDorm(stuNumber,total);
+        //先发送message
+        //修改其后勤处审核状态
+        dormMapper.doCheckForDorm(stuNumber);
+        //修改process表状态
+        eduMapper.setDormStatus(stuNumber);
+        //更新finance的总金额
+         sumExpense(stuNumber);
+        //修改
+        return ResponseResult.SUCCESS("退寝成功");
+    }
+
+    public ResponseResult sendMessage(String stuNumber){
+        Message message = new Message();
         return null;
     }
+
+
+
+
+    @Resource
+    private FinanceMapper financeMapper;
+    /**
+     * 计算总金额设置到finance表中
+     * @param stuNumber
+     */
+    public void sumExpense(String stuNumber){
+        financeMapper.sumExpense(stuNumber);
+    }
+
+
+
 
 
     /**
-     *
+     *  弹框显示某学生学生退寝详情
      * @return
      */
-    public ResponseResult detailDorm(){
-        return null;
+    public ResponseResult detailDorm(String stuNumber){
+        Map<String, Object> map = dormMapper.detailDorm(stuNumber);
+        List<Map<String,Object>> list = new ArrayList<>();
+        list.add(map);
+        return ResponseResult.SUCCESS("查询成功").setData(list);
     }
+
+
+
 
 
 

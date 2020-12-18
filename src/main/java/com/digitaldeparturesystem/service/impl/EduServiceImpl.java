@@ -271,12 +271,14 @@ public class EduServiceImpl implements IEduService {
     public ResponseResult listAll(){
         List<EduInfo> eduInfos = eduMapper.listPostEdu();
         List<EduInfo> eduInfos1 = eduMapper.listNoPostEdu();
-
+        Map<String,Object> map = new HashMap<>();
         eduInfos.addAll(eduInfos1);
-        return ResponseResult.SUCCESS("查询成功").setData(eduInfos);
-
-
+        int total = eduInfos.size();
+        map.put("total",total);
+        map.put("list",eduInfos1);
+        return ResponseResult.SUCCESS("查询成功").setData(map);
     }
+
 
 
 

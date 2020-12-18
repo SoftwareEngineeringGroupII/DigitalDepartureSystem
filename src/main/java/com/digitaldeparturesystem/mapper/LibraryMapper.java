@@ -41,5 +41,5 @@ public interface LibraryMapper {
 
     String findStuIDByNumber(String stuNumber);
 
-    Book detailBook(String bookID);
+    Map<String,Object> detailBook(String bookID);
 }

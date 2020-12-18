@@ -1,15 +1,19 @@
 package com.digitaldeparturesystem.controller.sector;
 
+import com.alibaba.fastjson.support.spring.annotation.ResponseJSONP;
 import com.digitaldeparturesystem.pojo.Card;
 import com.digitaldeparturesystem.pojo.Dorm;
+import com.digitaldeparturesystem.pojo.DormPay;
 import com.digitaldeparturesystem.response.ResponseResult;
 import com.digitaldeparturesystem.service.IDormService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.print.PrinterGraphics;
+import java.util.List;
 
 @CrossOrigin
 @Slf4j
@@ -107,6 +111,26 @@ public class DormApi {
     }
 
 
+    /**
+     * 审核后勤处
+     * @param stuNumber
+     * @param dormPays
+     * @return
+     */
+    @PostMapping("/checkDormStatus")
+    public ResponseResult checkDormStatus(@RequestParam String stuNumber,@RequestBody DormPay dormPays){
+        return dormService.checkDormStatus(stuNumber,dormPays);
+    }
+
+    /**
+     * 弹框弹出退寝详情
+     * @param stuNumber
+     * @return
+     */
+    @GetMapping("/detailDorm")
+    public ResponseResult detailDorm(@RequestParam("stuNumber") String stuNumber){
+        return dormService.detailDorm(stuNumber);
+    }
 
 
 }

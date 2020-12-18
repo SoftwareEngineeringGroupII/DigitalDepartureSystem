@@ -112,9 +112,7 @@ public class FinanceServiceImpl implements IFinanceService {
         //pageHelper使用
         //分页处理,显示第start页的size条数据
         PageHelper.startPage(start,size);
-       // List<Map<String, Object>> students = financeMapper.listStudentFinanceInfos(params);
         List<FinanceInfo> students = financeMapper.listStudentFinanceInfos(params);
-        //PageInfo<Map<String, Object>> financePageInfo = new PageInfo<>(students);
         PageInfo<FinanceInfo> financePageInfo = new PageInfo<>(students);
         int pageNum = financePageInfo.getPageNum();
         int pages = financePageInfo.getPages();
@@ -149,14 +147,19 @@ public class FinanceServiceImpl implements IFinanceService {
      */
     @Override
     public ResponseResult doCheckForFinance(String stuNumber) {
-        try {
-            financeMapper.doCheckForFinance(stuNumber);
-            //审核成功后设置离校流程表financeStatus
-            eduMapper.setFinanceStatus(stuNumber);
-            return ResponseResult.SUCCESS("审核成功");
-        }catch (Exception e){
-            return ResponseResult.FAILED("审核失败,请重新进行操作");
+            //先查询其他部门的审核状态：一卡通、财务处、后勤处
+        int cardStatus = financeMapper.findCardStatus(stuNumber);
+        int dormStatus = financeMapper.findDormStatus(stuNumber);
+        int libStatus = financeMapper.findLibStatus(stuNumber);
+        //如果有一个部门没结算清楚,不能通过
+        if (cardStatus==0||dormStatus==0||libStatus==0){
+                return ResponseResult.FAILED("审核失败！请先去其他部门结算赔偿/罚款金额");
         }
+        //如果没有都过,修改状态
+        financeMapper.doCheckForFinance(stuNumber);
+        //审核成功后设置离校流程表financeStatus
+        eduMapper.setFinanceStatus(stuNumber);
+        return ResponseResult.SUCCESS("审核成功");
     }
 
 
