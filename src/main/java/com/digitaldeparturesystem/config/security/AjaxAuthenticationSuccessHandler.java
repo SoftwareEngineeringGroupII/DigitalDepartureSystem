@@ -66,15 +66,16 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
         Object principal = authentication.getPrincipal();
         Clerk clerk = null;
-        log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> login success" );
         if (principal instanceof Clerk){
             clerk = (Clerk)principal;
+            log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> " + clerk.getClerkAccount() +" ==> login success" );
             //登录成功
             log.info("管理员账户名 ==> " + clerk.getClerkAccount());
         }
         Student student = null;
         if (principal instanceof Student){
             student = (Student) principal;
+            log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> " + student.getStuNumber() +" ==> login success" );
             //登录成功
             log.info("学生账户名 ==> " + student.getStuNumber());
         }

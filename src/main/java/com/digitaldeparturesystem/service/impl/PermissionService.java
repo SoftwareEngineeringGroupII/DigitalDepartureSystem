@@ -71,6 +71,9 @@ public class PermissionService {
                     break;
                 }
             }
+            if (!hasPermission){
+                log.info(student.getStuNumber() + " 权限不足，访问 -- " + request.getRequestURI() + " -- 被拒绝");
+            }
             return hasPermission;
         }else{
             //记录
@@ -96,6 +99,9 @@ public class PermissionService {
                     hasPermission = true;
                     break;
                 }
+            }
+            if (!hasPermission){
+                log.info(clerkFromToken.getClerkAccount() + " 权限不足，访问 -- " + request.getRequestURI() + " -- 被拒绝");
             }
             return hasPermission;
         }
