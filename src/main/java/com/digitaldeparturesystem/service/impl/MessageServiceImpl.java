@@ -60,7 +60,7 @@ public class MessageServiceImpl implements IMessageService {
         message.setMsgStatus("0");
         message.setMessageID(idWorker.nextId()+"");
         message.setSendID(student.getStuId());
-        message.setReceiveID("781917504145457152");
+        message.setReceiveID("教务处");
 
         //保存数据
         messageMapper.sendMessage(message);
@@ -106,23 +106,12 @@ public class MessageServiceImpl implements IMessageService {
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
         //解析*
         Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
-
-        //根据学生id查sendid
-        Message messageFromDB ;
-        messageFromDB = messageMapper.findMessageBySendId(student.getStuId());
-        if (messageFromDB == null){
-            //sendid没查到，查revId
-            messageFromDB = messageMapper.findMessageByRecvId(student.getStuId());
-            if (messageFromDB == null){
-                return ResponseResult.SUCCESS("暂无数据");
-            }else{
-                //有消息，返回
-                return ResponseResult.SUCCESS("查询成功").setData(messageFromDB);
-            }
-        }else{
-            //有消息，返回
-            return ResponseResult.SUCCESS("查询成功").setData(messageFromDB);
+        assert student != null;
+        List<Message> messages = messageMapper.showMessageUnRead();
+        if (messages.isEmpty()){
+            return ResponseResult.FAILED("暂无消息显示");
         }
+        return ResponseResult.SUCCESS("显示成功！").setData(messages);
     }
 
     @Override
@@ -145,16 +134,16 @@ public class MessageServiceImpl implements IMessageService {
             if (messageFromDB == null){
                 //无消息，可插入
                 if (TextUtils.isEmpty(message.getContent())){
-                return ResponseResult.FAILED("申请内容不能为空！");
+                    return ResponseResult.FAILED("申请内容不能为空！");
                 }
                 message.setMessagedate(new Date());
                 message.setMsgStatus("0");
                 message.setMessageID(idWorker.nextId()+"");
-                message.setSendID(student.getStuId());
-                message.setReceiveID("781917504145457152");
-            //保存数据
-            messageMapper.sendMessage(message);
-            return ResponseResult.SUCCESS("提交申请成功");
+                message.setSendID(student.getStuNumber());
+                message.setReceiveID("教务处");
+                //保存数据
+                messageMapper.sendMessage(message);
+                return ResponseResult.SUCCESS("提交申请成功");
             }else{
                 //有消息，可覆盖
                 if (TextUtils.isEmpty(title)) {
