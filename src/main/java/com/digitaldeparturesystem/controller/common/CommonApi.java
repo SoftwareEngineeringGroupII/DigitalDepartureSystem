@@ -133,7 +133,7 @@ public class CommonApi {
         return commonService.sendEmail(request,emailAddress);
     }
 
-    @GetMapping("/logs")
+    @PostMapping("/logs")
     public ResponseResult getLogs(HttpServletRequest request, @RequestBody LogSearchCondition condition){
         String tokenKey = CookieUtils.getCookie(request, Constants.Clerk.COOKIE_TOKEN_KEY);
         Clerk clerkFromToken = TokenUtils.parseClerkByTokenKey(redisUtils, tokenKey);
