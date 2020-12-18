@@ -60,7 +60,7 @@ public class LogcatServiceImpl implements ILogcatService {
             Matcher m = pattern.matcher(log);
             if (m.find()) {
                 logBean.setLogDate(m.group(1));
-                logBean.setLogClass(m.group(3));
+                logBean.setLogClass(m.group(3).trim());
                 logBean.setOption(m.group(5));
                 logResult.add(logBean);
             }
