@@ -25,10 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service  //后勤处
@@ -40,6 +37,12 @@ public class DormServiceImpl implements IDormService {
 
     @Resource
     private EduMapper eduMapper;
+
+    @Resource
+    private LibraryMapper libraryMapper;
+
+    @Autowired
+    private IdWorker idWorker;
 
 
     /**
@@ -205,11 +208,7 @@ public class DormServiceImpl implements IDormService {
         return ResponseResult.SUCCESS("查询成功").setData(map);
     }
 
-    @Resource
-    private LibraryMapper libraryMapper;
 
-    @Autowired
-    private IdWorker idWorker;
 
     /**
      * 审核后勤处,除了归还钥匙,还有看有没有破坏啥东西赔钱
@@ -222,22 +221,49 @@ public class DormServiceImpl implements IDormService {
         dormPay.setStuID(libraryMapper.findStuIDByNumber(stuNumber));
         total=dormPay.getPay();//总计后勤处需要换的钱
         dormMapper.insertDormPay(dormPay);
-        //往财务处打钱
+        //往财务处打钱(注意这里是用传入的新对象去更新财务处的dormFine,覆盖)
         dormMapper.updateFinanceDorm(stuNumber,total);
-        //先发送message
+        //更新finance的总金额
+        sumExpense(stuNumber);
+        //发送message
+        sendMessage(stuNumber,dormPay);
         //修改其后勤处审核状态
         dormMapper.doCheckForDorm(stuNumber);
         //修改process表状态
         eduMapper.setDormStatus(stuNumber);
-        //更新finance的总金额
-         sumExpense(stuNumber);
         //修改
         return ResponseResult.SUCCESS("退寝成功");
     }
 
-    public ResponseResult sendMessage(String stuNumber){
+
+    /**
+     * 后勤处审核成功后发送学生端消息
+     * @param stuNumber
+     * @return
+     */
+    public void sendMessage(String stuNumber, DormPay dormPay){
         Message message = new Message();
-        return null;
+        //查询这个人的后勤退款明细(本来也只会调一次接口,防止测试多个结果存入数据造成返回多个数据异常)
+      //  List<DormPay> dormPays = dormMapper.findDormPay(stuNumber);
+        String detail = dormPay.getDetail();
+        double pay = dormPay.getPay();
+        StringBuilder details = new StringBuilder();
+        details.append("欠款明细：").append(detail).append('\n').append("应缴费：").append(pay).append('\n');
+        //查询finance中后勤处应该缴费多少
+        //Double sumDormpay = dormMapper.findSumDormpay(stuNumber);
+        if (pay > 0){
+            message.setContent(details.toString()+'\n'+"后勤处已经审核,请到财务处缴费");
+        }else{
+            message.setContent("后勤处已审核通过");
+        }
+        message.setTitle("后勤处审核通知");
+        message.setMessageID(idWorker.nextId()+"");
+        message.setMsgStatus("2");
+        message.setReceiveID("后勤处");
+        message.setSendID(libraryMapper.findStuIDByNumber(stuNumber));
+        message.setMessagedate(new Date());
+        //保存message
+        dormMapper.sendMessage(message);
     }
 
 

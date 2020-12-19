@@ -64,6 +64,9 @@
          s.stuName,
          s.stuDept,
          s.stuType,
+         f.libFine,
+         f.cardBalance,
+         f.dormFine,
          f.expense
          FROM student s
          LEFT JOIN finance f
@@ -91,6 +94,9 @@
          s.stuName,
          s.stuDept,
          s.stuType,
+         f.dormFine,
+         f.cardBalance,
+         f.libFine,
          f.expense,
          f.financeStatus
          FROM student s
@@ -121,6 +127,11 @@
     <!--计算finance总金额-->
     <update id="sumExpense" parameterType="String">
         update finance set finance.expense=(cardBalance-dormFine-libFine)
+        where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </update>
+
+    <update id="setFine0" parameterType="string">
+        update finance set dormFine=0,libFine=0,expense=0,cardBalance=0
         where stuID=(select stuID from student where stuNumber=#{stuNumber})
     </update>
 </mapper>

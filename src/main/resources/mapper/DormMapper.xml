@@ -94,6 +94,22 @@
          where finance.stuID=(select stuID from student where stuNumber=#{stuNumber})
     </update>
 
+    <!--查询后勤处缴费明细-->
+    <select id="findDormPay" parameterType="String" resultType="com.digitaldeparturesystem.pojo.DormPay">
+         select * from dormpay where dormpay.stuID=(select stuID from student where stuNumber=#{stuNumber});
+    </select>
+
+    <!--查询finance表后勤处的应缴费-->
+    <select id="findSumDormpay" parameterType="String" resultType="double">
+        select dormFine from finance where stuID=(select stuID from student where stuNumber=#{stuNumber})
+    </select>
+
+    <!--向学生回复一卡通审核详情-->
+    <insert id="sendMessage" parameterType="com.digitaldeparturesystem.pojo.Message">
+        insert into message(messageID, sendID, title, content, messagedate, receiveID, msgStatus)
+        values(#{messageID}, #{sendID}, #{title}, #{content}, #{messagedate}, #{receiveID}, #{msgStatus})
+    </insert>
+
     
 
 

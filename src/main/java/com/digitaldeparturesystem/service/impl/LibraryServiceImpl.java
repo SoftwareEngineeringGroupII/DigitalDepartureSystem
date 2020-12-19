@@ -270,7 +270,7 @@ public class LibraryServiceImpl implements ILibraryService {
         }
         message.setTitle("图书管审核通知");
         message.setMessageID(idWorker.nextId()+"");
-        message.setMsgStatus("1");//默认为1,学生端查看
+        message.setMsgStatus("2");//默认为1,学生端查看
         message.setSendID(libraryMapper.findStuIDByNumber(stuNumber));
         message.setReceiveID("图书馆");
         message.setMessagedate(new Date());

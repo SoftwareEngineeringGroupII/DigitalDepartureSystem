@@ -41,6 +41,8 @@ public interface FinanceMapper {
 
     void sumExpense(String stuNumber);
 
+    void setFine0(String stuNumber);
+
 
 
 }

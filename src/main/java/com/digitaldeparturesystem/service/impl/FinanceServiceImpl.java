@@ -155,12 +155,17 @@ public class FinanceServiceImpl implements IFinanceService {
         if (cardStatus==0||dormStatus==0||libStatus==0){
                 return ResponseResult.FAILED("审核失败！请先去其他部门结算赔偿/罚款金额");
         }
-        //如果没有都过,修改状态
+        //如果,修改状态
         financeMapper.doCheckForFinance(stuNumber);
         //审核成功后设置离校流程表financeStatus
         eduMapper.setFinanceStatus(stuNumber);
+        //审核后将各个明细置为0
+        financeMapper.setFine0(stuNumber);
         return ResponseResult.SUCCESS("审核成功");
     }
+
+
+
 
 
     /**

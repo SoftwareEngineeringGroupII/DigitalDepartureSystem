@@ -1,7 +1,9 @@
 package com.digitaldeparturesystem.pojo;
 
 
+
 public class Finance {
+
 
   private String financeID;
 
@@ -11,11 +13,11 @@ public class Finance {
 
   private String financeStatus;
 
-  private double dorm;
+  private double cardBalance;
 
-  private double card;
+  private double dormFine;
 
-  private double lib;
+  private double libFine;
 
 
   public String getFinanceID() {
@@ -54,30 +56,30 @@ public class Finance {
   }
 
 
-  public double getDorm() {
-    return dorm;
+  public double getCardBalance() {
+    return cardBalance;
   }
 
-  public void setDorm(double dorm) {
-    this.dorm = dorm;
-  }
-
-
-  public double getCard() {
-    return card;
-  }
-
-  public void setCard(double card) {
-    this.card = card;
+  public void setCardBalance(double cardBalance) {
+    this.cardBalance = cardBalance;
   }
 
 
-  public double getLib() {
-    return lib;
+  public double getDormFine() {
+    return dormFine;
   }
 
-  public void setLib(double lib) {
-    this.lib = lib;
+  public void setDormFine(double dormFine) {
+    this.dormFine = dormFine;
+  }
+
+
+  public double getLibFine() {
+    return libFine;
+  }
+
+  public void setLibFine(double libFine) {
+    this.libFine = libFine;
   }
 
 }

@@ -193,7 +193,8 @@ public class CardServiceImpl implements ICardService {
         message.setMessageID(idWorker.nextId()+"");
         message.setSendID(libraryMapper.findStuIDByNumber(stuNumber));
         message.setReceiveID("一卡通");
-        message.setMsgStatus("1");//学生端查看
+        message.setMsgStatus("2");//学生端查看通知
+        message.setMessagedate(new Date());
         //保存消息到数据库
         cardMapper.sendMessage(message);
     }
@@ -230,6 +231,8 @@ public class CardServiceImpl implements ICardService {
     public void sumExpense(String stuNumber){
         financeMapper.sumExpense(stuNumber);
     }
+
+
 
 
 
