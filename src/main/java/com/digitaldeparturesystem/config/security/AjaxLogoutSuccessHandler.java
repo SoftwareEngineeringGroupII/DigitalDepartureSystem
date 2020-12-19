@@ -38,7 +38,6 @@ public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Access-Token,Authorization,ybg");
 
-        log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> logout success");
         //退出成功，删除数据库的refreshToken和删除redis的token
         String tokenKey = CookieUtils.getCookie(httpServletRequest, Constants.Clerk.COOKIE_TOKEN_KEY);
         //解析*
@@ -46,11 +45,13 @@ public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
         //删除refreshToken
         if (clerkFromToken == null||clerkFromToken.getClerkID() == null){
             Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
+            log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> "+student.getStuNumber()+" ==> logout success");
             tokenMapper.deleteAllByUserId(student.getStuId());
             //删除用户权限
             redisUtils.del(Constants.Clerk.KEY_AUTHORITY_CONTENT + student.getStuId());
         }else{
             tokenMapper.deleteAllByUserId(clerkFromToken.getClerkID());
+            log.info(IpUtil.getIpAddr(httpServletRequest) + " ==> "+clerkFromToken.getClerkAccount()+" ==> logout success");
             //删除用户权限
             redisUtils.del(Constants.Clerk.KEY_AUTHORITY_CONTENT + clerkFromToken.getClerkID());
         }
