@@ -92,7 +92,7 @@ public class MessageServiceImpl implements IMessageService {
         //解析*
         Student student = TokenUtils.parseStudentByTokenKey(redisUtils, tokenKey);
         assert student != null;
-        List<Message> messages = messageMapper.showMessageRead();
+        List<Message> messages = messageMapper.showMessageRead(student.getStuId());
         if (messages.isEmpty()){
             return ResponseResult.FAILED("暂无消息显示");
         }

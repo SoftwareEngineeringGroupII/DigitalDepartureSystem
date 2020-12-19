@@ -89,7 +89,7 @@ public class PermissionService {
             urls.add("/common/**");
             urls.add("/login/**");
             urls.add("/logout/**");
-            urls.add("/**");
+          urls.add("/**");
             //不需要权限，都可以访问
 //            //TODO:
 //            urls.add("/**");

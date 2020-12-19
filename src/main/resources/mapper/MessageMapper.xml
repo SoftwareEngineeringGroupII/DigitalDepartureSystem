@@ -24,7 +24,7 @@
     </delete>
     <!--显示反馈-->
     <select id="showMessageRead" resultType="com.digitaldeparturesystem.pojo.Message">
-        select * from message where msgStatus = 1;
+        select * from message where msgStatus = 2 and sendID = #{stuId};
     </select>
     <select id="showMessageUnRead" resultType="com.digitaldeparturesystem.pojo.Message">
         select * from message where msgStatus = 0;

@@ -26,7 +26,7 @@ public interface MessageMapper {
      * @param
      * @return
      */
-    List<Message> showMessageRead();
+    List<Message> showMessageRead(String stuId);
     /**
      * 显示未读信息
      */
